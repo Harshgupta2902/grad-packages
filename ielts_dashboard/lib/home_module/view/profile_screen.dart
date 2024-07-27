@@ -20,6 +20,7 @@ import 'package:utilities/components/cached_image_network_container.dart';
 import 'package:utilities/components/cupertino_date_picker.dart';
 import 'package:utilities/components/enums.dart';
 import 'package:utilities/components/gradding_app_bar.dart';
+import 'package:utilities/components/message_scaffold.dart';
 import 'package:utilities/dio/api_end_points.dart';
 import 'package:utilities/dio/http_apis.dart';
 import 'package:utilities/form_fields/custom_text_fields.dart';
@@ -27,6 +28,7 @@ import 'package:utilities/form_fields/intl_text_field.dart';
 import 'package:utilities/theme/app_box_decoration.dart';
 import 'package:utilities/theme/app_colors.dart';
 import 'package:utilities/validators/generic_validator.dart';
+import 'package:utilities/validators/my_regex.dart';
 
 final _profileController = Get.put(ProfileController());
 final _getCountriesController = Get.put(GetCountriesController());
@@ -112,7 +114,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     cityIdController.text = profile?.cityId ?? "";
     stateIdController.text = profile?.stateId ?? "";
     countryIdController.text = profile?.countryId.toString() ?? "";
-    gender = profile?.gender ?? "";
+    setState(() {
+      gender = profile?.gender ?? "";
+    });
 
     debugPrint("here is the gender from the api response $gender");
     await _getStatesController.getStates(countyId: countryIdController.text);
@@ -326,12 +330,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ],
                                 ),
                                 if (genderError != "")
-                                  Text(
-                                    genderError,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall
-                                        ?.copyWith(color: AppColors.cadmiumRed),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 12),
+                                    child: Text(
+                                      genderError,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(color: AppColors.cadmiumRed),
+                                    ),
                                   )
                               ],
                             ),
@@ -372,7 +379,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 return GenericValidator.required(
                                   value: value,
                                   message: "Enter Email",
-                                );
+                                ) ?? GenericValidator.regexMatch(value: value, regex: MyRegex.emailPattern, message: "Invalid Email");
                               },
                             ),
                             const SizedBox(height: 20),
@@ -650,7 +657,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 setState(() {
                   genderError = "Select Gender";
                 });
-                debugPrint("error:::::::  $gender");
+                debugPrint("error for gender:::::::  $gender");
               } else if (_formKey.currentState?.validate() == true) {
                 setState(() {
                   genderError = "";
@@ -678,6 +685,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   final status = responseBody['status'].toString();
                   debugPrint('status = $responseBody: $status');
                   if (status == "1") {
+                    messageScaffold(
+                      context: context,
+                      content: "Profile Updated Successfully",
+                      isTop: true,
+                      messageScaffoldType: MessageScaffoldType.success,
+                    );
                     _profileController.getProfileData();
                   }
                 });
@@ -712,6 +725,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           setState(() {
             gender = genderValue;
             debugPrint("error  $gender");
+            genderError = "";
           });
         },
         child: Container(

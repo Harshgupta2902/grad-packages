@@ -5,6 +5,7 @@ import 'package:study_abroad/study_abroad_module/components/unifinder/courses_lo
 import 'package:study_abroad/study_abroad_module/controller/course_finder_controller.dart';
 import 'package:study_abroad/study_abroad_module/controller/shortlist_course_controller.dart';
 import 'package:study_abroad/study_abroad_module/models/courses_unifinder_model.dart';
+import 'package:utilities/common/bottom_sheet/councellor_sheet.dart';
 import 'package:utilities/components/enums.dart';
 import 'package:utilities/components/message_scaffold.dart';
 
@@ -41,6 +42,11 @@ class _CourseViewState extends State<CourseView> {
               fees: "${course?.university?.countries?.symbol} ${course?.amount}",
               shortlist: course?.shortlisted,
               applied: course?.applied,
+              applyNowOnTap: () {
+                counsellorSheet(context,
+                    phoneNumber: "${_coursesController?.state?.result?.counsellor?.number}",
+                    name: "${_coursesController?.state?.result?.counsellor?.name}");
+              },
               shortListCallBack: (boolValue) {
                 debugPrint(boolValue.toString());
                 _shortListCourseController

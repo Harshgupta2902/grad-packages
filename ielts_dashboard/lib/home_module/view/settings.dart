@@ -71,7 +71,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               DraggableScrollableSheet(
                 controller: _scrollController,
                 snap: true,
-                initialChildSize: 0.75,
+                initialChildSize: 0.7,
                 minChildSize: 0.7,
                 maxChildSize: 0.896,
                 builder: (context, scrollController) {

@@ -69,7 +69,9 @@ class BookSeatCard extends StatelessWidget {
                   ),
                 ),
               ),
-              SvgPicture.asset(GuestAssetPath.forward),
+              GestureDetector(
+                  onTap: () => context.pushNamed(GuestGoPaths.guestBuyPlans),
+                  child: SvgPicture.asset(GuestAssetPath.forward)),
             ],
           )
         ],

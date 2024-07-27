@@ -37,6 +37,7 @@ class Result {
     this.safeCourses,
     this.moderateCourses,
     this.lowCourses,
+    this.counsellor,
   });
 
   Result.fromJson(dynamic json) {
@@ -63,6 +64,8 @@ class Result {
           moderateCourses?.add(SafeCourses.fromJson(v));
         });
       }
+      counsellor = json['counsellor'] != null ? Counsellor.fromJson(json['counsellor']) : null;
+
       if (json['lowCourses'] != null) {
         lowCourses = [];
         json['lowCourses'].forEach((v) {
@@ -82,6 +85,7 @@ class Result {
   List<SafeCourses>? safeCourses;
   List<SafeCourses>? moderateCourses;
   List<SafeCourses>? lowCourses;
+  Counsellor? counsellor;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -100,6 +104,9 @@ class Result {
     }
     if (lowCourses != null) {
       map['lowCourses'] = lowCourses?.map((v) => v.toJson()).toList();
+    }
+    if (counsellor != null) {
+      map['counsellor'] = counsellor?.toJson();
     }
     return map;
   }
@@ -269,9 +276,31 @@ class Courses {
     map['shortlisted'] = shortlisted;
     map['applied'] = applied;
     map['durationUnit'] = durationUnit;
+
     if (university != null) {
       map['university'] = university?.toJson();
     }
+    return map;
+  }
+}
+
+class Counsellor {
+  Counsellor({
+    this.number,
+    this.name,
+  });
+
+  Counsellor.fromJson(dynamic json) {
+    number = json['number'];
+    name = json['name'];
+  }
+  String? number;
+  String? name;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['number'] = number;
+    map['name'] = name;
     return map;
   }
 }

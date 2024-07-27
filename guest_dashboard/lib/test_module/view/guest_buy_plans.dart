@@ -200,19 +200,21 @@ class _GuestBuyPlansState extends State<GuestBuyPlans> {
                 ),
               ),
               const SizedBox(height: 16),
-              Container(
-                decoration: AppBoxDecoration.getBoxDecoration(
-                    color: AppColors.fernGreen.withOpacity(.1), borderRadius: 26),
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                child: Text(
-                  "${planData?.discount ?? "-"} OFF",
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppColors.fernGreen,
-                        fontWeight: FontWeight.w500,
-                      ),
+              if (planData?.discount == null) ...[
+                Container(
+                  decoration: AppBoxDecoration.getBoxDecoration(
+                      color: AppColors.fernGreen.withOpacity(.1), borderRadius: 26),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  child: Text(
+                    "${planData?.discount ?? "-"} OFF",
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: AppColors.fernGreen,
+                          fontWeight: FontWeight.w500,
+                        ),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 12),
+                const SizedBox(height: 12),
+              ],
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [

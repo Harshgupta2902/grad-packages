@@ -96,7 +96,7 @@ class _GuestDashboardViewState extends State<GuestDashboardView> {
                       color: Colors.white.withOpacity(0.3),
                       blur: 1,
                       borderRadius: SmoothBorderRadius(cornerRadius: 12),
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -231,7 +231,7 @@ class _GuestDashboardViewState extends State<GuestDashboardView> {
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       mainAxisSpacing: 14,
-                      crossAxisSpacing: 14,
+                      crossAxisSpacing: 8,
                       mainAxisExtent: 90,
                     ),
                     itemBuilder: (context, index) {
