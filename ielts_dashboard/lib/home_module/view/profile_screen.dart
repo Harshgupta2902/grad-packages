@@ -377,9 +377,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               controller: emailController,
                               validator: (value) {
                                 return GenericValidator.required(
-                                  value: value,
-                                  message: "Enter Email",
-                                ) ?? GenericValidator.regexMatch(value: value, regex: MyRegex.emailPattern, message: "Invalid Email");
+                                      value: value,
+                                      message: "Enter Email",
+                                    ) ??
+                                    GenericValidator.regexMatch(
+                                        value: value,
+                                        regex: MyRegex.emailPattern,
+                                        message: "Invalid Email");
                               },
                             ),
                             const SizedBox(height: 20),
