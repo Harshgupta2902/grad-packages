@@ -102,7 +102,7 @@ class _GuestBuyPlansState extends State<GuestBuyPlans> {
                             );
                           },
                           options: CarouselOptions(
-                            height: MediaQuery.of(context).size.height * 0.6,
+                            height: MediaQuery.of(context).size.height * 0.65,
                             autoPlay: false,
                             enableInfiniteScroll: true,
                             disableCenter: true,
@@ -392,7 +392,7 @@ class _GuestBuyPlansState extends State<GuestBuyPlans> {
                     color: AppColors.fernGreen.withOpacity(.1), borderRadius: 26),
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                 child: Text(
-                  "${"planData?.discount"} OFF",
+                  "${planData?.discount} OFF",
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: AppColors.fernGreen,
                         fontWeight: FontWeight.w500,

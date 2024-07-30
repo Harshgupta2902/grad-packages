@@ -22,7 +22,7 @@ class CustomTextFormField extends StatelessWidget {
     this.maxLines,
     this.title,
     this.fillColor,
-    this.showBorder,
+    this.showEnabledBorder,
   });
   final TextEditingController controller;
   final String hintText;
@@ -39,16 +39,13 @@ class CustomTextFormField extends StatelessWidget {
   final String? title;
   final List<TextInputFormatter>? inputFormatter;
   final Color? fillColor;
-  final bool? showBorder;
+  final bool? showEnabledBorder;
+
+
 
   static OutlineInputBorder focusedBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(10),
     borderSide: const BorderSide(color: AppColors.paleSky30),
-  );
-
-  static OutlineInputBorder enabledBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(10),
-    borderSide: const BorderSide(color: AppColors.alabaster),
   );
 
   @override
@@ -76,22 +73,21 @@ class CustomTextFormField extends StatelessWidget {
           },
           cursorColor: AppColors.black,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w500,
+                fontWeight: showEnabledBorder != null ? FontWeight.w600 : FontWeight.w500,
                 color: AppColors.darkJungleGreen,
               ),
           maxLines: maxLines ?? 1,
           decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: maxLines != null ? 4 : 0),
             fillColor: fillColor ?? AppColors.alabaster,
             hintText: hintText,
             suffixIcon: suffix,
             filled: true,
             floatingLabelAlignment: FloatingLabelAlignment.start,
             floatingLabelBehavior: FloatingLabelBehavior.always,
-            border: showBorder == true ? focusedBorder : null,
-            enabledBorder: showBorder == true ? enabledBorder : null,
-            focusedBorder: showBorder == true ? focusedBorder : null,
-            disabledBorder: showBorder == true ? enabledBorder : null,
+            // border: showEnabledBorder == true ? focusedBorder : null,
+            focusedBorder: showEnabledBorder == true ? focusedBorder : null,
+            disabledBorder: showEnabledBorder == true ? focusedBorder : null,
           ),
           onChanged: onChanged,
           onFieldSubmitted: onFieldSubmitted,

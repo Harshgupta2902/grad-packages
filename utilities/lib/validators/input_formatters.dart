@@ -90,12 +90,27 @@ class DecimalInputFormatter extends TextInputFormatter {
 
 class TextOnlyFormatter extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     final filteredText = newValue.text.replaceAll(RegExp('[^a-zA-Z]'), '');
     return newValue.copyWith(
       text: filteredText,
       selection: newValue.selection,
+    );
+  }
+}
+
+class WhitespaceTextInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    // Replace sequences of more than two spaces with two spaces
+    String newText = newValue.text.replaceAll(RegExp(r'\s{3,}'), '  ');
+
+    // Maintain the cursor position
+    int cursorPosition = newText.length;
+
+    return TextEditingValue(
+      text: newText,
+      selection: TextSelection.collapsed(offset: cursorPosition),
     );
   }
 }

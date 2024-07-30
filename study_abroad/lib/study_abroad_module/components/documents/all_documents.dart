@@ -27,8 +27,6 @@ class _AllDocumentsState extends State<AllDocuments> {
     expansionTileKey = List.generate(widget.result?.length ?? 0, (index) => GlobalKey());
   }
 
-
-
   openOrCloseContainer({required int index}) {
     setState(() {
       if (selectedIndex == index) {
@@ -144,10 +142,10 @@ class _AllDocumentsState extends State<AllDocuments> {
                                                 "$title",
                                                 style: Theme.of(context).textTheme.bodyLarge,
                                               ),
-                                              const SizedBox(height: 6),
-                                              if (desc != null)
+                                              if (desc != null || desc != "") ...[
+                                                const SizedBox(height: 6),
                                                 Text(
-                                                  desc,
+                                                  desc!,
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .bodySmall
@@ -157,6 +155,7 @@ class _AllDocumentsState extends State<AllDocuments> {
                                                       ? null
                                                       : TextOverflow.ellipsis,
                                                 ),
+                                              ]
                                             ],
                                           ),
                                         ),

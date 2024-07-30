@@ -23,11 +23,12 @@ class IeltsAddApplication extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: MediaQuery.of(context).size.height * 0.22,
       margin: const EdgeInsets.symmetric(horizontal: 16),
-      padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: const BoxDecoration(
         image: DecorationImage(
-          fit: BoxFit.fitWidth,
+          fit: BoxFit.fill,
           image: AssetImage(
             IeltsAssetPath.appManagerBackgroundBlue,
           ),
@@ -40,6 +41,7 @@ class IeltsAddApplication extends StatelessWidget {
             flex: 2,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   title,

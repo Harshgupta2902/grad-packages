@@ -305,25 +305,29 @@ class _IeltsDashboardViewState extends State<IeltsDashboardView> {
                                                         ),
                                                   ),
                                                 ),
-                                                Row(
-                                                  children: [
-                                                    const Icon(
-                                                      Icons.access_time_outlined,
-                                                      color: AppColors.gunMetal,
-                                                      size: 18,
-                                                    ),
-                                                    const SizedBox(width: 2),
-                                                    Text(
-                                                      item?.taskType ?? "-",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodySmall
-                                                          ?.copyWith(
-                                                            color: AppColors.gunMetal,
-                                                            fontWeight: FontWeight.w500,
-                                                          ),
-                                                    )
-                                                  ],
+                                                SizedBox(
+                                                  width: MediaQuery.of(context).size.width * 0.35,
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: [
+                                                      const Icon(
+                                                        Icons.access_time_outlined,
+                                                        color: AppColors.gunMetal,
+                                                        size: 18,
+                                                      ),
+                                                      const SizedBox(width: 2),
+                                                      Text(
+                                                        item?.taskType ?? "-",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall
+                                                            ?.copyWith(
+                                                              color: AppColors.gunMetal,
+                                                              fontWeight: FontWeight.w500,
+                                                            ),
+                                                      )
+                                                    ],
+                                                  ),
                                                 )
                                               ],
                                             ),

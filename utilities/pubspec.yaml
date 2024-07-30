@@ -25,6 +25,9 @@ dependencies:
   # web view
   flutter_inappwebview: ^5.8.0
 
+  validator_forge: ^1.0.0
+
+
   # firebase
   firebase_auth: ^4.17.8
   firebase_messaging: ^14.7.10

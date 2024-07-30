@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -346,6 +347,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             GestureDetector(
                               onTap: () => cupertinoCalenderDrawer(
                                 context: context,
+                                initialDate: DateTime.now().subtract(
+                                  const Duration(days: 365 * 10), // 25 years ago
+                                ),
+                                startDate: DateTime.now().subtract(
+                                  const Duration(days: 365 * 60), // 60 years ago
+                                ),
+                                endDate: DateTime.now().subtract(
+                                  const Duration(days: 365 * 10),
+                                ),
                                 title: "Select Date",
                                 onSave: (date) {
                                   setState(() {
@@ -355,7 +365,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     debugPrint('$selectedDateString');
                                   });
                                 },
-                                initialDate: DateTime.now(),
                               ),
                               child: CustomTextFormField(
                                 enabled: false,

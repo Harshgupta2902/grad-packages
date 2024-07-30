@@ -17,6 +17,7 @@ dependencies:
   flutter_inappwebview: ^5.8.0
   carousel_slider: ^4.2.1
   payu_checkoutpro_flutter: ^1.1.5
+  validator_forge: ^1.0.0
 
   utilities:
     path: /home/user/Apps/gradding-packages/utilities

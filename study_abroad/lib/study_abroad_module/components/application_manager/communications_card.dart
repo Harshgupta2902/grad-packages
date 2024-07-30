@@ -150,7 +150,7 @@ class _CommunicationCardState extends State<CommunicationCard> {
                     keyboardType: TextInputType.multiline,
                     hintText: "Your Message",
                     fillColor: Colors.transparent,
-                    showBorder: false,
+                    showEnabledBorder: false,
                   ),
                 ),
                 ElevatedButton(

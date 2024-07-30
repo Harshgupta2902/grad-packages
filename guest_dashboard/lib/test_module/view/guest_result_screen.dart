@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-
 import 'package:guest_dashboard/constants/guest_asset_paths.dart';
 import 'package:guest_dashboard/navigation/guest_go_paths.dart';
 import 'package:guest_dashboard/test_module/controller/get_report_card_controller.dart';
 import 'package:guest_dashboard/test_module/model/report_card_model.dart';
 import 'package:ielts_dashboard/constants/ielts_assets_path.dart';
 import 'package:utilities/common/model/common_model.dart';
+import 'package:utilities/components/custom_error_or_empty.dart';
 import 'package:utilities/components/custom_header_delegate.dart';
 import 'package:utilities/components/custom_tab_bar.dart';
 import 'package:utilities/components/gradding_app_bar.dart';
@@ -61,7 +61,23 @@ class _GuestResultScreenState extends State<GuestResultScreen> {
       ),
       body: _getReportCardController.obx((state) {
         if (state?.status?.toString() == "0" || state?.result == null) {
-          return Center(child: Text("${state?.message}"));
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomErrorOrEmpty(
+                  title: state?.message,
+                ),
+                const SizedBox(height: kToolbarHeight),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text(
+                    "Start Pre-IELTS Test",
+                  ),
+                ),
+              ],
+            ),
+          );
         }
         // setState(() {});
         return Stack(

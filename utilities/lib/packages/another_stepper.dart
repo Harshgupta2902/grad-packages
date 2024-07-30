@@ -101,17 +101,17 @@ class _VerticalStepperItemState extends State<VerticalStepperItem> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: MediaQuery.of(context).size.width * 0.22,
+              width: MediaQuery.of(context).size.width * 0.24,
               decoration: AppBoxDecoration.getBoxDecoration(
                 color: timing == null
                     ? AppColors.cadetGrey.withOpacity(0.1)
                     : AppColors.asparagus.withOpacity(0.1),
                 borderRadius: 6,
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
               child: Center(
                 child: Text(
-                  timing ?? "pending",
+                  timing ?? "Pending",
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: timing == null ? AppColors.cadetGrey : AppColors.fernGreen,
                         fontWeight: FontWeight.w700,

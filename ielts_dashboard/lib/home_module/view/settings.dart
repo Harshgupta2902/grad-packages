@@ -73,7 +73,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 snap: true,
                 initialChildSize: 0.7,
                 minChildSize: 0.7,
-                maxChildSize: 0.896,
+                maxChildSize: 0.90,
                 builder: (context, scrollController) {
                   return _popUp(scrollController);
                 },

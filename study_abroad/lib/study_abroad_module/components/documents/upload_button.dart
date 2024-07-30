@@ -50,6 +50,11 @@ Future<PlatformFile?> pickFiles(BuildContext context, bool format,
           if (status == "1") {
             _getDocumentController.getDocuments();
             _getDocumentController.update();
+            messageScaffold(
+              context: context,
+              content: "$docName is Uploaded",
+              messageScaffoldType: MessageScaffoldType.error,
+            );
           }
         });
         return file;

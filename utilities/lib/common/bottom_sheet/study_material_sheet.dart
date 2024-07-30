@@ -16,6 +16,7 @@ void studyMaterialSheet(
     context: context,
     isScrollControlled: true,
     showDragHandle: false,
+    barrierColor: Colors.black87,
     shape: const SmoothRectangleBorder(
       borderRadius: SmoothBorderRadius.vertical(
         top: SmoothRadius(cornerRadius: 16, cornerSmoothing: 1.0),

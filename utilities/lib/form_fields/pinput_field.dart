@@ -10,13 +10,14 @@ class PinputField extends StatelessWidget {
     this.validator,
     this.length,
     this.obscureText,
+    this.onChanged,
   });
 
   final int? length;
   final TextEditingController controller;
   final String? Function(String?)? validator;
   final bool? obscureText;
-
+  final void Function(String)? onChanged;
   @override
   Widget build(BuildContext context) {
     return Pinput(
@@ -30,6 +31,7 @@ class PinputField extends StatelessWidget {
       closeKeyboardWhenCompleted: true,
       obscuringCharacter: "*",
       obscureText: obscureText ?? false,
+      onChanged: onChanged,
       defaultPinTheme: PinTheme(
         width: 50,
         height: 50,

@@ -350,7 +350,7 @@ class _IeltsScheduleScreenState extends State<IeltsScheduleScreen> {
                                     final item = state?.result?.classData?[index];
                                     if (item?.isEmpty == true) {
                                       return CustomErrorOrEmpty(
-                                        title: "$selected",
+                                        title: "",
                                       );
                                     }
                                     return ListView.builder(

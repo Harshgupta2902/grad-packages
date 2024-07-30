@@ -19,7 +19,6 @@ class CustomDropDownFormField extends StatelessWidget {
     borderRadius: BorderRadius.circular(10),
     borderSide: const BorderSide(color: AppColors.alabaster),
   );
-  static List listData = ['purpose1', 'purpose2', 'purpose3'];
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +29,7 @@ class CustomDropDownFormField extends StatelessWidget {
       value: value,
       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             fontWeight: FontWeight.w500,
-            color: AppColors.boulder,
+            color: AppColors.darkJungleGreen,
           ),
       borderRadius: BorderRadius.circular(12),
       decoration: InputDecoration(

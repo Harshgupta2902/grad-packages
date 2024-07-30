@@ -85,6 +85,7 @@ class BookSessionSheetState extends State<BookSessionSheet> {
               ),
               const SizedBox(height: 24),
               CustomDropDownFormField(
+                value: selectedSlot,
                 items: List.generate(timings.length, (index) {
                   return DropdownMenuItem(
                     value: timings[index],

@@ -103,7 +103,7 @@ class _VerticalTabState extends State<VerticalTab> {
                   selectedIndex = value;
                 });
               },
-              physics: const BouncingScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: widget.content.length,
               controller: _pageController,
               itemBuilder: (context, index) {
