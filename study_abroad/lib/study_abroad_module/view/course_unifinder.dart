@@ -153,8 +153,7 @@ class _CourseUnifinderState extends State<CourseUnifinder> {
                                         );
                                         debugPrint(postData.toString());
                                         await _coursesController.getCoursesApi(
-                                          filterPostData: postData,
-                                        );
+                                            filterPostData: postData, offset: "1");
                                       },
                                       filterList:
                                           _universityFilterController.state?.result?.filters ?? [],

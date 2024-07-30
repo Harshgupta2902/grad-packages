@@ -13,9 +13,9 @@ class CoursesUnifinderController extends GetxController with StateMixin<CoursesU
 
     const apiEndPoint = APIEndPoints.getCourses;
     debugPrint("---------- $apiEndPoint getCoursesApi Start ----------");
-    // if (offset == '1') {
-    //   change(null, status: RxStatus.loading());
-    // }
+    if (offset == '1') {
+      change(null, status: RxStatus.loading());
+    }
     try {
       final Map<String, dynamic> postData = {
         "currency": "local",
@@ -29,16 +29,18 @@ class CoursesUnifinderController extends GetxController with StateMixin<CoursesU
         postData: filterPostData ?? postData,
       );
 
-      debugPrint("CoursesUnifinderController =>  getCoursesApi > Success ");
+      debugPrint("CoursesUnifinderController =>  getCoursesApi > Success ${response.data} ");
 
       if (response.statusCode != 200) {
         throw 'API ERROR ${response.statusCode} Message ${response.statusMessage}';
       }
 
       if (offset == '1') {
+        debugPrint("Offset:::::::::::$offset::::::::::::;;insertion");
         final modal = CoursesUnifinderModel.fromJson(response.data);
         change(modal, status: RxStatus.success());
       } else {
+        debugPrint("Offset::::::::::$offset:::::::::::::;;adding");
         final modal = CoursesUnifinderModel.fromJson(response.data);
         state?.result?.courses?.addAll(modal.result?.courses ?? []);
         change(state, status: RxStatus.success());
