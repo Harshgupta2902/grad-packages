@@ -53,7 +53,8 @@ Future<PlatformFile?> pickFiles(BuildContext context, bool format,
             messageScaffold(
               context: context,
               content: "$docName is Uploaded",
-              messageScaffoldType: MessageScaffoldType.error,
+              messageScaffoldType: MessageScaffoldType.success,
+              isTop: true,
             );
           }
         });

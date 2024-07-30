@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:guest_dashboard/navigation/guest_go_paths.dart';
 import 'package:utilities/components/enums.dart';
 import 'package:utilities/components/message_scaffold.dart';
+import 'package:utilities/packages/dialogs.dart';
 
 class GuestTestWebView extends StatefulWidget {
   const GuestTestWebView({super.key, required this.url, required this.successUrl});
@@ -17,9 +18,6 @@ class GuestTestWebView extends StatefulWidget {
 
 class _GuestTestWebViewState extends State<GuestTestWebView> {
   String? currentUrl;
-  bool isLoading = false;
-  bool isBackNavigationAllowed = true;
-  bool isBackExecuted = false;
 
   @override
   void initState() {
@@ -36,12 +34,7 @@ class _GuestTestWebViewState extends State<GuestTestWebView> {
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) {
-        messageScaffold(
-          context: context,
-          content: "Do Not Exit While Test is Running",
-          messageScaffoldType: MessageScaffoldType.error,
-
-        );
+        Dialogs.exitFromTest(context);
       },
       child: Scaffold(
         body: InAppWebView(

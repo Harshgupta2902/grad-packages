@@ -98,7 +98,52 @@ class Dialogs {
     );
   }
 
-  static Future<void> successDialog(BuildContext context, {String? title}) async {
+  static Future<void> exitFromTest(BuildContext context) async {
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          shape: SmoothRectangleBorder(
+            borderRadius: SmoothBorderRadius(cornerRadius: 10),
+          ),
+          backgroundColor: AppColors.backgroundColor,
+          children: <Widget>[
+            Center(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Lottie.asset("packages/utilities/assets/error.json", height: 120, width: 120),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    "Do you want to Cancel the Test",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: AppColors.darkJungleGreen, fontWeight: FontWeight.w500),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.pop();
+                      context.pop();
+                    },
+                    child: const Text("Exit"),
+                  ),
+                ],
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  static Future<void> successDialog(BuildContext context,
+      {String? title, void Function()? onTap}) async {
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -127,7 +172,7 @@ class Dialogs {
                         ?.copyWith(color: AppColors.darkJungleGreen, fontWeight: FontWeight.w500),
                   ),
                   ElevatedButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () => onTap ?? Navigator.pop(context),
                     child: const Text("Ok"),
                   ),
                 ],

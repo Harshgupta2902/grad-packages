@@ -40,7 +40,7 @@ class _AppliedState extends State<Applied> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: [
-          if (widget.appliedCourses?.isNotEmpty == true)
+          if (widget.appliedCourses?.isNotEmpty == true) ...[
             SizedBox(
               height: 32,
               child: ListView.separated(
@@ -84,7 +84,8 @@ class _AppliedState extends State<Applied> {
                 separatorBuilder: (context, index) => const SizedBox(width: 12),
               ),
             ),
-          const SizedBox(height: 10),
+            const SizedBox(height: 10),
+          ],
           Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,

@@ -29,6 +29,7 @@ import 'package:utilities/form_fields/intl_text_field.dart';
 import 'package:utilities/theme/app_box_decoration.dart';
 import 'package:utilities/theme/app_colors.dart';
 import 'package:utilities/validators/generic_validator.dart';
+import 'package:utilities/validators/input_formatters.dart';
 import 'package:utilities/validators/my_regex.dart';
 
 final _profileController = Get.put(ProfileController());
@@ -213,10 +214,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   child: CustomTextFormField(
                                     title: "First Name",
                                     hintText: "First Name",
+                                    inputFormatter: [WhitespaceTextInputFormatter()],
                                     controller: firstNameController,
                                     validator: (value) {
                                       return GenericValidator.required(
-                                        value: value,
+                                        value: value?.trim(),
                                         message: "Enter First Name",
                                       );
                                     },
@@ -226,11 +228,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 Flexible(
                                   child: CustomTextFormField(
                                     title: "Last Name",
+                                    inputFormatter: [WhitespaceTextInputFormatter()],
                                     hintText: "Last Name",
                                     controller: lastNameController,
                                     validator: (value) {
                                       return GenericValidator.required(
-                                        value: value,
+                                        value: value?.trim(),
                                         message: "Enter Last Name",
                                       );
                                     },

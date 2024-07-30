@@ -70,8 +70,8 @@ class _GuestResultScreenState extends State<GuestResultScreen> {
                 ),
                 const SizedBox(height: kToolbarHeight),
                 ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
+                  onPressed: () => context.pushNamed(GuestGoPaths.guestPreTestScreen),
+                  child: const Text(
                     "Start Pre-IELTS Test",
                   ),
                 ),
