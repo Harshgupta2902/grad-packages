@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -209,6 +208,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             const SizedBox(height: kToolbarHeight),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Flexible(
                                   child: CustomTextFormField(
@@ -370,6 +370,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 },
                               ),
                               child: CustomTextFormField(
+                                validationMode: AutovalidateMode.always,
                                 enabled: false,
                                 title: "Date Of Birth",
                                 hintText: "Enter DOB",

@@ -207,9 +207,9 @@ class _GuestBuyPlansState extends State<GuestBuyPlans> {
                 child: Text(
                   "${planData?.discount ?? "-"} OFF",
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: AppColors.fernGreen,
-                    fontWeight: FontWeight.w500,
-                  ),
+                        color: AppColors.fernGreen,
+                        fontWeight: FontWeight.w500,
+                      ),
                 ),
               ),
               const SizedBox(height: 12),

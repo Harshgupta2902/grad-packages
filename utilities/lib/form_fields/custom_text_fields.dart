@@ -22,7 +22,7 @@ class CustomTextFormField extends StatelessWidget {
     this.maxLines,
     this.title,
     this.fillColor,
-    this.showEnabledBorder,
+    this.showEnabledBorder, this.validationMode,
   });
   final TextEditingController controller;
   final String hintText;
@@ -40,7 +40,7 @@ class CustomTextFormField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatter;
   final Color? fillColor;
   final bool? showEnabledBorder;
-
+  final AutovalidateMode? validationMode;
 
 
   static OutlineInputBorder focusedBorder = OutlineInputBorder(

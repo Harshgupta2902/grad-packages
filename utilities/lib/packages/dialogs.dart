@@ -126,12 +126,20 @@ class Dialogs {
                         ?.copyWith(color: AppColors.darkJungleGreen, fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () {
-                      context.pop();
-                      context.pop();
-                    },
-                    child: const Text("Exit"),
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          context.pop();
+                          context.pop();
+                        },
+                        child: const Text("Exit"),
+                      ),
+                      ElevatedButton(
+                        onPressed:() => context.pop(),
+                        child: const Text("Cancel"),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -142,8 +150,7 @@ class Dialogs {
     );
   }
 
-  static Future<void> successDialog(BuildContext context,
-      {String? title, void Function()? onTap}) async {
+  static Future<void> successDialog(BuildContext context, {String? title}) async {
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -172,7 +179,7 @@ class Dialogs {
                         ?.copyWith(color: AppColors.darkJungleGreen, fontWeight: FontWeight.w500),
                   ),
                   ElevatedButton(
-                    onPressed: () => onTap ?? Navigator.pop(context),
+                    onPressed: () => Navigator.pop(context),
                     child: const Text("Ok"),
                   ),
                 ],

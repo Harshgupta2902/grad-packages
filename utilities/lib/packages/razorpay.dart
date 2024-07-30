@@ -32,10 +32,7 @@ openRazorpay({
         amount: amount.toString(),
       )
           .then((value) {
-        Dialogs.successDialog(
-          context,
-          onTap: () => onTap(),
-        );
+        onTap();
       });
     } catch (error) {
       debugPrint('error $error');

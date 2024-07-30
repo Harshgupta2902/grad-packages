@@ -349,7 +349,7 @@ class _IeltsScheduleScreenState extends State<IeltsScheduleScreen> {
                                   itemBuilder: (BuildContext context, int index) {
                                     final item = state?.result?.classData?[index];
                                     if (item?.isEmpty == true) {
-                                      return CustomErrorOrEmpty(
+                                      return const CustomErrorOrEmpty(
                                         title: "",
                                       );
                                     }

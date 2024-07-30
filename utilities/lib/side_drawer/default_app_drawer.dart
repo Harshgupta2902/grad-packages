@@ -71,7 +71,7 @@ class _DefaultCustomDrawerState extends State<DefaultCustomDrawer> with TickerPr
                   left: 12,
                   right: MediaQuery.of(context).size.width * 0.24,
                   top: 24,
-                  bottom: 20,
+                  bottom: 10,
                 ),
                 decoration: AppBoxDecoration.getBoxDecoration(
                   showShadow: false,
@@ -79,13 +79,13 @@ class _DefaultCustomDrawerState extends State<DefaultCustomDrawer> with TickerPr
                 ),
                 child: Column(
                   children: <Widget>[
+                    const SizedBox(height: 20),
+                    SvgPicture.asset("packages/utilities/assets/logo.svg"),
                     Expanded(
                       child: SingleChildScrollView(
-                        physics: const NeverScrollableScrollPhysics(),
+                        physics: const BouncingScrollPhysics(),
                         child: Column(
                           children: [
-                            const SizedBox(height: 20),
-                            SvgPicture.asset("packages/utilities/assets/logo.svg"),
                             ListView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
@@ -152,7 +152,7 @@ class _DefaultCustomDrawerState extends State<DefaultCustomDrawer> with TickerPr
                           thickness: 0,
                         ),
                         Container(
-                          margin: const EdgeInsets.symmetric(vertical: 18, horizontal: 26),
+                          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 26),
                           decoration: AppBoxDecoration.getBoxDecoration(
                             showShadow: false,
                             color: Colors.transparent,
@@ -233,7 +233,7 @@ class _DefaultCustomDrawerState extends State<DefaultCustomDrawer> with TickerPr
                             ),
                           ),
                         ),
-                        const SizedBox(height: 16)
+                        const SizedBox(height: 6)
                       ],
                     )
                   ],
