@@ -32,7 +32,7 @@ class _SafeCoursesViewState extends State<SafeCoursesView> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: [
-          if (widget.courses!.isEmpty) ...[
+          if (widget.courses?.isEmpty == true) ...[
             const SizedBox(height: kToolbarHeight + kToolbarHeight),
             Lottie.asset(StudyAbroadAssetPath.noCourseFoundLottie, height: 120),
             const SizedBox(height: 20),

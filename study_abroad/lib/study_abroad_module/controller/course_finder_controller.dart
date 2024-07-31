@@ -21,7 +21,6 @@ class CoursesUnifinderController extends GetxController with StateMixin<CoursesU
         "currency": "local",
         "limit": "10",
         "offset": offset,
-        "search": "",
       };
 
       final response = await postRequest(

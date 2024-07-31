@@ -35,7 +35,7 @@ class _CourseViewState extends State<CourseView> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: [
-          if (widget.courses!.isEmpty) ...[
+          if (widget.courses?.isEmpty == true) ...[
             const SizedBox(height: kToolbarHeight + kToolbarHeight),
             Lottie.asset(StudyAbroadAssetPath.noCourseFoundLottie, height: 120),
             const SizedBox(height: 20),
@@ -78,7 +78,6 @@ class _CourseViewState extends State<CourseView> {
                         messageScaffoldType: MessageScaffoldType.success,
                       );
                       _coursesController.getCoursesApi(offset: '1');
-
                       return;
                     } else {
                       messageScaffold(

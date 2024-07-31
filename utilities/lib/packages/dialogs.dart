@@ -127,6 +127,7 @@ class Dialogs {
                   ),
                   const SizedBox(height: 16),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ElevatedButton(
                         onPressed: () {
@@ -135,8 +136,9 @@ class Dialogs {
                         },
                         child: const Text("Exit"),
                       ),
+                      const SizedBox(width: 12),
                       ElevatedButton(
-                        onPressed:() => context.pop(),
+                        onPressed: () => context.pop(),
                         child: const Text("Cancel"),
                       ),
                     ],

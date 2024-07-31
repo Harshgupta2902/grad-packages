@@ -9,6 +9,7 @@ import 'package:study_abroad/study_abroad_module/components/unifinder/safe_cours
 import 'package:study_abroad/study_abroad_module/controller/course_finder_controller.dart';
 import 'package:study_abroad/study_abroad_module/controller/unifinder_filter_controller.dart';
 import 'package:utilities/common/bottom_sheet/book_session_sheet.dart';
+import 'package:utilities/components/custom_error_or_empty.dart';
 import 'package:utilities/components/custom_header_delegate.dart';
 import 'package:utilities/components/gradding_app_bar.dart';
 import 'package:utilities/packages/smooth_rectangular_border.dart';
@@ -69,28 +70,37 @@ class _CourseUnifinderState extends State<CourseUnifinder> {
         backButton: true,
       ),
       body: _coursesController.obx((state) {
+        if (state?.result == null) {
+          return const Center(
+            child: CustomErrorOrEmpty(
+              title: "No Data Found \n Api Error",
+            ),
+          );
+        }
         return DefaultTabController(
           length: 4,
           child: NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) => [
               SliverPersistentHeader(
                 delegate: CustomHeaderDelegate(
-                  maxExtent: MediaQuery.of(context).size.height * 0.23,
-                  minExtent: MediaQuery.of(context).size.height * 0.23,
+                  maxExtent: MediaQuery.of(context).size.height * 0.24,
+                  minExtent: MediaQuery.of(context).size.height * 0.24,
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 10, left: 16, right: 16),
                     decoration: BoxDecoration(
                       gradient: GradientAppColors.courseFinderCardGradient,
                       borderRadius: SmoothBorderRadius(cornerRadius: 10),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           "These are AI based results, to get accurate personalized results, get in touch with our expert counsellor and don't take risk!",
                           style: Theme.of(context)
                               .textTheme
-                              .bodyLarge
+                              .titleMedium
                               ?.copyWith(color: AppColors.white, fontWeight: FontWeight.w500),
                         ),
                         ElevatedButton(

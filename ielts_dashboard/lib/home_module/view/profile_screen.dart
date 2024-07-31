@@ -68,8 +68,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? selectedValue = "";
 
   String? countryCode;
+  int maxLength = 10;
 
   String? altCountryCode;
+  int altMaxLength = 10;
 
   String? selectedName;
 
@@ -408,6 +410,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 setState(() {
                                   countryCode = value.dialCode;
                                   selectedName = value.name;
+                                  maxLength = value.maxLength;
                                 });
                               },
                               onChanged: (value) {
@@ -417,9 +420,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               },
                               validator: (value) {
                                 return GenericValidator.required(
-                                  value: value,
-                                  message: "Enter Number",
-                                );
+                                      value: value,
+                                      message: "Enter Number",
+                                    ) ??
+                                    GenericValidator.checkLength(
+                                      value: value,
+                                      length: maxLength,
+                                      message: "Invalid Number",
+                                    );
                               },
                               hintText: 'Mobile Number',
                             ),
@@ -460,6 +468,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   setState(() {
                                     altCountryCode = value.dialCode;
                                     altSelectedName = value.name;
+                                    altMaxLength = value.maxLength;
                                   });
                                 },
                                 onChanged: (value) {
@@ -470,9 +479,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 },
                                 validator: (value) {
                                   return GenericValidator.required(
-                                    value: value,
-                                    message: "Enter Number",
-                                  );
+                                        value: value,
+                                        message: "Enter Number",
+                                      ) ??
+                                      GenericValidator.checkLength(
+                                        value: value,
+                                        length: altMaxLength,
+                                        message: "Invalid Number",
+                                      );
                                 },
                                 hintText: 'Alternate Mobile Number',
                               ),
@@ -596,52 +610,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Positioned(
                   left: 0,
                   right: 0,
-                  child: GestureDetector(
-                    onTap: () => studyMaterialSheet(
-                      context,
-                      extensions: Extensions.image,
-                      imageUrl: pickedImage == null ? state?.profile?.imageUrl : pickedImage?.path,
-                    ),
-                    child: Hero(
-                      tag: "profile-image",
-                      child: Container(
-                        clipBehavior: Clip.hardEdge,
-                        padding: EdgeInsets.all(pickedImage == null ? 8 : 0),
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                        ),
-                        child: pickedImage == null
-                            ? ClipOval(
-                                child: CachedImageNetworkContainer(
-                                height: 100,
-                                width: 100,
-                                fit: BoxFit.cover,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  shape: BoxShape.circle,
-                                ),
-                                url: state?.profile?.imageUrl,
-                                placeHolder: buildPlaceholder(
-                                  name: "name",
-                                  context: context,
-                                ),
-                              ))
-                            : Container(
-                                height: 100,
-                                width: 100,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Image.file(
-                                  File(pickedImage?.path ?? ''),
-                                  height: 100,
-                                  width: 100,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
+                  child: Hero(
+                    tag: "profile-image",
+                    child: Container(
+                      clipBehavior: Clip.hardEdge,
+                      padding: EdgeInsets.all(pickedImage == null ? 8 : 0),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
                       ),
+                      child: pickedImage == null
+                          ? ClipOval(
+                              child: CachedImageNetworkContainer(
+                              height: 100,
+                              width: 100,
+                              fit: BoxFit.cover,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                              ),
+                              url: state?.profile?.imageUrl,
+                              placeHolder: buildPlaceholder(
+                                name: "name",
+                                context: context,
+                              ),
+                            ))
+                          : Container(
+                              height: 100,
+                              width: 100,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Image.file(
+                                File(pickedImage?.path ?? ''),
+                                height: 100,
+                                width: 100,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
                     ),
                   ),
                 ),
