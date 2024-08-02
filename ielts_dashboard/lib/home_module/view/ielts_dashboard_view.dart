@@ -404,6 +404,42 @@ class _IeltsDashboardViewState extends State<IeltsDashboardView> {
           ),
         );
       },
+      onError: (error) => GestureDetector(
+        onTap: () => _dashboardController.getDashboardData(),
+        child: Center(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Something Went Wrong!",
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: AppColors.primaryColor,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Try Again!",
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: AppColors.primaryColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Icon(
+                      Icons.replay,
+                      size: 22,
+                      color: AppColors.primaryColor,
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

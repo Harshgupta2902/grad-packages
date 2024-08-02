@@ -53,14 +53,15 @@ class _DocumentsCenterState extends State<DocumentsCenter> with SingleTickerProv
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-          appBar: const GraddingAppBar(
-            backButton: true,
-          ),
-          body: _getDocumentsController.obx((state) {
-            return Container(
+    return _getDocumentsController.obx(
+      (state) {
+        return GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Scaffold(
+            appBar: const GraddingAppBar(
+              backButton: true,
+            ),
+            body: Container(
               width: MediaQuery.of(context).size.width,
               decoration: AppBoxDecoration.getBoxDecoration(borderRadius: 12, showShadow: false),
               padding: const EdgeInsets.symmetric(vertical: 12),
@@ -146,8 +147,46 @@ class _DocumentsCenterState extends State<DocumentsCenter> with SingleTickerProv
                   ],
                 ),
               ),
-            );
-          })),
+            ),
+          ),
+        );
+      },
+      onError: (error) => GestureDetector(
+        onTap: () => _getDocumentsController.getDocuments(),
+        child: Center(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Something Went Wrong!",
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: AppColors.primaryColor,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Try Again!",
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: AppColors.primaryColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Icon(
+                      Icons.replay,
+                      size: 22,
+                      color: AppColors.primaryColor,
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

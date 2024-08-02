@@ -12,7 +12,7 @@ Future<http.Response> httpApi({
   XFile? image,
   required Map<String, String>? additionalFields,
 }) async {
-  final uri = Uri.parse("https://beta.gradding.com/api/mobile-api/v1/$endpoint");
+  final uri = Uri.parse("https://www.gradding.com/api/mobile-api/v1/$endpoint");
   final prefs = GetStorage();
   var token = prefs.read('TOKEN');
 

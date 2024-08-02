@@ -47,7 +47,7 @@ class _GuestTestWebViewState extends State<GuestTestWebView> {
           ),
           onLoadStart: (controller, url) async {
             debugPrint("onLoadStart:::::::::$url");
-            if (url.toString() == "https://beta.gradding.com/dashboard/pre-ielts-test/report" ||
+            if (url.toString() == "https://www.gradding.com/dashboard/pre-ielts-test/report" ||
                 url.toString() == widget.successUrl) {
               debugPrint('sending to report');
               context.pushReplacementNamed(GuestGoPaths.guestResultScreen);

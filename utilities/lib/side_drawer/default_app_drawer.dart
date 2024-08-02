@@ -185,21 +185,25 @@ class _DefaultCustomDrawerState extends State<DefaultCustomDrawer> with TickerPr
                                 ),
                               ),
                               const SizedBox(width: 6),
-                              GestureDetector(
-                                onTap: widget.profile,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      _profileController.state?.profile?.name ?? "",
-                                      style: Theme.of(context).textTheme.bodyLarge,
-                                    ),
-                                    Text(
-                                      _profileController.state?.profile?.email ?? "",
-                                      style: Theme.of(context).textTheme.bodySmall,
-                                    ),
-                                  ],
+                              Flexible(
+                                child: GestureDetector(
+                                  onTap: widget.profile,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        _profileController.state?.profile?.name ?? "",
+                                        style: Theme.of(context).textTheme.bodyLarge,
+                                      ),
+                                      Text(
+                                        _profileController.state?.profile?.email ?? "",
+                                        style: Theme.of(context).textTheme.bodySmall,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -240,8 +244,39 @@ class _DefaultCustomDrawerState extends State<DefaultCustomDrawer> with TickerPr
                 ),
               );
             },
-            onError: (error) => const SizedBox.shrink(),
-            onEmpty: const SizedBox.shrink(),
+            onError: (error) => GestureDetector(
+              onTap: () => _defaultCustomDrawerController.getMenuItems(path: "home"),
+              child: Center(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Something Went Wrong!",
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Try Again!",
+                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                          Icon(
+                            Icons.replay,
+                            size: 22,
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
       ),

@@ -41,7 +41,7 @@ class _AppliedState extends State<Applied> {
       child: Column(
         children: [
           if (widget.appliedCourses?.isNotEmpty == true) ...[
-            SizedBox(
+            Align(alignment: Alignment.centerLeft, child: SizedBox(
               height: 32,
               child: ListView.separated(
                 itemCount: widget.appliedCourses?.length ?? 0,
@@ -55,7 +55,7 @@ class _AppliedState extends State<Applied> {
                       });
                       _getCommentsController.getComments(
                           applicationId:
-                              "${widget.appliedCourses?[selectedIndex].card?.applicationId}");
+                          "${widget.appliedCourses?[selectedIndex].card?.applicationId}");
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -65,7 +65,7 @@ class _AppliedState extends State<Applied> {
                             : Colors.transparent,
                         border: Border.all(
                           color:
-                              selectedIndex == index ? AppColors.primaryColor : AppColors.boulder,
+                          selectedIndex == index ? AppColors.primaryColor : AppColors.boulder,
                         ),
                       ),
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
@@ -83,7 +83,7 @@ class _AppliedState extends State<Applied> {
                 },
                 separatorBuilder: (context, index) => const SizedBox(width: 12),
               ),
-            ),
+            ),),
             const SizedBox(height: 10),
           ],
           Container(

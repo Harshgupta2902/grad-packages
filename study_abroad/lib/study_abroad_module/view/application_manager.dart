@@ -27,67 +27,104 @@ class _ApplicationManagerState extends State<ApplicationManager> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint(widget.tabIndex?.toString() ?? "");
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        appBar: const GraddingAppBar(
-          backButton: true,
-        ),
-        body: _applicationManagerController.obx((state) {
-          return Container(
-            width: MediaQuery.of(context).size.width,
-            decoration: AppBoxDecoration.getBoxDecoration(borderRadius: 12, showShadow: false),
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: DefaultTabController(
-              initialIndex: widget.tabIndex ?? 0,
-              length: 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(
-                      "Application Manager",
-                      style: Theme.of(context).textTheme.bodyLarge,
+    return _applicationManagerController.obx(
+      (state) {
+        return GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Scaffold(
+            appBar: const GraddingAppBar(
+              backButton: true,
+            ),
+            body: Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: AppBoxDecoration.getBoxDecoration(borderRadius: 12, showShadow: false),
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: DefaultTabController(
+                initialIndex: widget.tabIndex ?? 0,
+                length: 2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Text(
+                        "Application Manager",
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 6),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(
-                      "Add and track all your university applications right here!",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(color: AppColors.cadetGrey),
+                    const SizedBox(height: 6),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Text(
+                        "Add and track all your university applications right here!",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall
+                            ?.copyWith(color: AppColors.cadetGrey),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 6),
-                  const CustomTabBar(
-                    borderRadius: 10,
-                    tabList: [
-                      "Shortlist",
-                      "Applied",
-                    ],
-                    horizontalPadding: 16,
-                  ),
-                  const SizedBox(height: 10),
-                  Flexible(
-                    child: TabBarView(
-                      children: [
-                        ShortListed(shortlistCourses: state?.result?.shortlistedCourses),
-                        Applied(appliedCourses: state?.result?.applyCourses),
+                    const SizedBox(height: 6),
+                    const CustomTabBar(
+                      borderRadius: 10,
+                      tabList: [
+                        "Shortlist",
+                        "Applied",
                       ],
+                      horizontalPadding: 16,
                     ),
-                  )
-                ],
+                    const SizedBox(height: 10),
+                    Flexible(
+                      child: TabBarView(
+                        children: [
+                          ShortListed(shortlistCourses: state?.result?.shortlistedCourses),
+                          Applied(appliedCourses: state?.result?.applyCourses),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          );
-        }),
+          ),
+        );
+      },
+      onError: (error) => GestureDetector(
+        onTap: () => _applicationManagerController.getApplications(),
+        child: Center(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Something Went Wrong!",
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: AppColors.primaryColor,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Try Again!",
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: AppColors.primaryColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Icon(
+                      Icons.replay,
+                      size: 22,
+                      color: AppColors.primaryColor,
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

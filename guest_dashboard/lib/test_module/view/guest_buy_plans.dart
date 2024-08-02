@@ -36,99 +36,137 @@ class _GuestBuyPlansState extends State<GuestBuyPlans> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const GraddingAppBar(
-        backButton: true,
-        showActions: false,
-      ),
-      body: buyPlansController.obx((state) {
-        return DefaultTabController(
-          length: 2,
-          child: Column(
-            children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: CustomTabBar(
-                  tabList: ["Classes", "Mock Test"],
-                  isScrollable: false,
+    return buyPlansController.obx(
+      (state) {
+        return Scaffold(
+          appBar: const GraddingAppBar(
+            backButton: true,
+            showActions: false,
+          ),
+          body: DefaultTabController(
+            length: 2,
+            child: Column(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: CustomTabBar(
+                    tabList: ["Classes", "Mock Test"],
+                    isScrollable: false,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              Flexible(
-                child: TabBarView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    Column(
-                      children: [
-                        CarouselSlider.builder(
-                          carouselController: controller,
-                          itemCount: state?.result?.classes?.length ?? 0,
-                          itemBuilder: (context, index, realIndex) {
-                            return buildClassContainer(
-                              index,
-                              planData: state?.result?.classes?[index],
-                            );
-                          },
-                          options: CarouselOptions(
-                            height: MediaQuery.of(context).size.height * 0.6,
-                            autoPlay: false,
-                            enableInfiniteScroll: true,
-                            disableCenter: true,
-                            pauseAutoPlayOnTouch: false,
-                            clipBehavior: Clip.none,
-                            viewportFraction: 0.85,
-                            enlargeCenterPage: true,
-                            initialPage: activeIndex,
-                            padEnds: true,
-                            onPageChanged: (index, reason) => setState(() => activeIndex = index),
-                            pageSnapping: true,
-                            scrollDirection: Axis.horizontal,
-                            scrollPhysics: const BouncingScrollPhysics(),
+                const SizedBox(height: 20),
+                Flexible(
+                  child: TabBarView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      Column(
+                        children: [
+                          CarouselSlider.builder(
+                            carouselController: controller,
+                            itemCount: state?.result?.classes?.length ?? 0,
+                            itemBuilder: (context, index, realIndex) {
+                              return buildClassContainer(
+                                index,
+                                planData: state?.result?.classes?[index],
+                              );
+                            },
+                            options: CarouselOptions(
+                              height: MediaQuery.of(context).size.height * 0.6,
+                              autoPlay: false,
+                              enableInfiniteScroll: true,
+                              disableCenter: true,
+                              pauseAutoPlayOnTouch: false,
+                              clipBehavior: Clip.none,
+                              viewportFraction: 0.85,
+                              enlargeCenterPage: true,
+                              initialPage: activeIndex,
+                              padEnds: true,
+                              onPageChanged: (index, reason) => setState(() => activeIndex = index),
+                              pageSnapping: true,
+                              scrollDirection: Axis.horizontal,
+                              scrollPhysics: const BouncingScrollPhysics(),
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        buildIndicator(state?.result?.classes?.length),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        CarouselSlider.builder(
-                          carouselController: controller,
-                          itemCount: state?.result?.mockTestPlans?.length ?? 0,
-                          itemBuilder: (context, index, realIndex) {
-                            return buildMockTestPlanContainer(
-                              index,
-                              planData: state?.result?.mockTestPlans?[index],
-                            );
-                          },
-                          options: CarouselOptions(
-                            height: MediaQuery.of(context).size.height * 0.65,
-                            autoPlay: false,
-                            enableInfiniteScroll: true,
-                            disableCenter: true,
-                            pauseAutoPlayOnTouch: false,
-                            clipBehavior: Clip.none,
-                            viewportFraction: 0.85,
-                            enlargeCenterPage: true,
-                            initialPage: activeIndex,
-                            padEnds: true,
-                            onPageChanged: (index, reason) => setState(() => activeIndex = index),
-                            pageSnapping: true,
-                            scrollDirection: Axis.horizontal,
-                            scrollPhysics: const BouncingScrollPhysics(),
+                          const SizedBox(height: 20),
+                          buildIndicator(state?.result?.classes?.length),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          CarouselSlider.builder(
+                            carouselController: controller,
+                            itemCount: state?.result?.mockTestPlans?.length ?? 0,
+                            itemBuilder: (context, index, realIndex) {
+                              return buildMockTestPlanContainer(
+                                index,
+                                planData: state?.result?.mockTestPlans?[index],
+                              );
+                            },
+                            options: CarouselOptions(
+                              height: MediaQuery.of(context).size.height * 0.65,
+                              autoPlay: false,
+                              enableInfiniteScroll: true,
+                              disableCenter: true,
+                              pauseAutoPlayOnTouch: false,
+                              clipBehavior: Clip.none,
+                              viewportFraction: 0.85,
+                              enlargeCenterPage: true,
+                              initialPage: activeIndex,
+                              padEnds: true,
+                              onPageChanged: (index, reason) => setState(() => activeIndex = index),
+                              pageSnapping: true,
+                              scrollDirection: Axis.horizontal,
+                              scrollPhysics: const BouncingScrollPhysics(),
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        buildIndicator(state?.result?.mockTestPlans?.length),
-                      ],
-                    ),
-                  ],
+                          const SizedBox(height: 20),
+                          buildIndicator(state?.result?.mockTestPlans?.length),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
-      }),
+      },
+      onError: (error) => GestureDetector(
+        onTap: () => buyPlansController.getPlansData(),
+        child: Center(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Something Went Wrong!",
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: AppColors.primaryColor,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Try Again!",
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: AppColors.primaryColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Icon(
+                      Icons.replay,
+                      size: 22,
+                      color: AppColors.primaryColor,
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 
