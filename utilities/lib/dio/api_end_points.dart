@@ -1,5 +1,5 @@
 class APIEndPoints {
-  static const live = 'https://gradding.com/mobileapi/';
+  static const live = 'https://gradding.com/api/mobile-api/v1/';
   static const local = 'http://10.0.20.122:8000/api/mobile-api/v1/';
   static const beta = 'https://beta.gradding.com/api/mobile-api/v1/';
   static const base = beta;
