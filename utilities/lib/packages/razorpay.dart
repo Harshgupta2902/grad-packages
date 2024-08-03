@@ -63,7 +63,8 @@ openRazorpay({
   razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
 
   var options = {
-    'key': 'rzp_test_9Oqxns8kejKZpZ',
+    'key': 'rzp_live_cbnFxnhacRizR0',
+    // 'key': 'rzp_test_9Oqxns8kejKZpZ',
     'amount': (amount * 100), // Amount in smallest currency unit (e.g., paise for INR)
     'currency': currency ?? "INR",
     'name': 'Gradding',

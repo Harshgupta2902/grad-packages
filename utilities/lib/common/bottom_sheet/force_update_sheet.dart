@@ -14,13 +14,17 @@ appUpdateFunction({
   required BuildContext context,
 }) async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  debugPrint('packageInfo ${packageInfo.buildNumber} inside function');
 
   String buildNumber = packageInfo.buildNumber;
   debugPrint("buildNumberbuildNumber$buildNumber");
   bool updateAvailable = (buildNo ?? 0) > int.parse(buildNumber);
+  debugPrint('updateAvailable $updateAvailable inside function');
 
   if (forceUpdate == 1) {
     if (updateAvailable) {
+      debugPrint('updateAvailable $updateAvailable inside forceUpdate updateAvailable');
+
       Future.delayed(
         Duration.zero,
         () => showForceUpdateBottomSheet(context),
@@ -28,6 +32,8 @@ appUpdateFunction({
     }
 
     if (Platform.isAndroid) {
+      debugPrint('Platform.isAndroid');
+
       try {
         final updateInfo = await InAppUpdate.checkForUpdate();
 
