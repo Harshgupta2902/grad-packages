@@ -106,8 +106,8 @@ class _VerticalStepperItemState extends State<VerticalStepperItem> {
                 color: widget.isError == true
                     ? AppColors.cadmiumRed.withOpacity(0.1)
                     : timing == null
-                    ? AppColors.cadetGrey.withOpacity(0.1)
-                    : AppColors.asparagus.withOpacity(0.1),
+                        ? AppColors.cadetGrey.withOpacity(0.1)
+                        : AppColors.asparagus.withOpacity(0.1),
                 borderRadius: 6,
               ),
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
@@ -115,13 +115,13 @@ class _VerticalStepperItemState extends State<VerticalStepperItem> {
                 child: Text(
                   timing ?? "Pending",
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: widget.isError == true
-                        ? AppColors.cadmiumRed
-                        : timing == null
-                        ? AppColors.cadetGrey
-                        : AppColors.fernGreen,
-                    fontWeight: FontWeight.w700,
-                  ),
+                        color: widget.isError == true
+                            ? AppColors.cadmiumRed
+                            : timing == null
+                                ? AppColors.cadetGrey
+                                : AppColors.fernGreen,
+                        fontWeight: FontWeight.w700,
+                      ),
                 ),
               ),
             ),
@@ -140,8 +140,8 @@ class _VerticalStepperItemState extends State<VerticalStepperItem> {
                         color: widget.isError == true
                             ? AppColors.cadmiumRed
                             : widget.index <= widget.activeIndex
-                            ? AppColors.darkMintGreen
-                            : AppColors.cadetGrey,
+                                ? AppColors.darkMintGreen
+                                : AppColors.cadetGrey,
                         borderRadius: 30,
                       ),
                       padding: const EdgeInsets.all(2),
@@ -176,13 +176,13 @@ class _VerticalStepperItemState extends State<VerticalStepperItem> {
                     widget.item.subtitle!.text,
                     textAlign: TextAlign.start,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: widget.isError == true
-                          ? AppColors.cadmiumRed
-                          : timing == null
-                          ? AppColors.cadetGrey
-                          : Colors.black,
-                      fontWeight: FontWeight.w600,
-                    ),
+                          color: widget.isError == true
+                              ? AppColors.cadmiumRed
+                              : timing == null
+                                  ? AppColors.cadetGrey
+                                  : Colors.black,
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
                 ),
               ),
