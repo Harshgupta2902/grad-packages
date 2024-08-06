@@ -10,6 +10,7 @@ class AnotherStepper extends StatelessWidget {
     this.activeBarColor = AppColors.darkMintGreen,
     this.inActiveBarColor = AppColors.primaryColor,
     required this.timings,
+    this.isError = false,
   }) : super(key: key);
 
   final List<StepperData> stepperList;
@@ -17,6 +18,7 @@ class AnotherStepper extends StatelessWidget {
   final Color activeBarColor;
   final Color inActiveBarColor;
   final List<String?> timings;
+  final bool? isError;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,7 @@ class AnotherStepper extends StatelessWidget {
       inActiveBarColor: inActiveBarColor,
       activeBarColor: activeBarColor,
       timings: timings[index],
+      isError: index == stepperList.length - 1 ? isError ?? false : false,
     );
   }
 }
@@ -67,6 +70,7 @@ class VerticalStepperItem extends StatefulWidget {
     required this.activeBarColor,
     required this.inActiveBarColor,
     required this.timings,
+    required this.isError,
   }) : super(key: key);
 
   final StepperData item;
@@ -76,17 +80,13 @@ class VerticalStepperItem extends StatefulWidget {
   final Color activeBarColor;
   final Color inActiveBarColor;
   final String? timings;
+  final bool isError;
 
   @override
   State<VerticalStepperItem> createState() => _VerticalStepperItemState();
 }
 
 class _VerticalStepperItemState extends State<VerticalStepperItem> {
-  double containerWidth = 0;
-  double containerHeight = 0;
-
-  String buttonText = 'Let\'s get started';
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -103,7 +103,9 @@ class _VerticalStepperItemState extends State<VerticalStepperItem> {
             Container(
               width: MediaQuery.of(context).size.width * 0.24,
               decoration: AppBoxDecoration.getBoxDecoration(
-                color: timing == null
+                color: widget.isError == true
+                    ? AppColors.cadmiumRed.withOpacity(0.1)
+                    : timing == null
                     ? AppColors.cadetGrey.withOpacity(0.1)
                     : AppColors.asparagus.withOpacity(0.1),
                 borderRadius: 6,
@@ -113,9 +115,13 @@ class _VerticalStepperItemState extends State<VerticalStepperItem> {
                 child: Text(
                   timing ?? "Pending",
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: timing == null ? AppColors.cadetGrey : AppColors.fernGreen,
-                        fontWeight: FontWeight.w700,
-                      ),
+                    color: widget.isError == true
+                        ? AppColors.cadmiumRed
+                        : timing == null
+                        ? AppColors.cadetGrey
+                        : AppColors.fernGreen,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ),
@@ -129,10 +135,21 @@ class _VerticalStepperItemState extends State<VerticalStepperItem> {
                   child: SizedBox(
                     height: 20,
                     width: 20,
-                    child: StepperDot(
-                      index: widget.index,
-                      totalLength: widget.totalLength,
-                      activeIndex: widget.activeIndex,
+                    child: Container(
+                      decoration: AppBoxDecoration.getBoxDecoration(
+                        color: widget.isError == true
+                            ? AppColors.cadmiumRed
+                            : widget.index <= widget.activeIndex
+                            ? AppColors.darkMintGreen
+                            : AppColors.cadetGrey,
+                        borderRadius: 30,
+                      ),
+                      padding: const EdgeInsets.all(2),
+                      child: const Icon(
+                        Icons.check,
+                        size: 14,
+                        color: AppColors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -159,9 +176,13 @@ class _VerticalStepperItemState extends State<VerticalStepperItem> {
                     widget.item.subtitle!.text,
                     textAlign: TextAlign.start,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: timing == null ? AppColors.cadetGrey : Colors.black,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      color: widget.isError == true
+                          ? AppColors.cadmiumRed
+                          : timing == null
+                          ? AppColors.cadetGrey
+                          : Colors.black,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),
