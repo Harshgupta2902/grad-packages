@@ -36,14 +36,14 @@ class _GuestBuyPlansState extends State<GuestBuyPlans> {
 
   @override
   Widget build(BuildContext context) {
-    return buyPlansController.obx(
-      (state) {
-        return Scaffold(
-          appBar: const GraddingAppBar(
-            backButton: true,
-            showActions: false,
-          ),
-          body: DefaultTabController(
+    return Scaffold(
+      appBar: const GraddingAppBar(
+        backButton: true,
+        showActions: false,
+      ),
+      body: buyPlansController.obx(
+        (state) {
+          return DefaultTabController(
             length: 2,
             child: Column(
               children: [
@@ -128,41 +128,41 @@ class _GuestBuyPlansState extends State<GuestBuyPlans> {
                 ),
               ],
             ),
-          ),
-        );
-      },
-      onError: (error) => GestureDetector(
-        onTap: () => buyPlansController.getPlansData(),
-        child: Center(
+          );
+        },
+        onError: (error) => GestureDetector(
+          onTap: () => buyPlansController.getPlansData(),
           child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Something Went Wrong!",
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: AppColors.primaryColor,
-                    fontWeight: FontWeight.w600,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Something Went Wrong!",
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Try Again!",
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: AppColors.primaryColor,
-                        fontWeight: FontWeight.w600,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Try Again!",
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: AppColors.primaryColor,
+                              fontWeight: FontWeight.w600,
+                            ),
                       ),
-                    ),
-                    Icon(
-                      Icons.replay,
-                      size: 22,
-                      color: AppColors.primaryColor,
-                    )
-                  ],
-                ),
-              ],
+                      Icon(
+                        Icons.replay,
+                        size: 22,
+                        color: AppColors.primaryColor,
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

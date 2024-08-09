@@ -27,15 +27,15 @@ class _ApplicationManagerState extends State<ApplicationManager> {
 
   @override
   Widget build(BuildContext context) {
-    return _applicationManagerController.obx(
-      (state) {
-        return GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Scaffold(
-            appBar: const GraddingAppBar(
-              backButton: true,
-            ),
-            body: Container(
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: const GraddingAppBar(
+          backButton: true,
+        ),
+        body: _applicationManagerController.obx(
+          (state) {
+            return Container(
               width: MediaQuery.of(context).size.width,
               decoration: AppBoxDecoration.getBoxDecoration(borderRadius: 12, showShadow: false),
               padding: const EdgeInsets.symmetric(vertical: 12),
@@ -86,42 +86,42 @@ class _ApplicationManagerState extends State<ApplicationManager> {
                   ],
                 ),
               ),
-            ),
-          ),
-        );
-      },
-      onError: (error) => GestureDetector(
-        onTap: () => _applicationManagerController.getApplications(),
-        child: Center(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Something Went Wrong!",
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: AppColors.primaryColor,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Row(
+            );
+          },
+          onError: (error) => GestureDetector(
+            onTap: () => _applicationManagerController.getApplications(),
+            child: Center(
+              child: Center(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Try Again!",
+                      "Something Went Wrong!",
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: AppColors.primaryColor,
-                        fontWeight: FontWeight.w600,
-                      ),
+                            color: AppColors.primaryColor,
+                            fontWeight: FontWeight.w600,
+                          ),
                     ),
-                    Icon(
-                      Icons.replay,
-                      size: 22,
-                      color: AppColors.primaryColor,
-                    )
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Try Again!",
+                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                color: AppColors.primaryColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
+                        Icon(
+                          Icons.replay,
+                          size: 22,
+                          color: AppColors.primaryColor,
+                        )
+                      ],
+                    ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
         ),

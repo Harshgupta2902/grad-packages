@@ -41,7 +41,7 @@ class AnotherStepper extends StatelessWidget {
       inActiveBarColor: inActiveBarColor,
       activeBarColor: activeBarColor,
       timings: timings[index],
-      isError: index == stepperList.length - 1 ? isError ?? false : false,
+      isError: isError == true ? index == stepperList.length - 1 : false,
     );
   }
 }

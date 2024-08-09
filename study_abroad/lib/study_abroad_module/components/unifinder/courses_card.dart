@@ -245,7 +245,7 @@ class CoursesCard extends StatelessWidget {
                         color: AppColors.primaryColor,
                         width: 2,
                       ),
-                      minimumSize: const Size(double.infinity, 40),
+                      minimumSize: Size(MediaQuery.of(context).size.width, 40),
                     ),
                     onPressed: applyNowOnTap,
                     child: Row(

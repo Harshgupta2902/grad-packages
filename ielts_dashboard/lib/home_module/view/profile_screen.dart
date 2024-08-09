@@ -390,6 +390,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               title: "Email",
                               hintText: "Enter Email",
                               controller: emailController,
+                              validationMode: AutovalidateMode.always,
                               validator: (value) {
                                 return GenericValidator.required(
                                       value: value,
@@ -536,6 +537,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 title: "Country",
                                 hintText: "Select Country",
                                 controller: countryController,
+                                validationMode: AutovalidateMode.always,
                                 enabled: false,
                                 validator: (value) {
                                   return GenericValidator.required(
@@ -565,6 +567,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 title: "State",
                                 hintText: "Select Your State",
                                 controller: stateController,
+                                validationMode: AutovalidateMode.always,
                                 enabled: false,
                                 validator: (value) {
                                   return GenericValidator.required(

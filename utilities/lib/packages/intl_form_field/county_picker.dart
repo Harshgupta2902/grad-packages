@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:utilities/components/custom_error_or_empty.dart';
 import 'package:utilities/packages/intl_form_field/countries.dart';
 import 'package:utilities/packages/intl_form_field/helpers.dart';
+import 'package:utilities/validators/input_formatters.dart';
 
 class PickerDialogStyle {
   final Color? backgroundColor;
@@ -100,6 +102,7 @@ class _CountryPickerDialogState extends State<CountryPickerDialog> {
                 fillColor: Color(0xFFF9FAFC),
                 hintText: "Search Country",
               ),
+              inputFormatters: [TextOnlyFormatter()],
               onChanged: (value) {
                 _filteredCountries = widget.countryList.stringSearch(value)
                   ..sort(
@@ -111,58 +114,62 @@ class _CountryPickerDialogState extends State<CountryPickerDialog> {
               },
             ),
             // const SizedBox(height: 20),
-            Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.all(10),
-                shrinkWrap: true,
-                itemCount: _filteredCountries.length,
-                itemBuilder: (ctx, index) => Column(
-                  children: <Widget>[
-                    ListTile(
-                      leading: Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              spreadRadius: 20,
-                              blurRadius: 20,
-                              color: Colors.black.withOpacity(0.06),
-                              offset: const Offset(0, 4),
-                            )
+            _filteredCountries.isEmpty
+                ? const CustomErrorOrEmpty(title: "No Country Found")
+                : Expanded(
+                    child: ListView.builder(
+                      padding: const EdgeInsets.all(10),
+                      shrinkWrap: true,
+                      itemCount: _filteredCountries.length,
+                      itemBuilder: (ctx, index) {
+                        return Column(
+                          children: <Widget>[
+                            ListTile(
+                              leading: Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      spreadRadius: 20,
+                                      blurRadius: 20,
+                                      color: Colors.black.withOpacity(0.06),
+                                      offset: const Offset(0, 4),
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.circular(40),
+                                ),
+                                clipBehavior: Clip.hardEdge,
+                                child: Image.network(
+                                  "https://raw.githubusercontent.com/Harshgupta2902/intl_phone/master/assets/flags/${_filteredCountries[index].code.toLowerCase()}.png",
+                                  height: 26,
+                                  width: 26,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                              title: Text(
+                                _filteredCountries[index].localizedName(widget.languageCode),
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                      color: const Color(0XFF374151),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                              ),
+                              trailing: Text(
+                                '+${_filteredCountries[index].dialCode}',
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                              ),
+                              onTap: () {
+                                _selectedCountry = _filteredCountries[index];
+                                widget.onCountryChanged(_selectedCountry);
+                                Navigator.of(context).pop();
+                              },
+                            ),
                           ],
-                          borderRadius: BorderRadius.circular(40),
-                        ),
-                        clipBehavior: Clip.hardEdge,
-                        child: Image.network(
-                          "https://raw.githubusercontent.com/Harshgupta2902/intl_phone/master/assets/flags/${_filteredCountries[index].code.toLowerCase()}.png",
-                          height: 26,
-                          width: 26,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                      title: Text(
-                        _filteredCountries[index].localizedName(widget.languageCode),
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: const Color(0XFF374151),
-                              fontWeight: FontWeight.w500,
-                            ),
-                      ),
-                      trailing: Text(
-                        '+${_filteredCountries[index].dialCode}',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w500,
-                            ),
-                      ),
-                      onTap: () {
-                        _selectedCountry = _filteredCountries[index];
-                        widget.onCountryChanged(_selectedCountry);
-                        Navigator.of(context).pop();
+                        );
                       },
                     ),
-                  ],
-                ),
-              ),
-            ),
+                  ),
           ],
         ),
       ),

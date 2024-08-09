@@ -118,6 +118,7 @@ class _DefaultCustomDrawerState extends State<DefaultCustomDrawer> with TickerPr
                                       showShadow: false,
                                     ),
                                     child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         dynamicImage(image: item?.icon ?? ""),
                                         const SizedBox(width: 14),
@@ -298,6 +299,7 @@ Widget dynamicImage({
         height: height ?? 24,
         width: width ?? 24,
         semanticsLabel: 'Custom Image',
+        fit: BoxFit.fill,
       );
     }
     if (image.endsWith(".png")) {
@@ -305,6 +307,7 @@ Widget dynamicImage({
         image,
         height: height ?? 24,
         width: width ?? 24,
+        fit: BoxFit.fill,
       );
     }
   }
@@ -314,6 +317,7 @@ Widget dynamicImage({
       image,
       height: height ?? 24,
       width: width ?? 24,
+      fit: BoxFit.fill,
     );
   }
 
@@ -323,6 +327,7 @@ Widget dynamicImage({
       height: height ?? 24,
       width: width ?? 24,
       semanticsLabel: 'Custom Image',
+      fit: BoxFit.fill,
     );
   }
 
