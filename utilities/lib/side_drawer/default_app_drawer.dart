@@ -267,7 +267,7 @@ class _DefaultCustomDrawerState extends State<DefaultCustomDrawer> with TickerPr
                                   fontWeight: FontWeight.w600,
                                 ),
                           ),
-                          Icon(
+                          const Icon(
                             Icons.replay,
                             size: 22,
                           )

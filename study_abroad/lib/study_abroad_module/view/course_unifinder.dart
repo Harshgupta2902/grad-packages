@@ -97,7 +97,7 @@ class _CourseUnifinderState extends State<CourseUnifinder> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "These are AI based results, to get accurate personalized results, get in touch with our expert counsellor and don't take risk!",
+                                  "Tuition fee may vary so, get in touch with India’s finest experts to budget your study abroad journey",
                                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                       color: AppColors.white, fontWeight: FontWeight.w500),
                                 ),
@@ -365,7 +365,7 @@ class _CourseUnifinderState extends State<CourseUnifinder> {
                               fontWeight: FontWeight.w600,
                             ),
                       ),
-                      Icon(
+                      const Icon(
                         Icons.replay,
                         size: 22,
                         color: AppColors.primaryColor,

@@ -44,7 +44,7 @@ class CounsellorSheetState extends State<CounsellorSheet> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            "Connect with our Experts and start your journey",
+            "Ask your queries to the counsellor",
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontSize: 20,

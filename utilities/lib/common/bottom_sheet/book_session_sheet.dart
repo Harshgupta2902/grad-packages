@@ -70,7 +70,7 @@ class BookSessionSheetState extends State<BookSessionSheet> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "Book a Session Now",
+                "Book a session",
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       fontSize: 20,
@@ -79,7 +79,7 @@ class BookSessionSheetState extends State<BookSessionSheet> {
               ),
               const SizedBox(height: 12),
               Text(
-                "Select Slot Timings from below and get one on one counselling session",
+                "Select a time slot and book a free session with our counsellors",
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
@@ -105,12 +105,12 @@ class BookSessionSheetState extends State<BookSessionSheet> {
                     selectedSlot = value as String?;
                   });
                 },
-                hintText: "Select Slot Timings",
+                hintText: "Select Timing Slot",
               ),
               const SizedBox(height: 24),
               CustomTextFormField(
                 controller: _commentController,
-                hintText: "Enter Comments",
+                hintText: "Write your query",
                 maxLines: 4,
                 validator: (value) {
                   if (value == null || value.isEmpty) {

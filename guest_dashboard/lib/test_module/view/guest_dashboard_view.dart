@@ -296,7 +296,7 @@ class _GuestDashboardViewState extends State<GuestDashboardView> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  Icon(
+                  const Icon(
                     Icons.replay,
                     size: 22,
                     color: AppColors.primaryColor,

@@ -173,7 +173,7 @@ class _DocumentsCenterState extends State<DocumentsCenter> with SingleTickerProv
                                 fontWeight: FontWeight.w600,
                               ),
                         ),
-                        Icon(
+                        const Icon(
                           Icons.replay,
                           size: 22,
                           color: AppColors.primaryColor,

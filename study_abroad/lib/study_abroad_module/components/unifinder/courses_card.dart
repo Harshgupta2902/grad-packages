@@ -227,7 +227,8 @@ class CoursesCard extends StatelessWidget {
                 ],
               ),
             ),
-          ] else ...[
+          ]
+          else ...[
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
