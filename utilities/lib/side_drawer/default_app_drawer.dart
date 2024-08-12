@@ -179,7 +179,7 @@ class _DefaultCustomDrawerState extends State<DefaultCustomDrawer> with TickerPr
                                     ),
                                     url: _profileController.state?.profile?.imageUrl,
                                     placeHolder: buildPlaceholder(
-                                      name: "name",
+                                      name: _profileController.state?.profile?.name?[0],
                                       context: context,
                                     ),
                                   ),

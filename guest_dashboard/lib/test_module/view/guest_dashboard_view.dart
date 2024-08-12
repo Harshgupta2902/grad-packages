@@ -282,9 +282,9 @@ class _GuestDashboardViewState extends State<GuestDashboardView> {
               Text(
                 "Something Went Wrong!",
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: AppColors.primaryColor,
-                  fontWeight: FontWeight.w600,
-                ),
+                      color: AppColors.primaryColor,
+                      fontWeight: FontWeight.w600,
+                    ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -292,9 +292,9 @@ class _GuestDashboardViewState extends State<GuestDashboardView> {
                   Text(
                     "Try Again!",
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: AppColors.primaryColor,
-                      fontWeight: FontWeight.w600,
-                    ),
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
                   const Icon(
                     Icons.replay,

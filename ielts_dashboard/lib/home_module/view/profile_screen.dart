@@ -633,7 +633,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               url: state?.profile?.imageUrl,
                               placeHolder: buildPlaceholder(
-                                name: "name",
+                                name: state?.profile?.name?[0],
                                 context: context,
                               ),
                             ))
