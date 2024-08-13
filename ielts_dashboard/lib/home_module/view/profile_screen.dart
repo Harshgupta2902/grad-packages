@@ -88,6 +88,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   DateTime? selectedDate;
   String? selectedDateString;
 
+  bool isLoadingData = true;
+
   @override
   void initState() {
     super.initState();
@@ -123,6 +125,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     debugPrint("here is the gender from the api response $gender");
     await _getStatesController.getStates(countyId: countryIdController.text);
     await _getCityController.getCities(stateId: stateIdController.text);
+    setState(() {
+      isLoadingData = false;
+    });
   }
 
   Future getImage() async {
@@ -186,6 +191,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           showActions: false,
         ),
         body: _profileController.obx((state) {
+          if (isLoadingData) {
+            return const Center(child: CircularProgressIndicator());
+          }
           return SingleChildScrollView(
             child: Stack(
               children: [
@@ -378,7 +386,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 controller: dobController,
                                 validator: (value) {
                                   return GenericValidator.required(
-                                    value: value,
+                                    value: dobController.text,
                                     message: "Enter your birth date",
                                   );
                                 },
@@ -527,7 +535,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 getNewData: (key) async {
                                   countryIdController.text = key;
                                   await _getStatesController.getStates(countyId: key);
-                                  // cityController.clear();
+                                  cityController.clear();
+                                  stateController.clear();
                                   setState(() {});
                                 },
                                 context: context,
@@ -538,6 +547,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 controller: countryController,
                                 validationMode: AutovalidateMode.always,
                                 enabled: false,
+                                suffix: _getStatesController.isLoggingIn.value == true
+                                    ? const Padding(
+                                        padding: EdgeInsets.all(16),
+                                        child: CircularProgressIndicator(
+                                          color: AppColors.primaryColor,
+                                          backgroundColor: Colors.white,
+                                        ),
+                                      )
+                                    : const Icon(Icons.arrow_drop_down),
                                 validator: (value) {
                                   return GenericValidator.required(
                                     value: value,
@@ -546,62 +564,76 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 },
                               ),
                             ),
-                            const SizedBox(height: 20),
-                            GestureDetector(
-                              onTap: () => changeCountry(
-                                hintText: "Select States",
-                                data: _getStatesController.state?.answers,
-                                onchange: (value) {
-                                  stateController.text = value;
-                                },
-                                getNewData: (key) async {
-                                  stateIdController.text = key;
-                                  await _getCityController.getCities(stateId: key);
-                                  // cityController.clear();
-                                  setState(() {});
-                                },
-                                context: context,
+                            if (_getStatesController.state?.answers?.isNotEmpty == true) ...[
+                              const SizedBox(height: 20),
+                              GestureDetector(
+                                onTap: () => changeCountry(
+                                  hintText: "Select States",
+                                  data: _getStatesController.state?.answers,
+                                  onchange: (value) {
+                                    stateController.text = value;
+                                  },
+                                  getNewData: (key) async {
+                                    stateIdController.text = key;
+                                    await _getCityController.getCities(stateId: key);
+
+                                    setState(() {});
+                                  },
+                                  context: context,
+                                ),
+                                child: CustomTextFormField(
+                                  title: "State",
+                                  hintText: "Select Your State",
+                                  controller: stateController,
+                                  validationMode: AutovalidateMode.always,
+                                  enabled: false,
+                                  suffix: _getCityController.isLoggingIn.value == true
+                                      ? const Padding(
+                                          padding: EdgeInsets.all(16),
+                                          child: CircularProgressIndicator(
+                                            color: AppColors.primaryColor,
+                                            backgroundColor: Colors.white,
+                                          ),
+                                        )
+                                      : const Icon(Icons.arrow_drop_down),
+                                  validator: (value) {
+                                    return GenericValidator.required(
+                                      value: value,
+                                      message: "Select State",
+                                    );
+                                  },
+                                ),
                               ),
-                              child: CustomTextFormField(
-                                title: "State",
-                                hintText: "Select Your State",
-                                controller: stateController,
-                                validationMode: AutovalidateMode.always,
-                                enabled: false,
-                                validator: (value) {
-                                  return GenericValidator.required(
-                                    value: value,
-                                    message: "Select State",
-                                  );
-                                },
+                            ],
+                            if (_getStatesController.state?.answers?.isNotEmpty == true &&
+                                _getCityController.state?.answers?.isNotEmpty == true) ...[
+                              const SizedBox(height: 20),
+                              GestureDetector(
+                                onTap: () => changeCountry(
+                                  hintText: "Select City",
+                                  data: _getCityController.state?.answers,
+                                  onchange: (value) {
+                                    cityController.text = value;
+                                  },
+                                  getNewData: (key) {
+                                    cityIdController.text = key;
+                                  },
+                                  context: context,
+                                ),
+                                child: CustomTextFormField(
+                                  title: "City",
+                                  hintText: "Select your city",
+                                  controller: cityController,
+                                  enabled: false,
+                                  validator: (value) {
+                                    return GenericValidator.required(
+                                      value: value,
+                                      message: "Select city",
+                                    );
+                                  },
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 20),
-                            GestureDetector(
-                              onTap: () => changeCountry(
-                                hintText: "Select City",
-                                data: _getCityController.state?.answers,
-                                onchange: (value) {
-                                  cityController.text = value;
-                                },
-                                getNewData: (key) {
-                                  cityIdController.text = key;
-                                },
-                                context: context,
-                              ),
-                              child: CustomTextFormField(
-                                title: "City",
-                                hintText: "Select your city",
-                                controller: cityController,
-                                enabled: false,
-                                validator: (value) {
-                                  return GenericValidator.required(
-                                    value: value,
-                                    message: "Select city",
-                                  );
-                                },
-                              ),
-                            ),
+                            ]
                           ],
                         ),
                       ),
@@ -669,70 +701,72 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           );
         }),
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.only(bottom: 10),
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              minimumSize: Size(
-                MediaQuery.of(context).size.width * 0.8,
-                42,
-              ),
-            ),
-            onPressed: () async {
-              if (gender == "") {
-                setState(() {
-                  genderError = "Select Gender";
-                });
-                debugPrint("error for gender:::::::  $gender");
-              } else if (_formKey.currentState?.validate() == true) {
-                setState(() {
-                  genderError = "";
-                });
-                debugPrint(pickedImage.toString());
-                await httpApi(
-                  endpoint: APIEndPoints.updateProfileData,
-                  image: pickedImage,
-                  additionalFields: {
-                    "name": firstNameController.text,
-                    "email": emailController.text,
-                    "last_name": lastNameController.text,
-                    "alternate_phone": alternatePhoneController.text,
-                    "alternate_country": altCountryCode ?? "",
-                    "gender": gender,
-                    "birth_date": selectedDateString ?? "",
-                    "state_id": stateIdController.text,
-                    "country_id": countryIdController.text,
-                    "city_id": cityIdController.text,
-                    "passport_number": passPortController.text,
-                    "passport_expiry": validUpToController.text,
+        floatingActionButton: isLoadingData == false
+            ? Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(
+                      MediaQuery.of(context).size.width * 0.8,
+                      42,
+                    ),
+                  ),
+                  onPressed: () async {
+                    if (gender == "") {
+                      setState(() {
+                        genderError = "Select Gender";
+                      });
+                      debugPrint("error for gender:::::::  $gender");
+                    } else if (_formKey.currentState?.validate() == true) {
+                      setState(() {
+                        genderError = "";
+                      });
+                      debugPrint(pickedImage.toString());
+                      await httpApi(
+                        endpoint: APIEndPoints.updateProfileData,
+                        image: pickedImage,
+                        additionalFields: {
+                          "name": firstNameController.text,
+                          "email": emailController.text,
+                          "last_name": lastNameController.text,
+                          "alternate_phone": alternatePhoneController.text,
+                          "alternate_country": altCountryCode ?? "",
+                          "gender": gender,
+                          "birth_date": selectedDateString ?? "",
+                          "state_id": stateIdController.text,
+                          "country_id": countryIdController.text,
+                          "city_id": cityIdController.text,
+                          "passport_number": passPortController.text,
+                          "passport_expiry": validUpToController.text,
+                        },
+                      ).then((value) {
+                        Map<String, dynamic> responseBody = jsonDecode(value.body);
+                        final status = responseBody['status'].toString();
+                        debugPrint('status = $responseBody: $status');
+                        if (status == "1") {
+                          messageScaffold(
+                            context: context,
+                            content: "Profile Updated Successfully",
+                            isTop: true,
+                            messageScaffoldType: MessageScaffoldType.success,
+                          );
+                          _profileController.getProfileData();
+                        }
+                      });
+                    } else {
+                      debugPrint("error");
+                    }
                   },
-                ).then((value) {
-                  Map<String, dynamic> responseBody = jsonDecode(value.body);
-                  final status = responseBody['status'].toString();
-                  debugPrint('status = $responseBody: $status');
-                  if (status == "1") {
-                    messageScaffold(
-                      context: context,
-                      content: "Profile Updated Successfully",
-                      isTop: true,
-                      messageScaffoldType: MessageScaffoldType.success,
-                    );
-                    _profileController.getProfileData();
-                  }
-                });
-              } else {
-                debugPrint("error");
-              }
-            },
-            child: Text(
-              "Update Profile",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(fontWeight: FontWeight.w500, color: AppColors.white),
-            ),
-          ),
-        ),
+                  child: Text(
+                    "Update Profile",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(fontWeight: FontWeight.w500, color: AppColors.white),
+                  ),
+                ),
+              )
+            : null,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );

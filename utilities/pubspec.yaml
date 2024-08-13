@@ -38,7 +38,7 @@ dependencies:
   http: ^1.2.0
   image_picker: ^1.0.8
   file_picker: ^8.0.0+1
-
+  
   study_abroad:
     path: /home/user/Apps/gradding-packages/study_abroad
 

@@ -219,7 +219,7 @@ class _DefaultCustomDrawerState extends State<DefaultCustomDrawer> with TickerPr
                                 elevation: 0),
                             onPressed: () async {
                               prefs.erase();
-                              context.go("/login");
+                              context.go("/login", extra: {"number": ""});
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,

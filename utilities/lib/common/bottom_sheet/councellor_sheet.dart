@@ -63,25 +63,27 @@ class CounsellorSheetState extends State<CounsellorSheet> {
               children: [
                 SvgPicture.asset("packages/utilities/assets/counsellor.svg"),
                 const SizedBox(width: 20),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.name,
-                      // "No Counsellor assigned yet",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyLarge
-                          ?.copyWith(color: Colors.white, fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      "COUNSELLOR",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium
-                          ?.copyWith(color: Colors.white, fontWeight: FontWeight.w500),
-                    ),
-                  ],
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.name,
+                        // "No Counsellor assigned yet",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge
+                            ?.copyWith(color: Colors.white, fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        "COUNSELLOR",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: Colors.white, fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
                 ),
                 const Spacer(),
                 GestureDetector(
@@ -89,7 +91,10 @@ class CounsellorSheetState extends State<CounsellorSheet> {
                     context.pop();
                     launchCall(phone: widget.phoneNumber);
                   },
-                  child: SvgPicture.asset("packages/utilities/assets/call.svg"),
+                  child: SvgPicture.asset(
+                    "packages/utilities/assets/call.svg",
+                    height: 42,
+                  ),
                 ),
               ],
             ),

@@ -9,15 +9,18 @@ class CustomDropDownFormField extends StatelessWidget {
     required this.hintText,
     this.validator,
     this.value,
+    this.showEnabledBorder = false,
   });
   final List<DropdownMenuItem<Object>> items;
   final String hintText;
   final String? value;
   final void Function(Object?)? onChanged;
   final String? Function(Object?)? validator;
-  static OutlineInputBorder enabledBorder = OutlineInputBorder(
+  final bool? showEnabledBorder;
+
+  static OutlineInputBorder focusedBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(10),
-    borderSide: const BorderSide(color: AppColors.alabaster),
+    borderSide: const BorderSide(color: AppColors.paleSky30),
   );
 
   @override
@@ -38,10 +41,10 @@ class CustomDropDownFormField extends StatelessWidget {
         filled: true,
         floatingLabelAlignment: FloatingLabelAlignment.start,
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        border: enabledBorder,
-        enabledBorder: enabledBorder,
-        focusedBorder: enabledBorder,
-        disabledBorder: enabledBorder,
+        border: showEnabledBorder == true ? focusedBorder : null,
+        focusedBorder: showEnabledBorder == true ? focusedBorder : null,
+        disabledBorder: showEnabledBorder == true ? focusedBorder : null,
+        enabledBorder: showEnabledBorder == true ? focusedBorder : null,
       ),
     );
   }

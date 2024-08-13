@@ -21,7 +21,7 @@ class _FooterState extends State<Footer> {
           await prefs.erase();
           Future.delayed(
             Duration.zero,
-            () => context.goNamed("/login"),
+            () => context.goNamed("/login", extra: {"number": ""}),
           );
         },
         child: Container(

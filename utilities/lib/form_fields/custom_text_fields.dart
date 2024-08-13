@@ -22,7 +22,8 @@ class CustomTextFormField extends StatelessWidget {
     this.maxLines,
     this.title,
     this.fillColor,
-    this.showEnabledBorder, this.validationMode,
+    this.showEnabledBorder,
+    this.validationMode,
   });
   final TextEditingController controller;
   final String hintText;
@@ -41,7 +42,6 @@ class CustomTextFormField extends StatelessWidget {
   final Color? fillColor;
   final bool? showEnabledBorder;
   final AutovalidateMode? validationMode;
-
 
   static OutlineInputBorder focusedBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(10),
@@ -78,16 +78,18 @@ class CustomTextFormField extends StatelessWidget {
               ),
           maxLines: maxLines ?? 1,
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: maxLines != null ? 4 : 0),
+            contentPadding:
+                EdgeInsets.symmetric(horizontal: 12, vertical: maxLines != null ? 4 : 0),
             fillColor: fillColor ?? AppColors.alabaster,
             hintText: hintText,
             suffixIcon: suffix,
             filled: true,
             floatingLabelAlignment: FloatingLabelAlignment.start,
             floatingLabelBehavior: FloatingLabelBehavior.always,
-            // border: showEnabledBorder == true ? focusedBorder : null,
+            border: showEnabledBorder == true ? focusedBorder : null,
             focusedBorder: showEnabledBorder == true ? focusedBorder : null,
             disabledBorder: showEnabledBorder == true ? focusedBorder : null,
+            enabledBorder: showEnabledBorder == true ? focusedBorder : null,
           ),
           onChanged: onChanged,
           onFieldSubmitted: onFieldSubmitted,

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:utilities/packages/smooth_rectangular_border.dart';
 
 typedef DateSelectionCallback = void Function(DateTime selectedDate);
 
@@ -14,9 +15,14 @@ Future<void> cupertinoCalenderDrawer(
   DateTime? selectedDate;
   await showModalBottomSheet(
     context: context,
+    shape: const SmoothRectangleBorder(
+      borderRadius: SmoothBorderRadius.vertical(
+        top: SmoothRadius(cornerRadius: 16, cornerSmoothing: 1.0),
+      ),
+    ),
     builder: (context) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           children: [
             Text(
