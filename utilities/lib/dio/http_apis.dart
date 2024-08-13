@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
+import 'package:utilities/dio/api_end_points.dart';
 
 Future<http.Response> httpApi({
   required String endpoint,
@@ -12,7 +13,9 @@ Future<http.Response> httpApi({
   XFile? image,
   required Map<String, String>? additionalFields,
 }) async {
-  final uri = Uri.parse("https://www.gradding.com/api/mobile-api/v1/$endpoint");
+  final uri = Uri.parse("${APIEndPoints.base}$endpoint");
+
+  debugPrint(uri.toString());
   final prefs = GetStorage();
   var token = prefs.read('TOKEN');
 

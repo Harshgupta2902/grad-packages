@@ -6,9 +6,12 @@ import 'package:guest_dashboard/navigation/guest_go_paths.dart';
 import 'package:guest_dashboard/test_module/controller/buy_plans_controller.dart';
 import 'package:guest_dashboard/test_module/controller/get_order_id_controller.dart';
 import 'package:guest_dashboard/test_module/model/buy_plans_model.dart';
+import 'package:utilities/common/controller/default_controller.dart';
 import 'package:utilities/components/custom_tab_bar.dart';
+import 'package:utilities/components/enums.dart';
 import 'package:utilities/components/gradding_app_bar.dart';
 import 'package:utilities/components/button_loader.dart';
+import 'package:utilities/components/message_scaffold.dart';
 import 'package:utilities/packages/razorpay.dart';
 import 'package:utilities/theme/app_box_decoration.dart';
 
@@ -16,6 +19,7 @@ import 'package:utilities/theme/app_colors.dart';
 
 final buyPlansController = Get.put(BuyPlansController());
 final _getOrderIdController = Get.put(GetOrderIdController());
+final getDefaultController = Get.put(DefaultController());
 
 class GuestBuyPlans extends StatefulWidget {
   const GuestBuyPlans({super.key});
@@ -36,6 +40,138 @@ class _GuestBuyPlansState extends State<GuestBuyPlans> {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: const GraddingAppBar(
+        backButton: true,
+        showActions: false,
+      ),
+      body: buyPlansController.obx(
+        (state) {
+          return DefaultTabController(
+            length: 2,
+            child: Column(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: CustomTabBar(
+                    tabList: ["Classes", "Mock Test"],
+                    isScrollable: false,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Flexible(
+                  child: TabBarView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      Column(
+                        children: [
+                          CarouselSlider.builder(
+                            carouselController: controller,
+                            itemCount: state?.result?.classes?.length ?? 0,
+                            itemBuilder: (context, index, realIndex) {
+                              return buildClassContainer(
+                                index,
+                                planData: state?.result?.classes?[index],
+                              );
+                            },
+                            options: CarouselOptions(
+                              height: MediaQuery.of(context).size.height * 0.6,
+                              autoPlay: false,
+                              enableInfiniteScroll: true,
+                              disableCenter: true,
+                              pauseAutoPlayOnTouch: false,
+                              clipBehavior: Clip.none,
+                              viewportFraction: 0.85,
+                              enlargeCenterPage: true,
+                              initialPage: activeIndex,
+                              padEnds: true,
+                              onPageChanged: (index, reason) => setState(() => activeIndex = index),
+                              pageSnapping: true,
+                              scrollDirection: Axis.horizontal,
+                              scrollPhysics: const BouncingScrollPhysics(),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          buildIndicator(state?.result?.classes?.length),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          CarouselSlider.builder(
+                            carouselController: controller,
+                            itemCount: state?.result?.mockTestPlans?.length ?? 0,
+                            itemBuilder: (context, index, realIndex) {
+                              return buildMockTestPlanContainer(
+                                index,
+                                planData: state?.result?.mockTestPlans?[index],
+                              );
+                            },
+                            options: CarouselOptions(
+                              height: MediaQuery.of(context).size.height * 0.65,
+                              autoPlay: false,
+                              enableInfiniteScroll: true,
+                              disableCenter: true,
+                              pauseAutoPlayOnTouch: false,
+                              clipBehavior: Clip.none,
+                              viewportFraction: 0.85,
+                              enlargeCenterPage: true,
+                              initialPage: activeIndex,
+                              padEnds: true,
+                              onPageChanged: (index, reason) => setState(() => activeIndex = index),
+                              pageSnapping: true,
+                              scrollDirection: Axis.horizontal,
+                              scrollPhysics: const BouncingScrollPhysics(),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          buildIndicator(state?.result?.mockTestPlans?.length),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+        onError: (error) => GestureDetector(
+          onTap: () => buyPlansController.getPlansData(),
+          child: Center(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Something Went Wrong!",
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Try Again!",
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: AppColors.primaryColor,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                      const Icon(
+                        Icons.replay,
+                        size: 22,
+                        color: AppColors.primaryColor,
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
     return Scaffold(
       appBar: const GraddingAppBar(
         backButton: true,
@@ -319,26 +455,37 @@ class _GuestBuyPlansState extends State<GuestBuyPlans> {
                     await _getOrderIdController.getOrderId(code: planData?.code ?? "");
                     final data = _getOrderIdController.state?.result;
                     if (data?.orderId != null) {
-                      Future.delayed(
-                        Duration.zero,
-                        () => openRazorpay(
-                          onTap: () {
-                            debugPrint(
-                                "Payment Success from guestBuyPlans and here is the on Tap:");
-                            context.goNamed(GuestGoPaths.guestDashboard);
-                          },
-                          amount: planData?.offerPrice ?? 0,
-                          title: "Buy Ielts Plans",
-                          orderId: data?.orderId?.toString() ?? "",
-                          context: context,
-                          // currency: "USD",
-                          prefill: {
-                            'contact': '${data?.phone}',
-                            'email': '${data?.email}',
-                          },
-                          description: planData?.name ?? "",
-                        ),
-                      );
+                      if (getDefaultController.state?.result?.paymentType == 4) {
+                        Future.delayed(
+                          Duration.zero,
+                          () => openRazorpay(
+                            onTap: () {
+                              debugPrint(
+                                  "Payment Success from guestBuyPlans and here is the on Tap:");
+                              context.goNamed(GuestGoPaths.guestDashboard);
+                            },
+                            amount: planData?.offerPrice ?? 0,
+                            title: "Buy Ielts Plans",
+                            orderId: data?.orderId?.toString() ?? "",
+                            context: context,
+                            // currency: "USD",
+                            prefill: {
+                              'contact': '${data?.phone}',
+                              'email': '${data?.email}',
+                            },
+                            description: planData?.name ?? "",
+                          ),
+                        );
+                      } else if (getDefaultController.state?.result?.paymentType == 8) {
+                        Future.delayed(
+                          Duration.zero,
+                          () => messageScaffold(
+                            context: context,
+                            content: "PayU Integration Coming Soon",
+                            messageScaffoldType: MessageScaffoldType.information,
+                          ),
+                        );
+                      }
                     }
                   },
                   child: ButtonLoader(

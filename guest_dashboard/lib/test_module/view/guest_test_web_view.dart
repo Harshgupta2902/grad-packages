@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:go_router/go_router.dart';
 import 'package:guest_dashboard/navigation/guest_go_paths.dart';
+import 'package:utilities/dio/api_end_points.dart';
 import 'package:utilities/packages/dialogs.dart';
 
 class GuestTestWebView extends StatefulWidget {
@@ -47,7 +48,10 @@ class _GuestTestWebViewState extends State<GuestTestWebView> {
           ),
           onLoadStart: (controller, url) async {
             debugPrint("onLoadStart:::::::::$url");
-            if (url.toString() == "https://www.gradding.com/dashboard/pre-ielts-test/report" ||
+            if (url.toString() ==
+                    (APIEndPoints.base == APIEndPoints.beta
+                        ? "https://beta.gradding.com/dashboard/pre-ielts-test/report"
+                        : "https://www.gradding.com/dashboard/pre-ielts-test/report") ||
                 url.toString() == widget.successUrl) {
               debugPrint('sending to report');
               context.pushReplacementNamed(GuestGoPaths.guestResultScreen);

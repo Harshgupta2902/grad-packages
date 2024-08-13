@@ -23,10 +23,7 @@ class PreIeltsTestCard extends StatelessWidget {
             IeltsAssetPath.appManagerBackgroundBlue,
           ),
         ),
-        borderRadius: SmoothBorderRadius(
-          cornerRadius: 16,
-          cornerSmoothing: 1.0,
-        ),
+        borderRadius: SmoothBorderRadius(cornerRadius: 16, cornerSmoothing: 1.0),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
