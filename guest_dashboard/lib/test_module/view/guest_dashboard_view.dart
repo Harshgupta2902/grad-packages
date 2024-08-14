@@ -9,6 +9,7 @@ import 'package:guest_dashboard/test_module/components/pre_ielts_test_card.dart'
 import 'package:guest_dashboard/test_module/controller/guest_dashboard_controller.dart';
 import 'package:ielts_dashboard/constants/ielts_assets_path.dart';
 import 'package:utilities/components/change_exam.dart';
+import 'package:utilities/components/try_again.dart';
 import 'package:utilities/side_drawer/default_app_drawer_controller.dart';
 import 'package:utilities/components/blurry_container.dart';
 import 'package:utilities/common/bottom_sheet/book_session_sheet.dart';
@@ -273,40 +274,11 @@ class _GuestDashboardViewState extends State<GuestDashboardView> {
           ),
         );
       },
-      onError: (error) => GestureDetector(
+      onError: (error) => TryAgain(
         onTap: () => _guestDashboardController.getGuestDashboardData(),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Something Went Wrong!",
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: AppColors.primaryColor,
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Try Again!",
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: AppColors.primaryColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
-                  const Icon(
-                    Icons.replay,
-                    size: 22,
-                    color: AppColors.primaryColor,
-                  )
-                ],
-              ),
-            ],
-          ),
-        ),
       ),
+
+
     );
   }
 }

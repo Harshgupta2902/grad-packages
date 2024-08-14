@@ -12,6 +12,7 @@ import 'package:utilities/common/bottom_sheet/book_session_sheet.dart';
 import 'package:utilities/components/custom_error_or_empty.dart';
 import 'package:utilities/components/custom_header_delegate.dart';
 import 'package:utilities/components/gradding_app_bar.dart';
+import 'package:utilities/components/try_again.dart';
 import 'package:utilities/packages/smooth_rectangular_border.dart';
 import 'package:utilities/theme/app_colors.dart';
 
@@ -341,42 +342,11 @@ class _CourseUnifinderState extends State<CourseUnifinder> {
                   ),
                 );
         },
-        onError: (error) => GestureDetector(
-          onTap: () => _coursesController.getCoursesApi(offset: '1'),
-          child: Center(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Something Went Wrong!",
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: AppColors.primaryColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Try Again!",
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              color: AppColors.primaryColor,
-                              fontWeight: FontWeight.w600,
-                            ),
-                      ),
-                      const Icon(
-                        Icons.replay,
-                        size: 22,
-                        color: AppColors.primaryColor,
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
+        onError: (error) => TryAgain(
+                    onTap: () => _coursesController.getCoursesApi(offset: '1'),
         ),
+
+
       ),
     );
   }

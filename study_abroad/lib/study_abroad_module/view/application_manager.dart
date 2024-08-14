@@ -5,6 +5,7 @@ import 'package:study_abroad/study_abroad_module/components/application_manager/
 import 'package:study_abroad/study_abroad_module/controller/application_manager_controller.dart';
 import 'package:utilities/components/custom_tab_bar.dart';
 import 'package:utilities/components/gradding_app_bar.dart';
+import 'package:utilities/components/try_again.dart';
 import 'package:utilities/theme/app_box_decoration.dart';
 import 'package:utilities/theme/app_colors.dart';
 
@@ -88,42 +89,11 @@ class _ApplicationManagerState extends State<ApplicationManager> {
               ),
             );
           },
-          onError: (error) => GestureDetector(
+          onError: (error) => TryAgain(
             onTap: () => _applicationManagerController.getApplications(),
-            child: Center(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Something Went Wrong!",
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: AppColors.primaryColor,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Try Again!",
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                color: AppColors.primaryColor,
-                                fontWeight: FontWeight.w600,
-                              ),
-                        ),
-                        const Icon(
-                          Icons.replay,
-                          size: 22,
-                          color: AppColors.primaryColor,
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
           ),
+
+
         ),
       ),
     );

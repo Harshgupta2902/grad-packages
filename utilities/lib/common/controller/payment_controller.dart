@@ -4,23 +4,24 @@ import 'package:utilities/dio/api_end_points.dart';
 import 'package:utilities/dio/api_request.dart';
 
 class PaymentController extends GetxController {
-  Future<String?> generatePayment({
-    required String amount,
-    required String orderId,
-    required String transactionId,
-  }) async {
+  Future<String?> generatePayment(
+      {String? amount,
+      String? orderId,
+      String? transactionId,
+      Map<String, dynamic>? postData}) async {
     const apiEndPoint = APIEndPoints.generatePayment;
     debugPrint("---------- $apiEndPoint generatePayment Start ----------");
     try {
       final response = await postRequest(
         apiEndPoint: apiEndPoint,
-        postData: {
-          "order_id": orderId,
-          "payment_gateway_id": 4,
-          "currency_symbol": "INR",
-          "transaction_id": transactionId,
-          "amount": amount
-        },
+        postData: postData ??
+            {
+              "order_id": orderId,
+              "payment_gateway_id": 4,
+              "currency_symbol": "INR",
+              "transaction_id": transactionId,
+              "amount": amount
+            },
       );
       debugPrint("PaymentController => generatePayment > Success  $response");
       if (response.statusCode != 200) {

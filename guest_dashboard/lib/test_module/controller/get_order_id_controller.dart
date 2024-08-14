@@ -6,15 +6,23 @@ import 'package:utilities/dio/api_request.dart';
 
 class GetOrderIdController extends GetxController with StateMixin<GetOrderIdModel> {
   RxBool isLoading = RxBool(false);
-  getOrderId({required String code}) async {
+  getOrderId({String? code, String? testTitle, String? testId}) async {
     const apiEndPoint = APIEndPoints.getOrderId;
     debugPrint("---------- $apiEndPoint getOrderId Start ----------");
-
+    Map<String, dynamic> postData = {};
     try {
+      if (code != null) {
+        postData = {'code': code};
+      } else if (testTitle != null) {
+        postData = {'testCardTitle': testTitle, "testId": testId};
+      } else {
+        postData = {};
+      }
+
       isLoading.value = true;
       final response = await postRequest(
         apiEndPoint: apiEndPoint,
-        postData: {'code': code},
+        postData: postData,
       );
 
       debugPrint("GetOrderIdController => getOrderId > Success  $response");

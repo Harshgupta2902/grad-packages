@@ -12,6 +12,7 @@ import 'package:ielts_dashboard/navigation/ielts_go_paths.dart';
 import 'package:lottie/lottie.dart';
 import 'package:utilities/components/blurry_container.dart';
 import 'package:utilities/components/custom_tab_bar.dart';
+import 'package:utilities/components/try_again.dart';
 import 'package:utilities/side_drawer/default_app_drawer_controller.dart';
 import 'package:utilities/packages/smooth_rectangular_border.dart';
 import 'package:utilities/services/fcm_notification_service.dart';
@@ -404,42 +405,11 @@ class _IeltsDashboardViewState extends State<IeltsDashboardView> {
           ),
         );
       },
-      onError: (error) => GestureDetector(
+      onError: (error) => TryAgain(
         onTap: () => _dashboardController.getDashboardData(),
-        child: Center(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Something Went Wrong!",
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: AppColors.primaryColor,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Try Again!",
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: AppColors.primaryColor,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const Icon(
-                      Icons.replay,
-                      size: 22,
-                      color: AppColors.primaryColor,
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
       ),
+
+
     );
   }
 }

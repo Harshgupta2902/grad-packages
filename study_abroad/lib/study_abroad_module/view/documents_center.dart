@@ -4,6 +4,7 @@ import 'package:study_abroad/study_abroad_module/components/documents/all_docume
 import 'package:study_abroad/study_abroad_module/controller/get_documents_list.dart';
 import 'package:utilities/components/custom_tab_bar.dart';
 import 'package:utilities/components/gradding_app_bar.dart';
+import 'package:utilities/components/try_again.dart';
 import 'package:utilities/form_fields/custom_text_fields.dart';
 import 'package:utilities/theme/app_box_decoration.dart';
 import 'package:utilities/theme/app_colors.dart';
@@ -149,42 +150,11 @@ class _DocumentsCenterState extends State<DocumentsCenter> with SingleTickerProv
               ),
             );
           },
-          onError: (error) => GestureDetector(
-            onTap: () => _getDocumentsController.getDocuments(),
-            child: Center(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Something Went Wrong!",
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: AppColors.primaryColor,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Try Again!",
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                color: AppColors.primaryColor,
-                                fontWeight: FontWeight.w600,
-                              ),
-                        ),
-                        const Icon(
-                          Icons.replay,
-                          size: 22,
-                          color: AppColors.primaryColor,
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
+          onError: (error) => TryAgain(
+                        onTap: () => _getDocumentsController.getDocuments(),
+
           ),
+
         ),
       ),
     );

@@ -8,6 +8,7 @@ import 'package:utilities/common/bottom_sheet/book_session_sheet.dart';
 import 'package:utilities/common/bottom_sheet/study_material_sheet.dart';
 import 'package:utilities/common/controller/profile_controller.dart';
 import 'package:utilities/components/enums.dart';
+import 'package:utilities/components/try_again.dart';
 import 'package:utilities/side_drawer/animated_support_container.dart';
 import 'package:utilities/side_drawer/default_app_drawer_controller.dart';
 import 'package:utilities/side_drawer/default_custom_drawer_model.dart';
@@ -245,39 +246,14 @@ class _DefaultCustomDrawerState extends State<DefaultCustomDrawer> with TickerPr
                 ),
               );
             },
-            onError: (error) => GestureDetector(
-              onTap: () => _defaultCustomDrawerController.getMenuItems(path: "home"),
-              child: Center(
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Something Went Wrong!",
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              fontWeight: FontWeight.w600,
-                            ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Try Again!",
-                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-                          const Icon(
-                            Icons.replay,
-                            size: 22,
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+            onError: (error) => TryAgain(
+                            onTap: () => _defaultCustomDrawerController.getMenuItems(path: "home"),
+
+
+
+
             ),
+
           ),
         ),
       ),

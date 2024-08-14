@@ -9,12 +9,14 @@ final _paymentController = Get.put(PaymentController());
 
 openRazorpay({
   required num amount,
-  required String title,
   required String description,
   required String orderId,
   required BuildContext context,
   required VoidCallback onTap,
+  String? testName,
   String? currency,
+  String? testId,
+  String? testTitle,
   required Map<String, String> prefill,
 }) {
   void handlePaymentSuccess(PaymentSuccessResponse response) async {
@@ -25,13 +27,18 @@ openRazorpay({
         return;
       }
       debugPrint('postRequest. Payment ID: ${response.paymentId}');
-      await _paymentController
-          .generatePayment(
-        orderId: orderId,
-        transactionId: response.paymentId.toString(),
-        amount: amount.toString(),
-      )
-          .then((value) {
+      await _paymentController.generatePayment(
+        postData: {
+          "order_id": orderId,
+          "payment_gateway_id": 4,
+          "currency_symbol": "INR",
+          "transaction_id": response.paymentId,
+          "amount": amount,
+          "testId": testId,
+          "testname": testName,
+          "testCardTitle": testTitle
+        },
+      ).then((value) {
         onTap();
       });
     } catch (error) {
@@ -63,8 +70,8 @@ openRazorpay({
   razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
 
   var options = {
-    'key': 'rzp_live_cbnFxnhacRizR0',
-    // 'key': 'rzp_test_9Oqxns8kejKZpZ',
+    // 'key': 'rzp_live_cbnFxnhacRizR0',
+    'key': 'rzp_test_9Oqxns8kejKZpZ',
     'amount': (amount * 100), // Amount in smallest currency unit (e.g., paise for INR)
     'currency': currency ?? "INR",
     'name': 'Gradding',

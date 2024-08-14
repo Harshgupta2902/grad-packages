@@ -252,16 +252,21 @@ class Dialogs {
                   const SizedBox(
                     width: 20,
                   ),
-                  Lottie.asset("packages/utilities/assets/error.json", height: 120, width: 120),
+                  Lottie.asset("packages/utilities/assets/error.json",
+                      height: 120, width: 120, repeat: false),
                   const SizedBox(
                     width: 20,
                   ),
-                  Text(
-                    title ?? "Something went wrong!",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: AppColors.darkJungleGreen, fontWeight: FontWeight.w500),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Text(
+                      title ?? "Something went wrong!",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(color: AppColors.darkJungleGreen, fontWeight: FontWeight.w500),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                   if (showButton == true) ...[
                     ElevatedButton(
@@ -276,7 +281,7 @@ class Dialogs {
         );
       },
     );
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 2));
     Future.delayed(
       Duration.zero,
       () => Navigator.pop(context),

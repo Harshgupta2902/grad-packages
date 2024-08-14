@@ -1,118 +1,162 @@
+import 'package:flutter/material.dart';
+
 class IeltsMockTestModel {
   IeltsMockTestModel({
     this.status,
     this.msg,
-    this.result,
+    this.tests,
+    this.buyMockTests,
+    this.order,
+    this.testname,
+    this.free,
   });
 
   IeltsMockTestModel.fromJson(dynamic json) {
-    status = json['status'];
-    msg = json['msg'];
-    result = json['result'] != null ? Result.fromJson(json['result']) : null;
+    try {
+      status = json['status'];
+      msg = json['msg'];
+      if (json['tests'] != null) {
+        tests = [];
+        json['tests'].forEach((v) {
+          tests?.add(Tests.fromJson(v));
+        });
+      }
+      if (json['buyMockTests'] != null) {
+        buyMockTests = [];
+        json['buyMockTests'].forEach((v) {
+          buyMockTests?.add(BuyMockTests.fromJson(v));
+        });
+      }
+      order = json['order'];
+      testname = json['testname'];
+      free = json['free'] != null ? json['free'].cast<num>() : [];
+    } catch (e) {
+      debugPrint("IELTSMOCKTEST ERROR FOR MODEL =>:::::$e");
+    }
   }
   num? status;
   String? msg;
-  Result? result;
+  List<Tests>? tests;
+  List<BuyMockTests>? buyMockTests;
+  bool? order;
+  String? testname;
+  List<num>? free;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['status'] = status;
     map['msg'] = msg;
-    if (result != null) {
-      map['result'] = result?.toJson();
+    if (tests != null) {
+      map['tests'] = tests?.map((v) => v.toJson()).toList();
     }
+    if (buyMockTests != null) {
+      map['buyMockTests'] = buyMockTests?.map((v) => v.toJson()).toList();
+    }
+    map['order'] = order;
+    map['testname'] = testname;
+    map['free'] = free;
     return map;
   }
 }
 
-class Result {
-  Result({
-    this.card,
-    this.tests,
-    this.username,
+class BuyMockTests {
+  BuyMockTests({
+    this.testTitle,
+    this.testDuration,
+    this.testPrice,
+    this.testQuestion,
+    this.testIs,
+    this.testId,
   });
 
-  Result.fromJson(dynamic json) {
-    card = json['card'] != null ? Card.fromJson(json['card']) : null;
-    if (json['tests'] != null) {
-      tests = [];
-      json['tests'].forEach((v) {
-        tests?.add(Tests.fromJson(v));
-      });
-    }
-    username = json['username'];
+  BuyMockTests.fromJson(dynamic json) {
+    testTitle = json['test_title'];
+    testDuration = json['test_duration'];
+    testPrice = json['test_price'];
+    testQuestion = json['test_question'];
+    testIs = json['test_is'];
+    testId = json['test_id'];
   }
-  Card? card;
-  List<Tests>? tests;
-  String? username;
+  String? testTitle;
+  String? testDuration;
+  String? testPrice;
+  num? testQuestion;
+  num? testIs;
+  num? testId;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    if (card != null) {
-      map['card'] = card?.toJson();
-    }
-    if (tests != null) {
-      map['tests'] = tests?.map((v) => v.toJson()).toList();
-    }
-    map['username'] = username;
+    map['test_title'] = testTitle;
+    map['test_duration'] = testDuration;
+    map['test_price'] = testPrice;
+    map['test_question'] = testQuestion;
+    map['test_is'] = testIs;
+    map['test_id'] = testId;
     return map;
   }
 }
 
 class Tests {
   Tests({
-    this.name,
     this.testId,
+    this.testTitle,
+    this.testIs,
+    this.src,
     this.status,
     this.band,
+    this.testPrice,
+    this.testDuration,
+    this.testQuestion,
+    this.listeningTestScore,
+    this.writingTestScore,
+    this.readingTestScore,
+    this.speakingTestScore,
   });
 
   Tests.fromJson(dynamic json) {
-    name = json['name'];
     testId = json['test_id'];
+    testTitle = json['test_title'];
+    testIs = json['test_is'];
+    src = json['src'];
     status = json['status'];
     band = json['band'];
+    testPrice = json['test_price'];
+    testDuration = json['test_duration'];
+    testQuestion = json['test_question'];
+    listeningTestScore = json['listening_test_score'];
+    writingTestScore = json['writing_test_score'];
+    readingTestScore = json['reading_test_score'];
+    speakingTestScore = json['speaking_test_score'];
   }
-  String? name;
-  String? testId;
+  num? testId;
+  String? testTitle;
+  num? testIs;
+  String? src;
   String? status;
   dynamic band;
+  String? testPrice;
+  String? testDuration;
+  num? testQuestion;
+  num? listeningTestScore;
+  num? writingTestScore;
+  num? readingTestScore;
+  num? speakingTestScore;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['name'] = name;
     map['test_id'] = testId;
+    map['test_title'] = testTitle;
+    map['test_is'] = testIs;
+    map['src'] = src;
     map['status'] = status;
     map['band'] = band;
-    return map;
-  }
-}
-
-class Card {
-  Card({
-    this.title,
-    this.desc,
-    this.complete,
-    this.total,
-  });
-
-  Card.fromJson(dynamic json) {
-    title = json['title'];
-    desc = json['desc'];
-    complete = json['complete'];
-    total = json['total'];
-  }
-  String? title;
-  String? desc;
-  num? complete;
-  num? total;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['title'] = title;
-    map['desc'] = desc;
-    map['complete'] = complete;
-    map['total'] = total;
+    map['test_price'] = testPrice;
+    map['test_duration'] = testDuration;
+    map['test_question'] = testQuestion;
+    map['listening_test_score'] = listeningTestScore;
+    map['writing_test_score'] = writingTestScore;
+    map['reading_test_score'] = readingTestScore;
+    map['speaking_test_score'] = speakingTestScore;
     return map;
   }
 }
