@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ielts_dashboard/home_module/view/buy_plan_screen.dart';
-import 'package:ielts_dashboard/home_module/view/ielts_exercise_screen.dart';
 import 'package:ielts_dashboard/home_module/view/ielts_mock_test_screen.dart';
 import 'package:ielts_dashboard/home_module/view/ielts_practice_test_screen.dart';
 import 'package:ielts_dashboard/home_module/view/ielts_schedule_screen.dart';
@@ -20,15 +19,14 @@ List<RouteBase> ieltsRoutes({
   return [
     GoRoute(
       parentNavigatorKey: rootNavigatorKey,
-      path: IeltsGoPaths.ieltsClassWebView,
-      name: IeltsGoPaths.ieltsClassWebView,
+      path: IeltsGoPaths.webViewScreen,
+      name: IeltsGoPaths.webViewScreen,
       builder: (context, state) {
         final extras = state.extra as Map<String, dynamic>;
         final leaveUrl = extras["leaveUrl"];
         final url = extras["url"];
         final errorLink = extras["errorLink"];
-
-        return IeltsClassWebView(
+        return WebViewScreen(
           leaveUrl: leaveUrl,
           errorLink: errorLink,
           url: url,
@@ -51,14 +49,14 @@ List<RouteBase> ieltsRoutes({
         return const IeltsPracticeTestScreen();
       },
     ),
-    GoRoute(
-      parentNavigatorKey: rootNavigatorKey,
-      path: IeltsGoPaths.ieltsExercise,
-      name: IeltsGoPaths.ieltsExercise,
-      builder: (context, state) {
-        return const IeltsExerciseScreen();
-      },
-    ),
+    // GoRoute(
+    //   parentNavigatorKey: rootNavigatorKey,
+    //   path: IeltsGoPaths.ieltsExercise,
+    //   name: IeltsGoPaths.ieltsExercise,
+    //   builder: (context, state) {
+    //     return const IeltsExerciseScreen();
+    //   },
+    // ),
     GoRoute(
       parentNavigatorKey: rootNavigatorKey,
       path: IeltsGoPaths.ieltsUserAttendance,

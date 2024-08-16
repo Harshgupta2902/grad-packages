@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:utilities/packages/dialogs.dart';
 
-class IeltsClassWebView extends StatefulWidget {
-  const IeltsClassWebView({
+class WebViewScreen extends StatefulWidget {
+  const WebViewScreen({
     Key? key,
     required this.url,
     required this.leaveUrl,
@@ -15,10 +15,10 @@ class IeltsClassWebView extends StatefulWidget {
   final String errorLink;
 
   @override
-  State<IeltsClassWebView> createState() => IeltsClassWebViewState();
+  State<WebViewScreen> createState() => WebViewScreenState();
 }
 
-class IeltsClassWebViewState extends State<IeltsClassWebView> {
+class WebViewScreenState extends State<WebViewScreen> {
   String? currentUrl;
   String? currentWebUrl;
 
@@ -41,10 +41,19 @@ class IeltsClassWebViewState extends State<IeltsClassWebView> {
         ),
         onWebViewCreated: (controller) {},
         initialOptions: InAppWebViewGroupOptions(
+          android: AndroidInAppWebViewOptions(
+            builtInZoomControls: false,
+            displayZoomControls: false,
+            useWideViewPort: true, // Ensures the web content uses viewport
+            loadWithOverviewMode: true, // Loads the web content fully zoomed out
+          ),
           crossPlatform: InAppWebViewOptions(
-            javaScriptEnabled: true,
-            supportZoom: false,
+            preferredContentMode: UserPreferredContentMode.MOBILE,
+            disableContextMenu: true, // Disables zooming via context menu
             allowFileAccessFromFileURLs: false,
+            javaScriptEnabled: true,
+            userAgent:
+                "Mozilla/5.0 (Linux; Android 10; Mobile; rv:68.0) Gecko/68.0 Firefox/68.0", // Force mobile user agent
           ),
         ),
         onLoadStart: (controller, url) async {
@@ -73,7 +82,7 @@ class IeltsClassWebViewState extends State<IeltsClassWebView> {
           );
           Future.delayed(
             Duration.zero,
-                () => Navigator.pop(context),
+            () => Navigator.pop(context),
           );
           return;
         },

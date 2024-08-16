@@ -6,6 +6,7 @@ import 'package:ielts_dashboard/constants/ielts_assets_path.dart';
 import 'package:ielts_dashboard/home_module/controller/class_shedule_controller.dart';
 import 'package:intl/intl.dart';
 import 'package:utilities/components/gradding_app_bar.dart';
+import 'package:utilities/components/try_again.dart';
 import 'package:utilities/packages/smooth_rectangular_border.dart';
 import 'package:utilities/theme/app_box_decoration.dart';
 import 'package:utilities/theme/app_colors.dart';
@@ -225,269 +226,276 @@ class _IeltsScheduleScreenState extends State<IeltsScheduleScreen> {
               ],
             ),
           ),
-          _classScheduleController.obx((state) {
-            return Flexible(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.rectangle,
-                  borderRadius: SmoothBorderRadius(cornerRadius: 32),
-                ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      const SizedBox(height: 10),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: List.generate(state?.result?.dates?.length ?? 0, (index) {
-                            final days = state?.result?.dates?[index];
-                            return GestureDetector(
-                              onTap: () {
-                                debugPrint("selected:::::::::$selected     $index");
-                                WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                                  _pageController.animateToPage(
-                                    index,
-                                    duration: const Duration(milliseconds: 300),
-                                    curve: Curves.ease,
-                                  );
-                                  setState(() {
-                                    selected = index;
+          _classScheduleController.obx(
+            (state) {
+              return Flexible(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.rectangle,
+                    borderRadius: SmoothBorderRadius(cornerRadius: 32),
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        const SizedBox(height: 10),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: List.generate(state?.result?.dates?.length ?? 0, (index) {
+                              final days = state?.result?.dates?[index];
+                              return GestureDetector(
+                                onTap: () {
+                                  debugPrint("selected:::::::::$selected     $index");
+                                  WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                                    _pageController.animateToPage(
+                                      index,
+                                      duration: const Duration(milliseconds: 300),
+                                      curve: Curves.ease,
+                                    );
+                                    setState(() {
+                                      selected = index;
+                                    });
                                   });
-                                });
-                              },
-                              child: Container(
-                                decoration: AppBoxDecoration.getBoxDecoration(
-                                  borderRadius: 10,
-                                  color: selected == index ? AppColors.primaryColor : Colors.white,
-                                  showShadow: false,
+                                },
+                                child: Container(
+                                  decoration: AppBoxDecoration.getBoxDecoration(
+                                    borderRadius: 10,
+                                    color:
+                                        selected == index ? AppColors.primaryColor : Colors.white,
+                                    showShadow: false,
+                                  ),
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: MediaQuery.of(context).size.width * 0.01),
+                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        getDayOfWeek(days ?? "")[0],
+                                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                              color: selected == index
+                                                  ? Colors.white
+                                                  : AppColors.heather,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Text(
+                                        days?.split("-").last ?? "-",
+                                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                              color: selected == index
+                                                  ? Colors.white
+                                                  : AppColors.darkJungleGreen,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                margin: EdgeInsets.symmetric(
-                                    horizontal: MediaQuery.of(context).size.width * 0.01),
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
+                              );
+                            }),
+                          ),
+                        ),
+                        Container(
+                          height: 2,
+                          width: MediaQuery.of(context).size.width,
+                          color: AppColors.vistaWhite,
+                          margin: const EdgeInsets.symmetric(vertical: 10),
+                        ),
+                        const SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 28),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                Row(
                                   children: [
-                                    Text(
-                                      getDayOfWeek(days ?? "")[0],
-                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                            color: selected == index
-                                                ? Colors.white
-                                                : AppColors.heather,
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width * 0.3,
+                                      child: Text(
+                                        "Time",
+                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                              color: AppColors.heather,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                      ),
                                     ),
-                                    const SizedBox(height: 6),
-                                    Text(
-                                      days?.split("-").last ?? "-",
-                                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                            color: selected == index
-                                                ? Colors.white
-                                                : AppColors.darkJungleGreen,
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width * 0.5,
+                                      child: Text(
+                                        "Course",
+                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                              color: AppColors.heather,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                      ),
                                     ),
                                   ],
                                 ),
-                              ),
-                            );
-                          }),
-                        ),
-                      ),
-                      Container(
-                        height: 2,
-                        width: MediaQuery.of(context).size.width,
-                        color: AppColors.vistaWhite,
-                        margin: const EdgeInsets.symmetric(vertical: 10),
-                      ),
-                      const SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 28),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width * 0.3,
-                                    child: Text(
-                                      "Time",
-                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                            color: AppColors.heather,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width * 0.5,
-                                    child: Text(
-                                      "Course",
-                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                            color: AppColors.heather,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 20),
-                              SizedBox(
-                                height: MediaQuery.of(context).size.height * 0.60,
-                                child: PageView.builder(
-                                  controller: _pageController,
-                                  onPageChanged: (value) => setState(() {
-                                    selected = value;
-                                  }),
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: state?.result?.classData?.length ?? 0,
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (BuildContext context, int index) {
-                                    final item = state?.result?.classData?[index];
-                                    if (item?.isEmpty == true) {
-                                      return const CustomErrorOrEmpty(
-                                        title: "",
-                                      );
-                                    }
-                                    return ListView.builder(
-                                      physics: const BouncingScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemCount: item?.length ?? 0,
-                                      itemBuilder: (context, index) {
-                                        final classData = item?[index];
-                                        return Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Flexible(
-                                              child: SizedBox(
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Row(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        Column(
-                                                          children: [
-                                                            Text(
-                                                              getTime(classData?.startDate ?? "-"),
-                                                              style: Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyLarge
-                                                                  ?.copyWith(
-                                                                    color:
-                                                                        AppColors.darkJungleGreen,
-                                                                    fontWeight: FontWeight.w500,
-                                                                  ),
-                                                            ),
-                                                            Text(
-                                                              classEndDate(
-                                                                getTime(
-                                                                    classData?.startDate ?? "-"),
-                                                                classData?.classDuration ?? 0,
-                                                              ),
-                                                              style: Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium
-                                                                  ?.copyWith(
-                                                                    color: AppColors.heather,
-                                                                    fontWeight: FontWeight.w500,
-                                                                  ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        const Spacer(),
-                                                        Container(
-                                                          height:
-                                                              MediaQuery.of(context).size.height *
-                                                                  0.15,
-                                                          width: 2,
-                                                          color: AppColors.vistaWhite,
-                                                          margin: const EdgeInsets.only(right: 20),
-                                                        )
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                            Flexible(
-                                              flex: 2,
-                                              child: SizedBox(
-                                                child: Container(
-                                                  decoration: AppBoxDecoration.getBoxDecoration(
-                                                    color: AppColors.primaryColor,
-                                                    borderRadius: 16,
-                                                  ),
-                                                  margin: const EdgeInsets.only(bottom: 16),
-                                                  padding: const EdgeInsets.all(16),
+                                const SizedBox(height: 20),
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height * 0.60,
+                                  child: PageView.builder(
+                                    controller: _pageController,
+                                    onPageChanged: (value) => setState(() {
+                                      selected = value;
+                                    }),
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    itemCount: state?.result?.classData?.length ?? 0,
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (BuildContext context, int index) {
+                                      final item = state?.result?.classData?[index];
+                                      if (item?.isEmpty == true) {
+                                        return const CustomErrorOrEmpty(
+                                          title: "",
+                                        );
+                                      }
+                                      return ListView.builder(
+                                        physics: const BouncingScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: item?.length ?? 0,
+                                        itemBuilder: (context, index) {
+                                          final classData = item?[index];
+                                          return Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Flexible(
+                                                child: SizedBox(
                                                   child: Column(
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Row(
                                                         crossAxisAlignment:
-                                                            CrossAxisAlignment.center,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment.spaceBetween,
+                                                            CrossAxisAlignment.start,
                                                         children: [
-                                                          Flexible(
-                                                            child: Text(
-                                                              classData?.className ?? "",
-                                                              style: Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyLarge
-                                                                  ?.copyWith(
-                                                                    color: Colors.white,
-                                                                    fontWeight: FontWeight.w600,
-                                                                  ),
-                                                            ),
+                                                          Column(
+                                                            children: [
+                                                              Text(
+                                                                getTime(
+                                                                    classData?.startDate ?? "-"),
+                                                                style: Theme.of(context)
+                                                                    .textTheme
+                                                                    .bodyLarge
+                                                                    ?.copyWith(
+                                                                      color:
+                                                                          AppColors.darkJungleGreen,
+                                                                      fontWeight: FontWeight.w500,
+                                                                    ),
+                                                              ),
+                                                              Text(
+                                                                classEndDate(
+                                                                  getTime(
+                                                                      classData?.startDate ?? "-"),
+                                                                  classData?.classDuration ?? 0,
+                                                                ),
+                                                                style: Theme.of(context)
+                                                                    .textTheme
+                                                                    .bodyMedium
+                                                                    ?.copyWith(
+                                                                      color: AppColors.heather,
+                                                                      fontWeight: FontWeight.w500,
+                                                                    ),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          const Icon(
-                                                            Icons.more_vert_rounded,
-                                                            color: Colors.white,
-                                                            size: 26,
+                                                          const Spacer(),
+                                                          Container(
+                                                            height:
+                                                                MediaQuery.of(context).size.height *
+                                                                    0.15,
+                                                            width: 2,
+                                                            color: AppColors.vistaWhite,
+                                                            margin:
+                                                                const EdgeInsets.only(right: 20),
                                                           )
                                                         ],
-                                                      ),
-                                                      const SizedBox(height: 6),
-                                                      Text(
-                                                        classData?.classCode ?? "",
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodySmall
-                                                            ?.copyWith(
-                                                              color: Colors.white,
-                                                              fontWeight: FontWeight.w500,
-                                                            ),
-                                                      ),
+                                                      )
                                                     ],
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  },
+                                              Flexible(
+                                                flex: 2,
+                                                child: SizedBox(
+                                                  child: Container(
+                                                    decoration: AppBoxDecoration.getBoxDecoration(
+                                                      color: AppColors.primaryColor,
+                                                      borderRadius: 16,
+                                                    ),
+                                                    margin: const EdgeInsets.only(bottom: 16),
+                                                    padding: const EdgeInsets.all(16),
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Row(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment.center,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            Flexible(
+                                                              child: Text(
+                                                                classData?.className ?? "",
+                                                                style: Theme.of(context)
+                                                                    .textTheme
+                                                                    .bodyLarge
+                                                                    ?.copyWith(
+                                                                      color: Colors.white,
+                                                                      fontWeight: FontWeight.w600,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                            const Icon(
+                                                              Icons.more_vert_rounded,
+                                                              color: Colors.white,
+                                                              size: 26,
+                                                            )
+                                                          ],
+                                                        ),
+                                                        const SizedBox(height: 6),
+                                                        Text(
+                                                          classData?.classCode ?? "",
+                                                          style: Theme.of(context)
+                                                              .textTheme
+                                                              .bodySmall
+                                                              ?.copyWith(
+                                                                color: Colors.white,
+                                                                fontWeight: FontWeight.w500,
+                                                              ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          },
-              onLoading: const Center(
-                child: CircularProgressIndicator(color: AppColors.stormGrey),
-              ))
+              );
+            },
+            onLoading: const Center(
+              child: CircularProgressIndicator(color: AppColors.stormGrey),
+            ),
+            onError: (error) => TryAgain(onTap: () => getDateRange(currentIndex)),
+          ),
         ],
       ),
     );

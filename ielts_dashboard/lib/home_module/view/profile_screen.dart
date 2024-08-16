@@ -20,6 +20,7 @@ import 'package:utilities/components/cupertino_date_picker.dart';
 import 'package:utilities/components/enums.dart';
 import 'package:utilities/components/gradding_app_bar.dart';
 import 'package:utilities/components/message_scaffold.dart';
+import 'package:utilities/components/try_again.dart';
 import 'package:utilities/dio/api_end_points.dart';
 import 'package:utilities/dio/http_apis.dart';
 import 'package:utilities/form_fields/custom_text_fields.dart';
@@ -700,7 +701,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             ),
           );
-        }),
+        },
+          onError: (error) => TryAgain(
+            onTap: () => _profileController.getProfileData(),
+          ),
+        ),
         floatingActionButton: isLoadingData == false
             ? Padding(
                 padding: const EdgeInsets.only(bottom: 10),

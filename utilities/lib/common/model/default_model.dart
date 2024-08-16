@@ -32,6 +32,8 @@ class Result {
     this.downloadUrl,
     this.path,
     this.paymentType,
+    this.privacy,
+    this.terms,
   });
 
   Result.fromJson(dynamic json) {
@@ -40,11 +42,15 @@ class Result {
     downloadUrl = json['download_url'];
     path = json['path'];
     paymentType = json['payment_type'];
+    privacy = json['privacy'];
+    terms = json['terms'];
   }
   num? forceUpdate;
   num? buildNo;
   String? downloadUrl;
   String? path;
+  String? privacy;
+  String? terms;
   int? paymentType;
 
   Map<String, dynamic> toJson() {
@@ -54,6 +60,8 @@ class Result {
     map['download_url'] = downloadUrl;
     map['path'] = path;
     map['payment_type'] = paymentType;
+    map['privacy'] = privacy;
+    map['terms'] = terms;
     return map;
   }
 }

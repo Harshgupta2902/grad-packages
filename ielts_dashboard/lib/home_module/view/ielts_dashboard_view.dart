@@ -83,7 +83,7 @@ class _IeltsDashboardViewState extends State<IeltsDashboardView> {
                           ),
                         ),
                         SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.5,
+                          // width: MediaQuery.of(context).size.width * 0.5,
                           child: Text(
                             state?.result?.stripData?.welcomeStripDesc ?? "-",
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -126,7 +126,7 @@ class _IeltsDashboardViewState extends State<IeltsDashboardView> {
                       onTap: () {
                         if (state?.result?.stripData?.classStatus == true) {
                           context.pushNamed(
-                            IeltsGoPaths.ieltsClassWebView,
+                            IeltsGoPaths.webViewScreen,
                             extra: {
                               "leaveUrl":
                                   _dashboardController.state?.result?.stripData?.classEndLink,

@@ -6,6 +6,7 @@ import 'package:guest_dashboard/test_module/controller/get_order_id_controller.d
 import 'package:ielts_dashboard/constants/ielts_assets_path.dart';
 import 'package:ielts_dashboard/home_module/model/ielts_mock_test_model.dart';
 import 'package:ielts_dashboard/navigation/ielts_go_paths.dart';
+import 'package:utilities/common/model/common_model.dart';
 import 'package:utilities/components/enums.dart';
 import 'package:utilities/components/message_scaffold.dart';
 import 'package:utilities/packages/dialogs.dart';
@@ -15,14 +16,15 @@ import 'package:utilities/theme/app_colors.dart';
 
 final _getOrderIdController = Get.put(GetOrderIdController());
 
-class IeltsTestCard extends StatelessWidget {
-  const IeltsTestCard(
-      {super.key,
-      this.state,
-      this.free,
-      this.buyMockTests,
-      required this.paymentType,
-      required this.testName});
+class IeltsMockTestCard extends StatelessWidget {
+  const IeltsMockTestCard({
+    super.key,
+    this.state,
+    this.free,
+    this.buyMockTests,
+    required this.paymentType,
+    required this.testName,
+  });
 
   final List<Tests>? state;
   final List<num>? free;
@@ -66,7 +68,7 @@ class IeltsTestCard extends StatelessWidget {
                                   color: AppColors.brightGrey, fontWeight: FontWeight.w600),
                             ),
                             const Spacer(),
-                            if (testData?.status == "completed")
+                            if (testData?.status == "complete")
                               Container(
                                 decoration: AppBoxDecoration.getBoxDecoration(
                                   color: AppColors.asparagus.withOpacity(0.1),
@@ -83,102 +85,143 @@ class IeltsTestCard extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 12),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                SvgPicture.asset(IeltsAssetPath.duration),
-                                const SizedBox(width: 12),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Duration",
-                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                          color: AppColors.brightGrey, fontWeight: FontWeight.w500),
+                        if (testData?.status == "complete" || testData?.band != null) ...[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: List.generate(4, (index) {
+                              final bands = [
+                                KeyValuePair(key: "L", value: testData?.listeningTestScore),
+                                KeyValuePair(key: "W", value: testData?.writingTestScore),
+                                KeyValuePair(key: "R", value: testData?.readingTestScore),
+                                KeyValuePair(key: "S", value: testData?.speakingTestScore),
+                              ];
+                              return Row(
+                                children: [
+                                  Container(
+                                    height: 30,
+                                    width: 30,
+                                    decoration: AppBoxDecoration.getBorderBoxDecoration(
+                                      showShadow: false,
+                                      color: AppColors.nobel.withOpacity(0.2),
+                                      borderColor: AppColors.nobel,
+                                      borderRadius: 40,
                                     ),
-                                    Text(
-                                      "${testData?.testDuration}",
-                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                          color: Colors.black.withOpacity(0.5),
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 10),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                SvgPicture.asset(IeltsAssetPath.section),
-                                const SizedBox(width: 12),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      testData?.testTitle == "Full Mock Test"
-                                          ? "Sections"
-                                          : "Questions",
-                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                          color: AppColors.brightGrey, fontWeight: FontWeight.w500),
-                                    ),
-                                    Text(
-                                      testData?.testTitle == "Full Mock Test"
-                                          ? "4"
-                                          : "${testData?.testQuestion}",
-                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                          color: Colors.black.withOpacity(0.5),
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 10),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 16),
-                        isFree
-                            ? GestureDetector(
-                                onTap: () {
-                                  Dialogs.webViewErrorDialog(
-                                    context,
-                                    title: "Use the desktop version to access the mock test",
-                                  );
-                                },
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width * 0.9,
-                                  height: 40,
-                                  decoration: const BoxDecoration(
-                                    gradient: GradientAppColors.goldenGradient,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(10),
+                                    child: Center(
+                                      child: Text(bands[index].key),
                                     ),
                                   ),
-                                  child: Center(
-                                    child: Text(
-                                      "Start Free Test",
-                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    bands[index].value.toString(),
+                                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                        color: AppColors.brightGrey, fontWeight: FontWeight.w500),
+                                  )
+                                ],
+                              );
+                            }),
+                          ),
+                        ] else ...[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  SvgPicture.asset(IeltsAssetPath.duration),
+                                  const SizedBox(width: 12),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Duration",
+                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                             color: AppColors.brightGrey,
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      Text(
+                                        "${testData?.testDuration}",
+                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                            color: Colors.black.withOpacity(0.5),
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 10),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  SvgPicture.asset(IeltsAssetPath.section),
+                                  const SizedBox(width: 12),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        testData?.testTitle == "Full Mock Test"
+                                            ? "Sections"
+                                            : "Questions",
+                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                            color: AppColors.brightGrey,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      Text(
+                                        testData?.testTitle == "Full Mock Test"
+                                            ? "4"
+                                            : "${testData?.testQuestion}",
+                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                            color: Colors.black.withOpacity(0.5),
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 10),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
+                        if (testData?.status != "complete") ...[
+                          const SizedBox(height: 16),
+                          isFree
+                              ? GestureDetector(
+                                  onTap: () {
+                                    Dialogs.webViewErrorDialog(
+                                      context,
+                                      title: "Use the desktop version to access the mock test",
+                                    );
+                                  },
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width * 0.9,
+                                    height: 40,
+                                    decoration: const BoxDecoration(
+                                      gradient: GradientAppColors.goldenGradient,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(10),
+                                      ),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        "Start Free Test",
+                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                              color: AppColors.brightGrey,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
                                     ),
                                   ),
+                                )
+                              : ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    minimumSize: Size(MediaQuery.of(context).size.width, 40),
+                                  ),
+                                  onPressed: () {
+                                    Dialogs.webViewErrorDialog(
+                                      context,
+                                      title: "Use the desktop version to access the mock test",
+                                    );
+                                  },
+                                  child: const Text("Start Now"),
                                 ),
-                              )
-                            : ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  minimumSize: Size(MediaQuery.of(context).size.width, 40),
-                                ),
-                                onPressed: () {
-                                  Dialogs.webViewErrorDialog(
-                                    context,
-                                    title: "Use the desktop version to access the mock test",
-                                  );
-                                },
-                                child: const Text("Start Now"),
-                              ),
+                        ]
                       ],
                     ),
                   ),

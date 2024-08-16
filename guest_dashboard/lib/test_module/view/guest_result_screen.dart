@@ -12,6 +12,7 @@ import 'package:utilities/components/custom_error_or_empty.dart';
 import 'package:utilities/components/custom_header_delegate.dart';
 import 'package:utilities/components/custom_tab_bar.dart';
 import 'package:utilities/components/gradding_app_bar.dart';
+import 'package:utilities/components/try_again.dart';
 import 'package:utilities/packages/smooth_rectangular_border.dart';
 import 'package:utilities/theme/app_box_decoration.dart';
 import 'package:utilities/theme/app_colors.dart';
@@ -96,7 +97,12 @@ class _GuestResultScreenState extends State<GuestResultScreen> {
             ),
           ],
         );
-      }),
+      },
+        onError: (error) => TryAgain(
+          onTap: () => _getReportCardController.getReportCard(),
+        ),
+
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: _getReportCardController.state?.result == null
           ? null

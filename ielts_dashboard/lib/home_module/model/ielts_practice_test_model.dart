@@ -2,117 +2,103 @@ class IeltsPracticeTestModel {
   IeltsPracticeTestModel({
     this.status,
     this.msg,
-    this.result,
+    this.tests,
+    this.testname,
   });
 
   IeltsPracticeTestModel.fromJson(dynamic json) {
     status = json['status'];
     msg = json['msg'];
-    result = json['result'] != null ? Result.fromJson(json['result']) : null;
-  }
-  num? status;
-  String? msg;
-  Result? result;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['status'] = status;
-    map['msg'] = msg;
-    if (result != null) {
-      map['result'] = result?.toJson();
-    }
-    return map;
-  }
-}
-
-class Result {
-  Result({
-    this.tests,
-    this.card,
-    this.username,
-  });
-
-  Result.fromJson(dynamic json) {
-    card = json['card'] != null ? Card.fromJson(json['card']) : null;
     if (json['tests'] != null) {
       tests = [];
       json['tests'].forEach((v) {
         tests?.add(Tests.fromJson(v));
       });
     }
-    username = json['username'];
+    testname = json['testname'];
   }
+  num? status;
+  String? msg;
   List<Tests>? tests;
-  String? username;
-  Card? card;
+  String? testname;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    if (card != null) {
-      map['card'] = card?.toJson();
-    }
+    map['status'] = status;
+    map['msg'] = msg;
     if (tests != null) {
       map['tests'] = tests?.map((v) => v.toJson()).toList();
     }
-    map['username'] = username;
+    map['testname'] = testname;
     return map;
   }
 }
 
 class Tests {
   Tests({
-    this.name,
     this.testId,
+    this.testTitle,
+    this.availableAt,
+    this.testIs,
+    this.src,
     this.status,
     this.band,
+    this.testPrice,
+    this.testDuration,
+    this.testQuestion,
+    this.listeningTestScore,
+    this.writingTestScore,
+    this.readingTestScore,
+    this.speakingTestScore,
   });
 
   Tests.fromJson(dynamic json) {
-    name = json['name'];
     testId = json['test_id'];
+    testTitle = json['test_title'];
+    availableAt = json['available_at'];
+    testIs = json['test_is'];
+    src = json['src'];
     status = json['status'];
     band = json['band'];
+    testPrice = json['test_price'];
+    testDuration = json['test_duration'];
+    testQuestion = json['test_question'];
+    listeningTestScore = json['listening_test_score'];
+    writingTestScore = json['writing_test_score'];
+    readingTestScore = json['reading_test_score'];
+    speakingTestScore = json['speaking_test_score'];
   }
-  String? name;
-  String? testId;
+  num? testId;
+  String? testTitle;
+  String? availableAt;
+  num? testIs;
+  String? src;
   String? status;
-  String? band;
+  dynamic band;
+  String? testPrice;
+  String? testDuration;
+  num? testQuestion;
+  num? listeningTestScore;
+  num? writingTestScore;
+  num? readingTestScore;
+  num? speakingTestScore;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['name'] = name;
     map['test_id'] = testId;
+    map['test_title'] = testTitle;
+    map['available_at'] = availableAt;
+    map['test_is'] = testIs;
+    map['src'] = src;
     map['status'] = status;
     map['band'] = band;
-    return map;
-  }
-}
-
-class Card {
-  Card({
-    this.title,
-    this.desc,
-    this.complete,
-    this.total,
-  });
-
-  Card.fromJson(dynamic json) {
-    title = json['title'];
-    desc = json['desc'];
-    complete = json['complete'];
-    total = json['total'];
-  }
-  String? title;
-  String? desc;
-  num? complete;
-  num? total;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['title'] = title;
-    map['desc'] = desc;
-    map['complete'] = complete;
-    map['total'] = total;
+    map['test_price'] = testPrice;
+    map['test_duration'] = testDuration;
+    map['test_question'] = testQuestion;
+    map['listening_test_score'] = listeningTestScore;
+    map['writing_test_score'] = writingTestScore;
+    map['reading_test_score'] = readingTestScore;
+    map['speaking_test_score'] = speakingTestScore;
     return map;
   }
 }

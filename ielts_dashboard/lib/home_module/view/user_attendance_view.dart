@@ -6,6 +6,7 @@ import 'package:ielts_dashboard/constants/ielts_assets_path.dart';
 import 'package:ielts_dashboard/home_module/controller/user_attendance_controller.dart';
 import 'package:intl/intl.dart';
 import 'package:utilities/components/gradding_app_bar.dart';
+import 'package:utilities/components/try_again.dart';
 import 'package:utilities/theme/app_colors.dart';
 
 final _userAttendanceController = Get.put(UserAttendanceController());
@@ -315,12 +316,9 @@ class UserAttendanceViewState extends State<UserAttendanceView> {
                         },
                       );
                     },
-                    onError: (error) {
-                      return const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20),
-                        child: CustomErrorOrEmpty(title: "Currently attendance not available"),
-                      );
-                    },
+                    onError: (error) => TryAgain(
+                      onTap: () => _userAttendanceController.getUserAttendance(),
+                    ),
                     onEmpty: const Padding(
                       padding: EdgeInsets.symmetric(vertical: 20),
                       child: CustomErrorOrEmpty(title: "Currently attendance not available"),

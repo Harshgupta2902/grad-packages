@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+import 'package:utilities/validators/input_formatters.dart';
 import '../theme/app_box_decoration.dart';
 import '../theme/app_colors.dart';
 
@@ -32,6 +33,7 @@ class PinputField extends StatelessWidget {
       obscuringCharacter: "*",
       obscureText: obscureText ?? false,
       onChanged: onChanged,
+      inputFormatters: [NumberOnlyInputFormatter()],
       defaultPinTheme: PinTheme(
         width: 50,
         height: 50,

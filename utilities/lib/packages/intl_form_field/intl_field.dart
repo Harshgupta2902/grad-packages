@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:utilities/packages/smooth_rectangular_border.dart';
 import 'package:utilities/theme/app_colors.dart';
 import 'countries.dart';
 import 'county_picker.dart';
@@ -108,6 +109,11 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
       isScrollControlled: true,
       constraints: BoxConstraints(
         maxHeight: MediaQuery.of(context).size.height * 0.95,
+      ),
+      shape: const SmoothRectangleBorder(
+        borderRadius: SmoothBorderRadius.vertical(
+          top: SmoothRadius(cornerRadius: 16, cornerSmoothing: 1.0),
+        ),
       ),
       builder: (context) => StatefulBuilder(
         builder: (ctx, setState) => CountryPickerDialog(

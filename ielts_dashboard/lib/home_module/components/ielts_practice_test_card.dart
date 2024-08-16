@@ -1,136 +1,202 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ielts_dashboard/constants/ielts_assets_path.dart';
 import 'package:ielts_dashboard/home_module/model/ielts_practice_test_model.dart';
+import 'package:utilities/common/model/common_model.dart';
+import 'package:utilities/components/custom_error_or_empty.dart';
 import 'package:utilities/packages/dialogs.dart';
 import 'package:utilities/theme/app_box_decoration.dart';
 import 'package:utilities/theme/app_colors.dart';
 
-class IeltsPracticeTestCard extends StatefulWidget {
+class IeltsPracticeTestCard extends StatelessWidget {
   const IeltsPracticeTestCard({
-    Key? key,
-    required this.tests,
-  }) : super(key: key);
+    super.key,
+    this.state,
+    required this.paymentType,
+    required this.testName,
+  });
 
-  final List<Tests> tests;
-
-  @override
-  State<IeltsPracticeTestCard> createState() => _IeltsPracticeTestCardState();
-}
-
-class _IeltsPracticeTestCardState extends State<IeltsPracticeTestCard> {
-  Color _getColor(String status) {
-    switch (status) {
-      case 'complete':
-        return AppColors.yellowyGreen;
-      case 'pending':
-        return AppColors.backgroundColor;
-      case 'locked':
-        return AppColors.gainsBoro;
-      default:
-        return Colors.transparent; // Default color
-    }
-  }
-
-  Color _getBorderColor(String status) {
-    switch (status) {
-      case 'complete':
-        return Colors.black;
-      case 'pending':
-        return AppColors.primaryColor.withOpacity(0.4);
-      case 'locked':
-        return AppColors.nobel;
-      default:
-        return Colors.transparent; // Default border color
-    }
-  }
+  final List<Tests>? state;
+  final num paymentType;
+  final String testName;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: List.generate(
-        widget.tests.length,
-        (index) {
-          final item = widget.tests[index];
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            decoration: AppBoxDecoration.getBoxDecoration(borderRadius: 16),
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Column(
+    return state?.isEmpty == true
+        ? const CustomErrorOrEmpty(
+            title: "No Practice Test Assigned Yet",
+          )
+        : ListView.separated(
+            itemCount: state?.length ?? 0,
+            shrinkWrap: true,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final testData = state?[index];
+              return Container(
+                clipBehavior: Clip.hardEdge,
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.all(16),
+                decoration: AppBoxDecoration.getBoxDecoration(),
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: _getColor(item.status.toString()),
-                        border: Border.all(
-                          color: _getBorderColor(item.status.toString()),
+                    Row(
+                      children: [
+                        checkLocked(testData?.status ?? "locked"),
+                        const SizedBox(width: 10),
+                        Text(
+                          testData?.testTitle ?? "",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
+                              ?.copyWith(color: AppColors.brightGrey, fontWeight: FontWeight.w600),
                         ),
-                      ),
-                      child: item.status == 'complete'
-                          ? const Center(
-                              child: Icon(
-                                Icons.check,
-                                color: Colors.black,
-                                size: 12,
-                              ),
-                            )
-                          : Center(
-                              child: Text('${index + 1}'),
+                        const Spacer(),
+                        if (testData?.status == "complete")
+                          Container(
+                            decoration: AppBoxDecoration.getBoxDecoration(
+                              color: AppColors.asparagus.withOpacity(0.1),
+                              borderRadius: 6,
                             ),
+                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+                            child: Text(
+                              "${testData?.band ?? 0} Band",
+                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: AppColors.fernGreen,
+                                  ),
+                            ),
+                          ),
+                      ],
                     ),
                     const SizedBox(height: 12),
-                    Text(
-                      item.name.toString(),
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: AppColors.brightGrey,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 20,
+                    if (testData?.status == "complete" || testData?.band != null) ...[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: List.generate(4, (index) {
+                          final bands = [
+                            KeyValuePair(key: "L", value: testData?.listeningTestScore),
+                            KeyValuePair(key: "W", value: testData?.writingTestScore),
+                            KeyValuePair(key: "R", value: testData?.readingTestScore),
+                            KeyValuePair(key: "S", value: testData?.speakingTestScore),
+                          ];
+                          return Row(
+                            children: [
+                              Container(
+                                height: 30,
+                                width: 30,
+                                decoration: AppBoxDecoration.getBorderBoxDecoration(
+                                  showShadow: false,
+                                  color: AppColors.nobel.withOpacity(0.2),
+                                  borderColor: AppColors.nobel,
+                                  borderRadius: 40,
+                                ),
+                                child: Center(
+                                  child: Text(bands[index].key),
+                                ),
+                              ),
+                              const SizedBox(width: 6),
+                              Text(
+                                bands[index].value.toString(),
+                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: AppColors.brightGrey, fontWeight: FontWeight.w500),
+                              )
+                            ],
+                          );
+                        }),
+                      ),
+                    ] else ...[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              SvgPicture.asset(IeltsAssetPath.duration),
+                              const SizedBox(width: 12),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Duration",
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                        color: AppColors.brightGrey, fontWeight: FontWeight.w500),
+                                  ),
+                                  Text(
+                                    "${testData?.testDuration}",
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                        color: Colors.black.withOpacity(0.5),
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 10),
+                                  ),
+                                ],
+                              )
+                            ],
                           ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      item.status == 'pending' ? "20 Questions" : "${item.band} Bands",
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: AppColors.paleSky.withOpacity(0.8),
-                            fontWeight: FontWeight.w400,
+                          Row(
+                            children: [
+                              SvgPicture.asset(IeltsAssetPath.section),
+                              const SizedBox(width: 12),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    testData?.testTitle == "Full Mock Test"
+                                        ? "Sections"
+                                        : "Questions",
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                        color: AppColors.brightGrey, fontWeight: FontWeight.w500),
+                                  ),
+                                  Text(
+                                    testData?.testTitle == "Full Mock Test"
+                                        ? "4"
+                                        : "${testData?.testQuestion}",
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                        color: Colors.black.withOpacity(0.5),
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 10),
+                                  ),
+                                ],
+                              )
+                            ],
                           ),
-                    ),
+                        ],
+                      )
+                    ],
+                    if (testData?.status != "complete") ...[
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: Size(MediaQuery.of(context).size.width, 40),
+                        ),
+                        onPressed: () {
+                          Dialogs.webViewErrorDialog(
+                            context,
+                            title: "Use the desktop version to access the practise test",
+                          );
+                        },
+                        child: const Text("Start Now"),
+                      ),
+                    ]
                   ],
                 ),
-                if (item.status == 'pending') ...[
-                  GestureDetector(
-                    onTap: () async {
-                      Dialogs.webViewErrorDialog(
-                        context,
-                        title: "You can't take classess on phone",
-                      );
-                    },
-                    child: SvgPicture.asset(IeltsAssetPath.startMockTest),
-                  ),
-                ],
-                if (item.status == 'complete') ...[
-                  GestureDetector(
-                    onTap: () {},
-                    child: SvgPicture.asset(IeltsAssetPath.playMockTest),
-                  ),
-                ],
-                if (item.status == 'locked') ...[
-                  GestureDetector(
-                    onTap: () {},
-                    child: SvgPicture.asset(IeltsAssetPath.lockMockTest),
-                  ),
-                ]
-              ],
-            ),
+              );
+            },
+            separatorBuilder: (context, index) {
+              return const SizedBox(height: 16);
+            },
           );
-        },
-      ),
-    );
+  }
+}
+
+Widget checkLocked(String status) {
+  switch (status) {
+    case 'complete':
+      return SvgPicture.asset(IeltsAssetPath.completed);
+    case 'pending':
+      return SvgPicture.asset(IeltsAssetPath.open);
+    case 'locked':
+      return SvgPicture.asset(IeltsAssetPath.close);
+    default:
+      return SvgPicture.asset(IeltsAssetPath.close);
   }
 }

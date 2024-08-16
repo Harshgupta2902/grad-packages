@@ -9,6 +9,7 @@ import 'package:utilities/common/controller/default_controller.dart';
 import 'package:utilities/components/custom_header_delegate.dart';
 import 'package:utilities/components/custom_tab_bar.dart';
 import 'package:utilities/components/gradding_app_bar.dart';
+import 'package:utilities/components/try_again.dart';
 import 'package:utilities/theme/app_box_decoration.dart';
 import 'package:utilities/theme/app_colors.dart';
 
@@ -44,55 +45,59 @@ class _IeltsMockTestScreenState extends State<IeltsMockTestScreen> {
             length: 5,
             child: NestedScrollView(
               headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                SliverAppBar(
-                  backgroundColor: Colors.transparent,
-                  automaticallyImplyLeading: false,
-                  expandedHeight: 170,
-                  flexibleSpace: FlexibleSpaceBar(
-                    background: Container(
-                      decoration: AppBoxDecoration.getBorderBoxDecoration(
-                        borderColor: AppColors.primaryColor,
-                        showShadow: false,
-                      ),
-                      margin: const EdgeInsets.symmetric(horizontal: 16),
-                      padding: const EdgeInsets.all(12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Know How Mock Tests are made",
-                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                fontWeight: FontWeight.w600, color: AppColors.brightGrey),
-                          ),
-                          const SizedBox(height: 6),
-                          ...List.generate(3, (index) {
-                            final data = [
-                              "Authentic content that closely resemble to actual IELTS exam",
-                              "Continuous update and refinement to ensure relevancy and effectiveness",
-                              "Detailed feedback on each test to point out mistake and scope of improvement"
-                            ];
-                            return Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SvgPicture.asset(IeltsAssetPath.testCheck),
-                                const SizedBox(width: 6),
-                                Flexible(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 2),
-                                    child: Text(
-                                      data[index],
-                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                          fontWeight: FontWeight.w500, color: AppColors.brightGrey),
+                SliverOverlapAbsorber(
+                  handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                  sliver: SliverAppBar(
+                    backgroundColor: Colors.transparent,
+                    automaticallyImplyLeading: false,
+                    expandedHeight: 170,
+                    flexibleSpace: FlexibleSpaceBar(
+                      background: Container(
+                        decoration: AppBoxDecoration.getBorderBoxDecoration(
+                          borderColor: AppColors.primaryColor,
+                          showShadow: false,
+                        ),
+                        margin: const EdgeInsets.symmetric(horizontal: 16),
+                        padding: const EdgeInsets.all(12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Know How Mock Tests are made",
+                              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                  fontWeight: FontWeight.w600, color: AppColors.brightGrey),
+                            ),
+                            const SizedBox(height: 6),
+                            ...List.generate(3, (index) {
+                              final data = [
+                                "Authentic content that closely resemble to actual IELTS exam",
+                                "Continuous update and refinement to ensure relevancy and effectiveness",
+                                "Detailed feedback on each test to point out mistake and scope of improvement"
+                              ];
+                              return Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SvgPicture.asset(IeltsAssetPath.testCheck),
+                                  const SizedBox(width: 6),
+                                  Flexible(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 2),
+                                      child: Text(
+                                        data[index].replaceAll("IELTS", state?.testname ?? "IELTS"),
+                                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.brightGrey),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            );
-                          })
-                        ],
+                                ],
+                              );
+                            })
+                          ],
+                        ),
                       ),
+                      collapseMode: CollapseMode.parallax,
                     ),
-                    collapseMode: CollapseMode.parallax,
                   ),
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: 20)),
@@ -122,35 +127,35 @@ class _IeltsMockTestScreenState extends State<IeltsMockTestScreen> {
               ],
               body: TabBarView(
                 children: [
-                  IeltsTestCard(
+                  IeltsMockTestCard(
                     state: fullFreeTests(state?.tests),
                     free: state?.free,
                     buyMockTests: fullBuyTests(state?.buyMockTests),
                     paymentType: defaultController.state?.result?.paymentType ?? 4,
                     testName: state?.testname ?? "IELTS",
                   ),
-                  IeltsTestCard(
+                  IeltsMockTestCard(
                     state: listeningFreeTests(state?.tests),
                     free: state?.free,
                     buyMockTests: listeningBuyTests(state?.buyMockTests),
                     paymentType: defaultController.state?.result?.paymentType ?? 4,
                     testName: state?.testname ?? "IELTS",
                   ),
-                  IeltsTestCard(
+                  IeltsMockTestCard(
                     state: readingFreeTests(state?.tests),
                     free: state?.free,
                     buyMockTests: readingBuyTests(state?.buyMockTests),
                     paymentType: defaultController.state?.result?.paymentType ?? 4,
                     testName: state?.testname ?? "IELTS",
                   ),
-                  IeltsTestCard(
+                  IeltsMockTestCard(
                     state: writingFreeTests(state?.tests),
                     free: state?.free,
                     buyMockTests: writingBuyTests(state?.buyMockTests),
                     paymentType: defaultController.state?.result?.paymentType ?? 4,
                     testName: state?.testname ?? "IELTS",
                   ),
-                  IeltsTestCard(
+                  IeltsMockTestCard(
                     state: speakingFreeTests(state?.tests),
                     free: state?.free,
                     buyMockTests: speakingBuyTests(state?.buyMockTests),
@@ -162,6 +167,9 @@ class _IeltsMockTestScreenState extends State<IeltsMockTestScreen> {
             ),
           );
         },
+        onError: (error) => TryAgain(
+          onTap: () => _ieltsMockTestController.getIeltsMockTests(),
+        ),
       ),
     );
   }
