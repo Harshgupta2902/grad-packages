@@ -1,14 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:in_app_update/in_app_update.dart';
-import 'package:lottie/lottie.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:utilities/packages/smooth_rectangular_border.dart';
-import 'package:utilities/theme/app_colors.dart';
 
 appUpdateFunction({
   required num? forceUpdate,
@@ -60,10 +56,8 @@ updateDrawer({required num appUpdate, required BuildContext context}) {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return WillPopScope(
-          onWillPop: () async {
-            return false;
-          },
+        return PopScope(
+          canPop:  false,
           child: CupertinoAlertDialog(
             title: const Text('Update Available'),
             content: const Text('A new version of the app is available.'),
@@ -114,9 +108,9 @@ updateDrawer({required num appUpdate, required BuildContext context}) {
 void _launchStore() async {
   if (Platform.isAndroid || Platform.isIOS) {
     final appId = Platform.isAndroid ? 'com.gradding' : '1246082058';
-    final uri = Platform.isAndroid
-        ? 'market://details?id=$appId'
-        : 'https://apps.apple.com/gb/app/id$appId';
+    // final uri = Platform.isAndroid
+    //     ? 'market://details?id=$appId'
+    //     : 'https://apps.apple.com/gb/app/id$appId';
 
     final url = Uri.parse("market://details?id=$appId");
     if (await canLaunchUrl(url)) {

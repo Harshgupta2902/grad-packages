@@ -277,8 +277,6 @@ class _GuestDashboardViewState extends State<GuestDashboardView> {
       onError: (error) => TryAgain(
         onTap: () => _guestDashboardController.getGuestDashboardData(),
       ),
-
-
     );
   }
 }

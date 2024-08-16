@@ -408,8 +408,6 @@ class _IeltsDashboardViewState extends State<IeltsDashboardView> {
       onError: (error) => TryAgain(
         onTap: () => _dashboardController.getDashboardData(),
       ),
-
-
     );
   }
 }

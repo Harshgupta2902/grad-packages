@@ -169,7 +169,7 @@ class Dialogs {
                     width: 20,
                   ),
                   Lottie.asset("packages/utilities/assets/success_session.json",
-                      height: 120, width: 120),
+                      height: 120, width: 120,),
                   const SizedBox(
                     width: 20,
                   ),
