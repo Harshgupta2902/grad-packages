@@ -37,9 +37,12 @@ class _GuestTestWebViewState extends State<GuestTestWebView> {
         Dialogs.exitFromTest(context);
       },
       child: Scaffold(
-        appBar: const GraddingAppBar(
+        appBar: GraddingAppBar(
           backButton: true,
           showActions: false,
+          backOnTap: () {
+            Dialogs.exitFromTest(context);
+          },
         ),
         body: InAppWebView(
           initialUrlRequest: URLRequest(url: Uri.parse(currentUrl ?? widget.url)),

@@ -6,6 +6,7 @@ import 'package:utilities/theme/app_colors.dart';
 
 class GraddingAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Function()? openDrawer;
+  final Function()? backOnTap;
   final bool? backButton;
   final bool? showActions;
   final String? title;
@@ -24,6 +25,7 @@ class GraddingAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.centerTitle = false,
     this.bgColor,
     this.isBlur,
+    this.backOnTap,
   });
 
   @override
@@ -62,11 +64,12 @@ class GraddingAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 )
               : GestureDetector(
-                  onTap: () {
-                    if (context.canPop()) {
-                      context.pop();
-                    }
-                  },
+                  onTap: backOnTap ??
+                      () {
+                        if (context.canPop()) {
+                          context.pop();
+                        }
+                      },
                   child: Padding(
                     padding: const EdgeInsets.only(left: 2),
                     child: SvgPicture.asset("packages/utilities/assets/back.svg"),
