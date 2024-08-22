@@ -7,7 +7,7 @@ import 'package:utilities/dio/api_request.dart';
 class AssignedPractiseTestController extends GetxController
     with StateMixin<IeltsPracticeTestModel> {
   getPracticeTests() async {
-    const apiEndPoint = APIEndPoints.assignedPracticeTest;
+    const apiEndPoint = APIEndPoints.assignedPracticeTestV1;
 
     debugPrint("---------- $apiEndPoint  Start ----------");
 

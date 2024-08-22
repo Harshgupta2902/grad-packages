@@ -2,7 +2,7 @@ class APIEndPoints {
   static const live = 'https://www.gradding.com/api/mobile-api/v1/';
   static const local = 'http://10.0.20.122:8000/api/mobile-api/v1/';
   static const beta = 'https://beta.gradding.com/api/mobile-api/v1/';
-  static const base = beta;
+  static const base = live;
 
   static const defaultApi = 'default';
   static const menuItems = "menu-items";
@@ -30,6 +30,10 @@ class APIEndPoints {
 
   static const assignedMockTest = "assigned-mock-test";
   static const assignedPracticeTest = "assigned-practice-test";
+  // v1 routes
+  static const assignedMockTestV1 = "assigned-mock-test-v1";
+  static const assignedPracticeTestV1 = "assigned-practice-test-v1";
+
   static const mockTestDetails = "mock-test-details";
   static const classSchedule = "class-schedule";
 

@@ -58,8 +58,10 @@ class IeltsMockTestCard extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            isFree
-                                ? const SizedBox(width: 28)
+                            testData?.status != "complete"
+                                ? (isFree
+                                    ? const SizedBox(width: 28)
+                                    : checkLocked(testData?.status ?? "locked"))
                                 : checkLocked(testData?.status ?? "locked"),
                             const SizedBox(width: 10),
                             Text(
@@ -114,7 +116,8 @@ class IeltsMockTestCard extends StatelessWidget {
                                   Text(
                                     bands[index].value.toString(),
                                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                        color: AppColors.brightGrey, fontWeight: FontWeight.w500),
+                                        color: getBandsTextColor(bands[index].value),
+                                        fontWeight: FontWeight.w500),
                                   )
                                 ],
                               );
@@ -225,25 +228,27 @@ class IeltsMockTestCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  if (isFree)
-                    Positioned(
-                      top: 10,
-                      left: -20,
-                      child: Transform.rotate(
-                        angle: -45 * (3.1415926535897932 / 180),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.25,
-                          decoration: const BoxDecoration(
-                            gradient: GradientAppColors.goldenGradient,
-                          ),
-                          child: Text(
-                            "FREE",
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.bodyLarge,
+                  if (testData?.status != "complete") ...[
+                    if (isFree)
+                      Positioned(
+                        top: 10,
+                        left: -20,
+                        child: Transform.rotate(
+                          angle: -45 * (3.1415926535897932 / 180),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.25,
+                            decoration: const BoxDecoration(
+                              gradient: GradientAppColors.goldenGradient,
+                            ),
+                            child: Text(
+                              "FREE",
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                  ]
                 ],
               );
             },
@@ -437,5 +442,19 @@ Widget checkLocked(String status) {
       return SvgPicture.asset(IeltsAssetPath.close);
     default:
       return SvgPicture.asset(IeltsAssetPath.close);
+  }
+}
+
+Color getBandsTextColor(num? status) {
+  if (status == null) return AppColors.brightGrey;
+
+  if (status >= 0 && status < 4) {
+    return AppColors.cadmiumRed;
+  } else if (status >= 4 && status < 6) {
+    return AppColors.yellow;
+  } else if (status >= 6 && status <= 9) {
+    return AppColors.fernGreen;
+  } else {
+    return AppColors.brightGrey;
   }
 }

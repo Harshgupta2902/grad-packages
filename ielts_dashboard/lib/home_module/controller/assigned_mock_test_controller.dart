@@ -7,7 +7,7 @@ import 'package:utilities/dio/api_request.dart';
 
 class AssignedMockTestController extends GetxController with StateMixin<IeltsMockTestModel> {
   getIeltsMockTests({conditionKey}) async {
-    const apiEndPoint = APIEndPoints.assignedMockTest;
+    const apiEndPoint = APIEndPoints.assignedMockTestV1;
     debugPrint("---------- $apiEndPoint  Start ----------");
 
     try {
