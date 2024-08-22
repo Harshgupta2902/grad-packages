@@ -13,6 +13,7 @@ class PinputField extends StatelessWidget {
     this.obscureText,
     this.onChanged,
     this.autofill,
+    this.onCompleted,
   });
 
   final int? length;
@@ -20,6 +21,7 @@ class PinputField extends StatelessWidget {
   final String? Function(String?)? validator;
   final bool? obscureText;
   final void Function(String)? onChanged;
+  final void Function(String)? onCompleted;
   final AndroidSmsAutofillMethod? autofill;
 
   @override
@@ -36,6 +38,7 @@ class PinputField extends StatelessWidget {
       obscuringCharacter: "*",
       obscureText: obscureText ?? false,
       onChanged: onChanged,
+      onCompleted: onCompleted,
       inputFormatters: [NumberOnlyInputFormatter()],
       defaultPinTheme: PinTheme(
         width: 50,
