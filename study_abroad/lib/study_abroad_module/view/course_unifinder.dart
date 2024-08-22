@@ -82,37 +82,42 @@ class _CourseUnifinderState extends State<CourseUnifinder> {
                   length: 4,
                   child: NestedScrollView(
                     headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                      SliverPersistentHeader(
-                        delegate: CustomHeaderDelegate(
-                          maxExtent: MediaQuery.of(context).size.height * 0.22,
-                          minExtent: MediaQuery.of(context).size.height * 0.22,
-                          child: Container(
-                            margin: const EdgeInsets.only(bottom: 10, left: 16, right: 16),
-                            decoration: BoxDecoration(
-                              gradient: GradientAppColors.courseFinderCardGradient,
-                              borderRadius: SmoothBorderRadius(cornerRadius: 10),
-                            ),
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Tuition fee may vary so, get in touch with India’s finest experts to budget your study abroad journey",
-                                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                      color: AppColors.white, fontWeight: FontWeight.w500),
-                                ),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                    foregroundColor: AppColors.jewel,
-                                    minimumSize: const Size(double.infinity, 40),
+                      SliverOverlapAbsorber(
+                        handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                        sliver: SliverAppBar(
+                          backgroundColor: Colors.transparent,
+                          automaticallyImplyLeading: false,
+                          expandedHeight: 160,
+                          flexibleSpace: FlexibleSpaceBar(
+                            background: Container(
+                              margin: const EdgeInsets.only(bottom: 10, left: 16, right: 16),
+                              decoration: BoxDecoration(
+                                gradient: GradientAppColors.courseFinderCardGradient,
+                                borderRadius: SmoothBorderRadius(cornerRadius: 10),
+                              ),
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Tuition fee may vary so, get in touch with India’s finest experts to budget your study abroad journey",
+                                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                        color: AppColors.white, fontWeight: FontWeight.w500),
                                   ),
-                                  onPressed: () => bookSessionSheet(context, service: ""),
-                                  child: const Text("Assign Me an Expert"),
-                                )
-                              ],
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.white,
+                                      foregroundColor: AppColors.jewel,
+                                      minimumSize: const Size(double.infinity, 40),
+                                    ),
+                                    onPressed: () => bookSessionSheet(context, service: ""),
+                                    child: const Text("Assign Me an Expert"),
+                                  )
+                                ],
+                              ),
                             ),
+                            collapseMode: CollapseMode.parallax,
                           ),
                         ),
                       ),
@@ -343,10 +348,8 @@ class _CourseUnifinderState extends State<CourseUnifinder> {
                 );
         },
         onError: (error) => TryAgain(
-                    onTap: () => _coursesController.getCoursesApi(offset: '1'),
+          onTap: () => _coursesController.getCoursesApi(offset: '1'),
         ),
-
-
       ),
     );
   }
