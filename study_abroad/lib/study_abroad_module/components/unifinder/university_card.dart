@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:study_abroad/constants/study_abroad_asset_paths.dart';
 import 'package:study_abroad/study_abroad_module/models/university_unifinder_model.dart';
+import 'package:utilities/common/bottom_sheet/book_session_sheet.dart';
 import 'package:utilities/packages/smooth_rectangular_border.dart';
 import 'package:utilities/theme/app_box_decoration.dart';
 import 'package:utilities/theme/app_colors.dart';
@@ -42,42 +43,12 @@ class UniversityCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Flexible(
-                child: Text(
-                  state?.name ?? "-",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge
-                      ?.copyWith(fontWeight: FontWeight.w600, fontSize: 20),
-                ),
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    "Shortlist",
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  Transform.scale(
-                    scale: 0.7,
-                    child: Switch(
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      activeColor: AppColors.primaryColor,
-                      inactiveTrackColor: AppColors.blueHaze.withOpacity(0.2),
-                      trackOutlineColor: const MaterialStatePropertyAll(AppColors.blueHaze),
-                      value: shortlist ?? false,
-                      onChanged: (value) {
-                        shortListCallBack!(value);
-                      },
-                      thumbColor: const MaterialStatePropertyAll(AppColors.white),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+          Text(
+            state?.name ?? "-",
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                ?.copyWith(fontWeight: FontWeight.w600, fontSize: 20),
           ),
           const SizedBox(height: 12),
           state?.recommended == 1
@@ -115,11 +86,17 @@ class UniversityCard extends StatelessWidget {
                   ),
                 )
               : const SizedBox.shrink(),
-          Wrap(
-            runSpacing: 10,
-            spacing: 15,
-            alignment: WrapAlignment.spaceBetween,
-            children: List.generate(4, (index) {
+          GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisExtent: 70,
+              mainAxisSpacing: 12,
+              crossAxisSpacing: 12,
+            ),
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: 4,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
               final List svg = [
                 StudyAbroadAssetPath.fees,
                 StudyAbroadAssetPath.ranking,
@@ -139,11 +116,10 @@ class UniversityCard extends StatelessWidget {
               ];
 
               return Container(
-                width: MediaQuery.of(context).size.width * 0.37,
                 decoration: AppBoxDecoration.getBoxDecoration(
                   color: AppColors.whiteLilac,
                   showShadow: false,
-                  borderRadius: 7,
+                  borderRadius: 8,
                 ),
                 padding: const EdgeInsets.all(10),
                 child: Column(
@@ -166,7 +142,7 @@ class UniversityCard extends StatelessWidget {
                     if (index == 0 || index == 1)
                       Text(
                         data[index],
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               color: AppColors.primaryColor,
                             ),
                       ),
@@ -193,50 +169,22 @@ class UniversityCard extends StatelessWidget {
                   ],
                 ),
               );
-            }),
+            },
           ),
-          const SizedBox(height: 18),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: ElevatedButton(
-                  style: OutlinedButton.styleFrom(
-                    minimumSize: Size(MediaQuery.of(context).size.width * 0.4, 40),
-                    shape: SmoothRectangleBorder(
-                      borderRadius: SmoothBorderRadius(
-                        cornerRadius: 10,
-                        cornerSmoothing: 1.0,
-                      ),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: const Text(
-                    "Talk To Counselor",
-                    textAlign: TextAlign.center,
-                  ),
-                ),
+          const SizedBox(height: 12),
+          OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              minimumSize: Size(MediaQuery.of(context).size.width, 40),
+              side: const BorderSide(
+                color: AppColors.primaryColor,
+                width: 2,
               ),
-              Flexible(
-                child: OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    minimumSize: Size(MediaQuery.of(context).size.width * 0.4, 40),
-                    shape: SmoothRectangleBorder(
-                      borderRadius: SmoothBorderRadius(
-                        cornerRadius: 10,
-                        cornerSmoothing: 1.0,
-                      ),
-                    ),
-                    side: const BorderSide(
-                      color: AppColors.primaryColor,
-                      width: 2,
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: const Text("Apply Now"),
-                ),
-              ),
-            ],
+            ),
+            onPressed: () => bookSessionSheet(context, service: ""),
+            child: const Text(
+              "Talk to University Experts",
+              textAlign: TextAlign.center,
+            ),
           ),
         ],
       ),

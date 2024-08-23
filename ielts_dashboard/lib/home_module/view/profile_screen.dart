@@ -191,298 +191,240 @@ class _ProfileScreenState extends State<ProfileScreen> {
           backButton: true,
           showActions: false,
         ),
-        body: _profileController.obx((state) {
-          if (isLoadingData) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          return SingleChildScrollView(
-            child: Stack(
-              children: [
-                Column(
-                  children: [
-                    const SizedBox(height: kToolbarHeight),
-                    Container(
-                      clipBehavior: Clip.hardEdge,
-                      decoration: AppBoxDecoration.getBoxDecoration(
-                        borderRadius: 14,
-                        showShadow: false,
-                      ),
-                      width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
-                      margin: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const SizedBox(height: kToolbarHeight),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Flexible(
-                                  child: CustomTextFormField(
-                                    title: "First Name",
-                                    hintText: "First Name",
-                                    inputFormatter: [WhitespaceTextInputFormatter()],
-                                    controller: firstNameController,
-                                    validator: (value) {
-                                      return GenericValidator.required(
-                                        value: value?.trim(),
-                                        message: "Enter First Name",
-                                      );
-                                    },
-                                  ),
-                                ),
-                                const SizedBox(width: 20),
-                                Flexible(
-                                  child: CustomTextFormField(
-                                    title: "Last Name",
-                                    inputFormatter: [WhitespaceTextInputFormatter()],
-                                    hintText: "Last Name",
-                                    controller: lastNameController,
-                                    validator: (value) {
-                                      return GenericValidator.required(
-                                        value: value?.trim(),
-                                        message: "Enter Last Name",
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 20),
-                            Row(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      passportShow = !passportShow;
-                                    });
-                                  },
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      Text(
-                                        "Do you have passport",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall
-                                            ?.copyWith(color: AppColors.primaryColor),
-                                      ),
-                                      const SizedBox(width: 6),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            if (passportShow) ...[
-                              const SizedBox(height: 20),
+        body: _profileController.obx(
+          (state) {
+            if (isLoadingData) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return SingleChildScrollView(
+              child: Stack(
+                children: [
+                  Column(
+                    children: [
+                      const SizedBox(height: kToolbarHeight),
+                      Container(
+                        clipBehavior: Clip.hardEdge,
+                        decoration: AppBoxDecoration.getBoxDecoration(
+                          borderRadius: 14,
+                          showShadow: false,
+                        ),
+                        width: MediaQuery.of(context).size.width,
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
+                        margin: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const SizedBox(height: kToolbarHeight),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Flexible(
                                     child: CustomTextFormField(
-                                      title: "Passport Number",
-                                      hintText: "UD124585",
-                                      controller: passPortController,
+                                      title: "First Name",
+                                      hintText: "First Name",
+                                      inputFormatter: [WhitespaceTextInputFormatter()],
+                                      controller: firstNameController,
                                       validator: (value) {
-                                        return passportShow == true
-                                            ? GenericValidator.required(
-                                                value: value,
-                                                message: "Enter passport number",
-                                              )
-                                            : null;
+                                        return GenericValidator.required(
+                                          value: value?.trim(),
+                                          message: "Enter First Name",
+                                        );
                                       },
                                     ),
                                   ),
                                   const SizedBox(width: 20),
                                   Flexible(
                                     child: CustomTextFormField(
-                                      title: "Valid Upto",
-                                      hintText: "25/12/2028",
-                                      controller: validUpToController,
+                                      title: "Last Name",
+                                      inputFormatter: [WhitespaceTextInputFormatter()],
+                                      hintText: "Last Name",
+                                      controller: lastNameController,
                                       validator: (value) {
-                                        return passportShow == true
-                                            ? GenericValidator.required(
-                                                value: value,
-                                                message: "Enter card validity",
-                                              )
-                                            : null;
+                                        return GenericValidator.required(
+                                          value: value?.trim(),
+                                          message: "Enter Last Name",
+                                        );
                                       },
                                     ),
                                   ),
                                 ],
                               ),
-                            ],
-                            const SizedBox(height: 20),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Gender",
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                        color: AppColors.stormDust,
-                                      ),
-                                ),
-                                Row(
-                                  children: [
-                                    _genderSelectionButton(
-                                      gender,
-                                      "male",
-                                      IeltsAssetPath.male,
-                                      IeltsAssetPath.activeMale,
-                                      "Male",
+                              const SizedBox(height: 20),
+                              Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        passportShow = !passportShow;
+                                      });
+                                    },
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        Text(
+                                          "Do you have passport",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall
+                                              ?.copyWith(color: AppColors.primaryColor),
+                                        ),
+                                        const SizedBox(width: 6),
+                                      ],
                                     ),
-                                    _genderSelectionButton(
-                                      gender,
-                                      "female",
-                                      IeltsAssetPath.female,
-                                      IeltsAssetPath.activeFemale,
-                                      "Female",
+                                  ),
+                                ],
+                              ),
+                              if (passportShow) ...[
+                                const SizedBox(height: 20),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Flexible(
+                                      child: CustomTextFormField(
+                                        title: "Passport Number",
+                                        hintText: "UD124585",
+                                        controller: passPortController,
+                                        validator: (value) {
+                                          return passportShow == true
+                                              ? GenericValidator.required(
+                                                  value: value,
+                                                  message: "Enter passport number",
+                                                )
+                                              : null;
+                                        },
+                                      ),
+                                    ),
+                                    const SizedBox(width: 20),
+                                    Flexible(
+                                      child: CustomTextFormField(
+                                        title: "Valid Upto",
+                                        hintText: "25/12/2028",
+                                        controller: validUpToController,
+                                        validator: (value) {
+                                          return passportShow == true
+                                              ? GenericValidator.required(
+                                                  value: value,
+                                                  message: "Enter card validity",
+                                                )
+                                              : null;
+                                        },
+                                      ),
                                     ),
                                   ],
                                 ),
-                                if (genderError != "")
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 12),
-                                    child: Text(
-                                      genderError,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall
-                                          ?.copyWith(color: AppColors.cadmiumRed),
-                                    ),
-                                  )
                               ],
-                            ),
-                            const SizedBox(height: 16),
-                            GestureDetector(
-                              onTap: () => cupertinoCalenderDrawer(
-                                context: context,
-                                initialDate: DateTime.now().subtract(
-                                  const Duration(days: 365 * 10), // 25 years ago
-                                ),
-                                startDate: DateTime.now().subtract(
-                                  const Duration(days: 365 * 60), // 60 years ago
-                                ),
-                                endDate: DateTime.now().subtract(
-                                  const Duration(days: 365 * 10),
-                                ),
-                                title: "Select Date",
-                                onSave: (date) {
-                                  setState(() {
-                                    selectedDate = date;
-                                    selectedDateString = DateFormat('yyyy-MM-dd').format(date);
-                                    dobController.text = selectedDateString!;
-                                    debugPrint('$selectedDateString');
-                                  });
-                                },
-                              ),
-                              child: CustomTextFormField(
-                                validationMode: AutovalidateMode.always,
-                                enabled: false,
-                                title: "Date Of Birth",
-                                hintText: "Enter DOB",
-                                controller: dobController,
-                                validator: (value) {
-                                  return GenericValidator.required(
-                                    value: dobController.text,
-                                    message: "Enter your birth date",
-                                  );
-                                },
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            CustomTextFormField(
-                              title: "Email",
-                              hintText: "Enter Email",
-                              controller: emailController,
-                              validationMode: AutovalidateMode.always,
-                              validator: (value) {
-                                return GenericValidator.required(
-                                      value: value,
-                                      message: "Enter Email",
-                                    ) ??
-                                    GenericValidator.regexMatch(
-                                        value: value,
-                                        regex: MyRegex.emailPattern,
-                                        message: "Invalid Email");
-                              },
-                            ),
-                            const SizedBox(height: 20),
-                            IntlTextField(
-                              title: "Phone Number",
-                              controller: phoneController,
-                              onCountryChanged: (value) {
-                                debugPrint(value.dialCode);
-                                setState(() {
-                                  countryCode = value.dialCode;
-                                  selectedName = value.name;
-                                  maxLength = value.maxLength;
-                                });
-                              },
-                              onChanged: (value) {
-                                if (phoneController.text.length != 10 && countryCode != '10') {
-                                  return;
-                                }
-                              },
-                              validator: (value) {
-                                return GenericValidator.required(
-                                      value: value,
-                                      message: "Enter Number",
-                                    ) ??
-                                    GenericValidator.checkLength(
-                                      value: value,
-                                      length: maxLength,
-                                      message: "Invalid Number",
-                                    );
-                              },
-                              hintText: 'Mobile Number',
-                            ),
-                            if (!show) ...[
-                              const SizedBox(height: 6),
-                              Align(
-                                alignment: Alignment.bottomLeft,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      show = true;
-                                    });
-                                  },
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      Text(
-                                        "Add an alternate mobile number:",
+                              const SizedBox(height: 20),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Gender",
+                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                          color: AppColors.stormDust,
+                                        ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      _genderSelectionButton(
+                                        gender,
+                                        "male",
+                                        IeltsAssetPath.male,
+                                        IeltsAssetPath.activeMale,
+                                        "Male",
+                                      ),
+                                      _genderSelectionButton(
+                                        gender,
+                                        "female",
+                                        IeltsAssetPath.female,
+                                        IeltsAssetPath.activeFemale,
+                                        "Female",
+                                      ),
+                                    ],
+                                  ),
+                                  if (genderError != "")
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 12),
+                                      child: Text(
+                                        genderError,
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodySmall
-                                            ?.copyWith(color: AppColors.primaryColor),
+                                            ?.copyWith(color: AppColors.cadmiumRed),
                                       ),
-                                      const SizedBox(width: 6),
-                                      const Icon(Icons.add_circle_outlined,
-                                          color: AppColors.primaryColor)
-                                    ],
+                                    )
+                                ],
+                              ),
+                              const SizedBox(height: 16),
+                              GestureDetector(
+                                onTap: () => cupertinoCalenderDrawer(
+                                  context: context,
+                                  initialDate: DateTime.now().subtract(
+                                    const Duration(days: 365 * 10), // 25 years ago
                                   ),
+                                  startDate: DateTime.now().subtract(
+                                    const Duration(days: 365 * 60), // 60 years ago
+                                  ),
+                                  endDate: DateTime.now().subtract(
+                                    const Duration(days: 365 * 10),
+                                  ),
+                                  title: "Select Date",
+                                  onSave: (date) {
+                                    setState(() {
+                                      selectedDate = date;
+                                      selectedDateString = DateFormat('yyyy-MM-dd').format(date);
+                                      dobController.text = selectedDateString!;
+                                      debugPrint('$selectedDateString');
+                                    });
+                                  },
+                                ),
+                                child: CustomTextFormField(
+                                  validationMode: AutovalidateMode.always,
+                                  enabled: false,
+                                  title: "Date Of Birth",
+                                  hintText: "Enter DOB",
+                                  controller: dobController,
+                                  validator: (value) {
+                                    return GenericValidator.required(
+                                      value: dobController.text,
+                                      message: "Enter your birth date",
+                                    );
+                                  },
                                 ),
                               ),
-                            ],
-                            if (show) ...[
+                              const SizedBox(height: 20),
+                              CustomTextFormField(
+                                title: "Email",
+                                hintText: "Enter Email",
+                                controller: emailController,
+                                validationMode: AutovalidateMode.always,
+                                validator: (value) {
+                                  return GenericValidator.required(
+                                        value: value,
+                                        message: "Enter Email",
+                                      ) ??
+                                      GenericValidator.regexMatch(
+                                          value: value,
+                                          regex: MyRegex.emailPattern,
+                                          message: "Invalid Email");
+                                },
+                              ),
                               const SizedBox(height: 20),
                               IntlTextField(
-                                title: "Alternate Phone Number",
-                                controller: alternatePhoneController,
+                                title: "Phone Number",
+                                controller: phoneController,
                                 onCountryChanged: (value) {
+                                  debugPrint(value.dialCode);
                                   setState(() {
-                                    altCountryCode = value.dialCode;
-                                    altSelectedName = value.name;
-                                    altMaxLength = value.maxLength;
+                                    countryCode = value.dialCode;
+                                    selectedName = value.name;
+                                    maxLength = value.maxLength;
                                   });
                                 },
                                 onChanged: (value) {
-                                  if (alternatePhoneController.text.length != 10 &&
-                                      altCountryCode != '10') {
+                                  if (phoneController.text.length != 10 && countryCode != '10') {
                                     return;
                                   }
                                 },
@@ -493,102 +435,122 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       ) ??
                                       GenericValidator.checkLength(
                                         value: value,
-                                        length: altMaxLength,
+                                        length: maxLength,
                                         message: "Invalid Number",
                                       );
                                 },
-                                hintText: 'Alternate Mobile Number',
+                                hintText: 'Mobile Number',
                               ),
-                              const SizedBox(height: 6),
-                              Align(
-                                alignment: Alignment.bottomLeft,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      show = false;
-                                    });
-                                  },
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      Text(
-                                        "Hide alternate mobile number:",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall
-                                            ?.copyWith(color: AppColors.primaryColor),
-                                      ),
-                                      const SizedBox(width: 6),
-                                      const Icon(Icons.remove_circle, color: AppColors.primaryColor)
-                                    ],
+                              if (!show) ...[
+                                const SizedBox(height: 6),
+                                Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        show = true;
+                                      });
+                                    },
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        Text(
+                                          "Add an alternate mobile number:",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall
+                                              ?.copyWith(color: AppColors.primaryColor),
+                                        ),
+                                        const SizedBox(width: 6),
+                                        const Icon(Icons.add_circle_outlined,
+                                            color: AppColors.primaryColor)
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                            const SizedBox(height: 20),
-                            GestureDetector(
-                              onTap: () => changeCountry(
-                                hintText: "Select Country",
-                                data: _getCountriesController.state?.answers,
-                                onchange: (value) {
-                                  countryController.text = value;
-                                },
-                                getNewData: (key) async {
-                                  countryIdController.text = key;
-                                  await _getStatesController.getStates(countyId: key);
-                                  cityController.clear();
-                                  stateController.clear();
-                                  setState(() {});
-                                },
-                                context: context,
-                              ),
-                              child: CustomTextFormField(
-                                title: "Country",
-                                hintText: "Select Country",
-                                controller: countryController,
-                                validationMode: AutovalidateMode.always,
-                                enabled: false,
-                                suffix: _getStatesController.isLoggingIn.value == true
-                                    ? const Padding(
-                                        padding: EdgeInsets.all(16),
-                                        child: CircularProgressIndicator(
-                                          color: AppColors.primaryColor,
-                                          backgroundColor: Colors.white,
+                              ],
+                              if (show) ...[
+                                const SizedBox(height: 20),
+                                IntlTextField(
+                                  title: "Alternate Phone Number",
+                                  controller: alternatePhoneController,
+                                  onCountryChanged: (value) {
+                                    setState(() {
+                                      altCountryCode = value.dialCode;
+                                      altSelectedName = value.name;
+                                      altMaxLength = value.maxLength;
+                                    });
+                                  },
+                                  onChanged: (value) {
+                                    if (alternatePhoneController.text.length != 10 &&
+                                        altCountryCode != '10') {
+                                      return;
+                                    }
+                                  },
+                                  validator: (value) {
+                                    return GenericValidator.required(
+                                          value: value,
+                                          message: "Enter Number",
+                                        ) ??
+                                        GenericValidator.checkLength(
+                                          value: value,
+                                          length: altMaxLength,
+                                          message: "Invalid Number",
+                                        );
+                                  },
+                                  hintText: 'Alternate Mobile Number',
+                                ),
+                                const SizedBox(height: 6),
+                                Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        show = false;
+                                      });
+                                    },
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        Text(
+                                          "Hide alternate mobile number:",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall
+                                              ?.copyWith(color: AppColors.primaryColor),
                                         ),
-                                      )
-                                    : const Icon(Icons.arrow_drop_down),
-                                validator: (value) {
-                                  return GenericValidator.required(
-                                    value: value,
-                                    message: "Select Country",
-                                  );
-                                },
-                              ),
-                            ),
-                            if (_getStatesController.state?.answers?.isNotEmpty == true) ...[
+                                        const SizedBox(width: 6),
+                                        const Icon(Icons.remove_circle,
+                                            color: AppColors.primaryColor)
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                               const SizedBox(height: 20),
                               GestureDetector(
                                 onTap: () => changeCountry(
-                                  hintText: "Select States",
-                                  data: _getStatesController.state?.answers,
+                                  hintText: "Select Country",
+                                  data: _getCountriesController.state?.answers,
                                   onchange: (value) {
-                                    stateController.text = value;
+                                    countryController.text = value;
                                   },
                                   getNewData: (key) async {
-                                    stateIdController.text = key;
-                                    await _getCityController.getCities(stateId: key);
-
+                                    countryIdController.text = key;
+                                    await _getStatesController.getStates(countyId: key);
+                                    cityController.clear();
+                                    stateController.clear();
                                     setState(() {});
                                   },
                                   context: context,
                                 ),
                                 child: CustomTextFormField(
-                                  title: "State",
-                                  hintText: "Select Your State",
-                                  controller: stateController,
+                                  title: "Country",
+                                  hintText: "Select Country",
+                                  controller: countryController,
                                   validationMode: AutovalidateMode.always,
                                   enabled: false,
-                                  suffix: _getCityController.isLoggingIn.value == true
+                                  suffix: _getStatesController.isLoggingIn.value == true
                                       ? const Padding(
                                           padding: EdgeInsets.all(16),
                                           child: CircularProgressIndicator(
@@ -600,108 +562,148 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   validator: (value) {
                                     return GenericValidator.required(
                                       value: value,
-                                      message: "Select State",
+                                      message: "Select Country",
                                     );
                                   },
                                 ),
                               ),
+                              if (_getStatesController.state?.answers?.isNotEmpty == true) ...[
+                                const SizedBox(height: 20),
+                                GestureDetector(
+                                  onTap: () => changeCountry(
+                                    hintText: "Select States",
+                                    data: _getStatesController.state?.answers,
+                                    onchange: (value) {
+                                      stateController.text = value;
+                                    },
+                                    getNewData: (key) async {
+                                      stateIdController.text = key;
+                                      await _getCityController.getCities(stateId: key);
+
+                                      setState(() {});
+                                    },
+                                    context: context,
+                                  ),
+                                  child: CustomTextFormField(
+                                    title: "State",
+                                    hintText: "Select Your State",
+                                    controller: stateController,
+                                    validationMode: AutovalidateMode.always,
+                                    enabled: false,
+                                    suffix: _getCityController.isLoggingIn.value == true
+                                        ? const Padding(
+                                            padding: EdgeInsets.all(16),
+                                            child: CircularProgressIndicator(
+                                              color: AppColors.primaryColor,
+                                              backgroundColor: Colors.white,
+                                            ),
+                                          )
+                                        : const Icon(Icons.arrow_drop_down),
+                                    validator: (value) {
+                                      return GenericValidator.required(
+                                        value: value,
+                                        message: "Select State",
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                              if (_getStatesController.state?.answers?.isNotEmpty == true &&
+                                  _getCityController.state?.answers?.isNotEmpty == true) ...[
+                                const SizedBox(height: 20),
+                                GestureDetector(
+                                  onTap: () => changeCountry(
+                                    hintText: "Select City",
+                                    data: _getCityController.state?.answers,
+                                    onchange: (value) {
+                                      cityController.text = value;
+                                    },
+                                    getNewData: (key) {
+                                      cityIdController.text = key;
+                                    },
+                                    context: context,
+                                  ),
+                                  child: CustomTextFormField(
+                                    title: "City",
+                                    hintText: "Select your city",
+                                    controller: cityController,
+                                    enabled: false,
+                                    validator: (value) {
+                                      return GenericValidator.required(
+                                        value: value,
+                                        message: "Select city",
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ]
                             ],
-                            if (_getStatesController.state?.answers?.isNotEmpty == true &&
-                                _getCityController.state?.answers?.isNotEmpty == true) ...[
-                              const SizedBox(height: 20),
-                              GestureDetector(
-                                onTap: () => changeCountry(
-                                  hintText: "Select City",
-                                  data: _getCityController.state?.answers,
-                                  onchange: (value) {
-                                    cityController.text = value;
-                                  },
-                                  getNewData: (key) {
-                                    cityIdController.text = key;
-                                  },
-                                  context: context,
-                                ),
-                                child: CustomTextFormField(
-                                  title: "City",
-                                  hintText: "Select your city",
-                                  controller: cityController,
-                                  enabled: false,
-                                  validator: (value) {
-                                    return GenericValidator.required(
-                                      value: value,
-                                      message: "Select city",
-                                    );
-                                  },
-                                ),
-                              ),
-                            ]
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: kToolbarHeight + 20),
-                  ],
-                ),
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  child: Hero(
-                    tag: "profile-image",
-                    child: Container(
-                      clipBehavior: Clip.hardEdge,
-                      padding: EdgeInsets.all(pickedImage == null ? 8 : 0),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                      child: pickedImage == null
-                          ? ClipOval(
-                              child: CachedImageNetworkContainer(
-                              height: 100,
-                              width: 100,
-                              fit: BoxFit.cover,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
-                              ),
-                              url: state?.profile?.imageUrl,
-                              placeHolder: buildPlaceholder(
-                                name: state?.profile?.name?[0],
-                                context: context,
-                              ),
-                            ))
-                          : Container(
-                              height: 100,
-                              width: 100,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Image.file(
-                                File(pickedImage?.path ?? ''),
+                      const SizedBox(height: kToolbarHeight + 20),
+                    ],
+                  ),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    child: Hero(
+                      tag: "profile-image",
+                      child: Container(
+                        clipBehavior: Clip.hardEdge,
+                        padding: EdgeInsets.all(pickedImage == null ? 8 : 0),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: pickedImage == null
+                            ? ClipOval(
+                                child: CachedImageNetworkContainer(
                                 height: 100,
                                 width: 100,
-                                fit: BoxFit.contain,
+                                fit: BoxFit.cover,
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                ),
+                                url: state?.profile?.imageUrl,
+                                placeHolder: buildPlaceholder(
+                                  name: state?.profile?.name?[0],
+                                  context: context,
+                                ),
+                              ))
+                            : Container(
+                                height: 100,
+                                width: 100,
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Image.file(
+                                  File(pickedImage?.path ?? ''),
+                                  height: 100,
+                                  width: 100,
+                                  fit: BoxFit.contain,
+                                ),
                               ),
-                            ),
+                      ),
                     ),
                   ),
-                ),
-                Positioned(
-                  left: 180,
-                  right: 100,
-                  top: 80,
-                  child: GestureDetector(
-                    onTap: () {
-                      getImage();
-                    },
-                    child: SvgPicture.asset(IeltsAssetPath.upload),
-                  ),
-                )
-              ],
-            ),
-          );
-        },
+                  Positioned(
+                    left: 180,
+                    right: 100,
+                    top: 80,
+                    child: GestureDetector(
+                      onTap: () {
+                        getImage();
+                      },
+                      child: SvgPicture.asset(IeltsAssetPath.upload),
+                    ),
+                  )
+                ],
+              ),
+            );
+          },
           onError: (error) => TryAgain(
             onTap: () => _profileController.getProfileData(),
           ),
@@ -711,10 +713,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 padding: const EdgeInsets.only(bottom: 10),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size(
-                      MediaQuery.of(context).size.width * 0.8,
-                      42,
-                    ),
+                    minimumSize: Size(MediaQuery.of(context).size.width * 0.8, 42),
                   ),
                   onPressed: () async {
                     if (gender == "") {

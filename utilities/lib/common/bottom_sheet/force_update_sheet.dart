@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:in_app_update/in_app_update.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:utilities/app_change.dart';
 
 appUpdateFunction({
   required num? forceUpdate,
@@ -57,7 +58,7 @@ updateDrawer({required num appUpdate, required BuildContext context}) {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return PopScope(
-          canPop:  false,
+          canPop: false,
           child: CupertinoAlertDialog(
             title: const Text('Update Available'),
             content: const Text('A new version of the app is available.'),
@@ -107,7 +108,9 @@ updateDrawer({required num appUpdate, required BuildContext context}) {
 
 void _launchStore() async {
   if (Platform.isAndroid || Platform.isIOS) {
-    final appId = Platform.isAndroid ? 'com.gradding' : '1246082058';
+    final appId = Platform.isAndroid
+        ? getAndroidPackageName(AppConstants.appName)
+        : getIosPackageName(AppConstants.appName);
     // final uri = Platform.isAndroid
     //     ? 'market://details?id=$appId'
     //     : 'https://apps.apple.com/gb/app/id$appId';
@@ -118,5 +121,31 @@ void _launchStore() async {
     } else {
       throw 'Could not launch Store URL';
     }
+  }
+}
+
+String getAndroidPackageName(String appName) {
+  switch (appName) {
+    case 'Gradding':
+      return "1246082058";
+    case 'Course-Finder':
+      return "com.gradding.finder";
+    case 'College-Predictor':
+      return "com.gradding.predictor";
+    default:
+      return "com.gradding";
+  }
+}
+
+String getIosPackageName(String appName) {
+  switch (appName) {
+    case 'Gradding':
+      return "";
+    case 'Course-Finder':
+      return "";
+    case 'College-Predictor':
+      return "";
+    default:
+      return "";
   }
 }

@@ -15,6 +15,7 @@ class UniversityUnifinderController extends GetxController
     Map<String, dynamic>? filterPostData,
   }) async {
     const apiEndPoint = APIEndPoints.getUniversity;
+    isLoading.value = true;
     debugPrint("---------- $apiEndPoint getUniversityApi Start ----------");
     try {
       final Map<String, dynamic> postData = {

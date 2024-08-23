@@ -32,9 +32,7 @@ class _CourseUnifinderState extends State<CourseUnifinder> {
   @override
   void initState() {
     super.initState();
-    _coursesController.getCoursesApi(
-      offset: '1',
-    );
+    _coursesController.getCoursesApi(offset: '1');
     _coursesController.loadMoreCount = 1;
     _universityFilterController.getCoursesFilterApi();
     scrollController.addListener(_scrollListener);
