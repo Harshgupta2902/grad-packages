@@ -15,17 +15,17 @@ import 'package:utilities/theme/app_colors.dart';
 
 final _shortListCourseController = Get.put(ShortlistCourseController());
 
-class CoursesViewDetailsCard extends StatefulWidget {
-  const CoursesViewDetailsCard({super.key, required this.courses, required this.counsellor});
+class RecommendedCourses extends StatefulWidget {
+  const RecommendedCourses({super.key, required this.courses, required this.counsellor});
 
   final List<Courses>? courses;
   final Counsellor? counsellor;
 
   @override
-  State<CoursesViewDetailsCard> createState() => _CoursesViewDetailsCardState();
+  State<RecommendedCourses> createState() => _RecommendedCoursesState();
 }
 
-class _CoursesViewDetailsCardState extends State<CoursesViewDetailsCard> {
+class _RecommendedCoursesState extends State<RecommendedCourses> {
   late List<GlobalKey> expansionTileKey;
   int selectedIndex = 0;
 

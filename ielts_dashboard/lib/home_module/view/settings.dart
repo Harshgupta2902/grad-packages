@@ -135,6 +135,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               borderRadius: 30,
                               color: AppColors.primaryColor,
                             ),
+                            fit: BoxFit.contain,
                             url: state?.imageUrl,
                             placeHolder: buildPlaceholder(
                               name: state?.name?[0],

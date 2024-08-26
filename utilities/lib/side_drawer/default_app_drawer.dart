@@ -247,13 +247,8 @@ class _DefaultCustomDrawerState extends State<DefaultCustomDrawer> with TickerPr
               );
             },
             onError: (error) => TryAgain(
-                            onTap: () => _defaultCustomDrawerController.getMenuItems(path: "home"),
-
-
-
-
+              onTap: () => _defaultCustomDrawerController.getMenuItems(path: "home"),
             ),
-
           ),
         ),
       ),

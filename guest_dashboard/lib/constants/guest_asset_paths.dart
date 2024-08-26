@@ -5,7 +5,7 @@ class GuestAssetPath {
   static const String forward = "packages/guest_dashboard/assets/icons/forward.svg";
 
   //  dashboard  svg  icons
-  static const String accommodation = "packages/guest_dashboard/assets/icons/accomodation.svg";
+  static const String accommodation = "packages/guest_dashboard/assets/icons/accommodation.svg";
   static const String documentPrep = "packages/guest_dashboard/assets/icons/document_prep.svg";
   static const String loansFinance = "packages/guest_dashboard/assets/icons/loans.svg";
   static const String studyAbroad = "packages/guest_dashboard/assets/icons/study_abroad.svg";

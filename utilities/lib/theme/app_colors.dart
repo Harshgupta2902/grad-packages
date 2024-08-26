@@ -63,6 +63,7 @@ class AppColors {
   static const Color gainsBoro = Color(0xFFDCDCDD);
   static const Color blackPearl = Color(0xFF0A171B);
   static const Color portLangOrange = Color(0xFFFF512F);
+  static const Color papayaOrange = Color(0xFFF3601E);
   static const Color gamboge = Color(0xFFF09819);
   static const Color brightSun = Color(0xFFFFCD45);
   static const Color golden = Color(0xFFF1C100);

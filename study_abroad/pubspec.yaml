@@ -25,8 +25,7 @@ dependencies:
 
   utilities:
     path: /home/user/Apps/gradding-packages/utilities
-  ielts_dashboard:
-    path: /home/user/Apps/gradding-packages/ielts_dashboard
+
 
 
 dev_dependencies:
@@ -46,6 +45,7 @@ flutter:
      - assets/bg/
      - assets/lottie/
      - assets/study_material/
+     - assets/university/
   #   - images/a_dot_ham.jpeg
   #
   # For details regarding assets in packages, see

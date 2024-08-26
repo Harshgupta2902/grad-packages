@@ -5,6 +5,7 @@ class StudyAbroadAssetPath {
   static const String bgPath = "${basePath}bg/";
   static const String lottiePath = "${basePath}lottie/";
   static const String studyMaterial = "${basePath}study_material/";
+  static const String universityDetails = "${basePath}university/";
 
   static const String upload = "${iconsPath}upload.svg";
   static const String delete = "${iconsPath}delete.svg";
@@ -42,4 +43,25 @@ class StudyAbroadAssetPath {
   static const String sound = "${studyMaterial}sound.svg";
   static const String video = "${studyMaterial}video.svg";
   static const String word = "${studyMaterial}word.svg";
+
+//   university details
+  static const String benefits = "${universityDetails}benefits.png";
+  static const String loan = "${universityDetails}loan.png";
+  static const String offer = "${universityDetails}offer.png";
+  static const String scholarship = "${universityDetails}scholarship.png";
+
+  static const String accommodation = "${universityDetails}accommodation.svg";
+  static const String free = "${universityDetails}free.svg";
+  static const String test = "${universityDetails}test.svg";
+  static const String visa = "${universityDetails}visa.svg";
+
+  static const String crossBgOverview = "${universityDetails}cross_bg.png";
+  static const String whyChooseBgOverview = "${universityDetails}why_choose.png";
+
+  static const String exceptionalCounselling = "${universityDetails}counselling.svg";
+  static const String handPickedCourses = "${universityDetails}courses.svg";
+  static const String smoothDocumentation = "${universityDetails}documentation.svg";
+  static const String customizedStudyPlans = "${universityDetails}plans.svg";
+  static const String bestTestPrep = "${universityDetails}test_preparation.svg";
+  static const String smoothVisaProcess = "${universityDetails}visa_process.svg";
 }

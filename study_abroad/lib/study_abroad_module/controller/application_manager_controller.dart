@@ -5,10 +5,10 @@ import 'package:utilities/dio/api_end_points.dart';
 import 'package:utilities/dio/api_request.dart';
 
 class ApplicationManagerController extends GetxController with StateMixin<ApplicationManagerModel> {
-  RxBool isLoading = RxBool(false);
   getApplications() async {
     const apiEndPoint = APIEndPoints.applicationManager;
     debugPrint("---------- $apiEndPoint  Start ----------");
+    change(null, status: RxStatus.loading());
 
     try {
       final response = await postRequest(

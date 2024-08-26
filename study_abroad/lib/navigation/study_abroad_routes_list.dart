@@ -4,7 +4,8 @@ import 'package:study_abroad/navigation/study_abroad_go_paths.dart';
 import 'package:study_abroad/study_abroad_module/view/application_manager.dart';
 import 'package:study_abroad/study_abroad_module/view/course_unifinder.dart';
 import 'package:study_abroad/study_abroad_module/view/documents_center.dart';
-import 'package:study_abroad/study_abroad_module/view/university_unifinder.dart';
+import 'package:study_abroad/study_abroad_module/view/university/university_detail.dart';
+import 'package:study_abroad/study_abroad_module/view/university/university_unifinder.dart';
 
 List<RouteBase> studyAbroadRoutes({
   required GlobalKey<NavigatorState>? shellNavigatorKey,
@@ -45,15 +46,19 @@ List<RouteBase> studyAbroadRoutes({
         return const UniversityUnifinder();
       },
     ),
-    // GoRoute(
-    //   parentNavigatorKey: rootNavigatorKey,
-    //   path: StudyAbroadGoPaths.uploadPage,
-    //   name: StudyAbroadGoPaths.uploadPage,
-    //   builder: (context, state) {
-    //     final extras = state.extra as Map<String, dynamic>;
-    //     final docType = extras['docType'];
-    //     return UploadPage(docType: docType);
-    //   },
-    // ),
+    GoRoute(
+      parentNavigatorKey: rootNavigatorKey,
+      path: StudyAbroadGoPaths.universityDetails,
+      name: StudyAbroadGoPaths.universityDetails,
+      builder: (context, state) {
+        final extras = state.extra as Map<String, dynamic>;
+        final city = extras['city'];
+        final university = extras['university'];
+        return UniversityDetailsScreen(
+          city: city,
+          university: university,
+        );
+      },
+    ),
   ];
 }

@@ -67,6 +67,8 @@ class APIEndPoints {
   static const getCourses = 'courses/by/country';
   static const getUniversity = 'university/by/country';
 
+  static const getUniversityDetails = 'getUniversityDetails';
+
   static const coursesFilter = 'courseFilterData';
   static const universityFilter = 'universityFilterData';
 

@@ -5,5 +5,5 @@ class StudyAbroadGoPaths {
   static const String courseFinder = '/courseFinder';
   static const String universityFinder = '/universityFinder';
 
-  // static const String uploadPage = '/uploadPage';
+  static const String universityDetails = '/universityDetails';
 }

@@ -661,7 +661,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 child: CachedImageNetworkContainer(
                                 height: 100,
                                 width: 100,
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                                 decoration: const BoxDecoration(
                                   color: Colors.white,
                                   shape: BoxShape.circle,

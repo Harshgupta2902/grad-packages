@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:study_abroad/constants/study_abroad_asset_paths.dart';
+import 'package:study_abroad/navigation/study_abroad_go_paths.dart';
 import 'package:study_abroad/study_abroad_module/models/university_unifinder_model.dart';
 import 'package:utilities/common/bottom_sheet/book_session_sheet.dart';
 import 'package:utilities/packages/smooth_rectangular_border.dart';
@@ -24,6 +26,7 @@ class UniversityCard extends StatelessWidget {
     this.shortlist,
     this.shortListCallBack,
   });
+
   final University? state;
   final String? selectedExam;
   final String currency;
@@ -180,9 +183,15 @@ class UniversityCard extends StatelessWidget {
                 width: 2,
               ),
             ),
-            onPressed: () => bookSessionSheet(context, service: ""),
+            onPressed: () => context.pushNamed(
+              StudyAbroadGoPaths.universityDetails,
+              extra: {
+                'city': state?.countries?.url,
+                "university": state?.url,
+              },
+            ),
             child: const Text(
-              "Talk to University Experts",
+              "Apply Now",
               textAlign: TextAlign.center,
             ),
           ),
