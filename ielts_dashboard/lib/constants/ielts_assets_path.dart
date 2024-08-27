@@ -15,12 +15,6 @@ class IeltsAssetPath {
   static const String appManagerBackgroundBlue =
       "packages/ielts_dashboard/assets/icons/app_manager_background_blue.png";
 
-  static const String startMockTest = "packages/ielts_dashboard/assets/icons/start_mock_test.svg";
-  static const String playMockTest = "packages/ielts_dashboard/assets/icons/play_mock_test.svg";
-  static const String lockMockTest = "packages/ielts_dashboard/assets/icons/lock_mock_test.svg";
-
-  static const String badge = "packages/ielts_dashboard/assets/icons/badge.png";
-
   static const String writing = "packages/ielts_dashboard/assets/icons/writing.png";
   static const String speaking = "packages/ielts_dashboard/assets/icons/speaking.png";
   static const String reading = "packages/ielts_dashboard/assets/icons/reading.png";

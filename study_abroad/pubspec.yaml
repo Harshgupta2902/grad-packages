@@ -25,6 +25,10 @@ dependencies:
 
   utilities:
     path: /home/user/Apps/gradding-packages/utilities
+  ielts_dashboard:
+    path: /home/user/Apps/gradding-packages/ielts_dashboard
+  guest_dashboard:
+    path: /home/user/Apps/gradding-packages/guest_dashboard
 
 
 

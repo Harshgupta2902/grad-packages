@@ -157,7 +157,7 @@ void onTapFunction(BuildContext context, String url) {
     case 'gif':
     case 'bmp':
     case 'svg':
-      studyMaterialSheet(context, extensions: Extensions.image, imageUrl: url);
+      studyMaterialSheet(context, extensions: FileTypes.image, imageUrl: url);
       break;
     case 'pdf':
       context.pushNamed(
@@ -178,7 +178,7 @@ void onTapFunction(BuildContext context, String url) {
     case 'm4a':
     case 'flac':
     case 'aac':
-      studyMaterialSheet(context, extensions: Extensions.sound, imageUrl: url);
+      studyMaterialSheet(context, extensions: FileTypes.sound, imageUrl: url);
       break;
     case 'mp4':
     case 'mov':
@@ -187,7 +187,7 @@ void onTapFunction(BuildContext context, String url) {
     case 'mkv':
     case 'flv':
     case 'webm':
-      studyMaterialSheet(context, extensions: Extensions.video, imageUrl: url);
+      studyMaterialSheet(context, extensions: FileTypes.video, imageUrl: url);
       break;
     case 'doc':
     case 'docx':
@@ -197,7 +197,7 @@ void onTapFunction(BuildContext context, String url) {
       );
       break;
     default:
-      studyMaterialSheet(context, extensions: Extensions.image, imageUrl: url);
+      studyMaterialSheet(context, extensions: FileTypes.image, imageUrl: url);
       break;
   }
 }

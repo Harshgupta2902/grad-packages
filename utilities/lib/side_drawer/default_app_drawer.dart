@@ -165,7 +165,7 @@ class _DefaultCustomDrawerState extends State<DefaultCustomDrawer> with TickerPr
                               GestureDetector(
                                 onTap: () => studyMaterialSheet(
                                   context,
-                                  extensions: Extensions.image,
+                                  extensions: FileTypes.image,
                                   imageUrl: _profileController.state?.profile?.imageUrl,
                                 ),
                                 child: Hero(

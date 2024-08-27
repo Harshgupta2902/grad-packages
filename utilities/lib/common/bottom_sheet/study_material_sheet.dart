@@ -7,7 +7,7 @@ import 'package:utilities/packages/smooth_rectangular_border.dart';
 
 void studyMaterialSheet(
   BuildContext context, {
-  required Extensions extensions,
+  required FileTypes extensions,
   String? imageUrl,
   String? audioUrl,
   String? videoUrl,
@@ -43,7 +43,7 @@ class StudyMaterialSheet extends StatefulWidget {
     this.videoUrl,
   });
 
-  final Extensions extensions;
+  final FileTypes extensions;
   final String? imageUrl;
   final String? audioUrl;
   final String? videoUrl;
@@ -69,7 +69,7 @@ class StudyMaterialSheetState extends State<StudyMaterialSheet> {
             ),
           ),
         ),
-        if (widget.extensions == Extensions.image && widget.imageUrl != null)
+        if (widget.extensions == FileTypes.image && widget.imageUrl != null)
           Center(
             child: CachedImageNetworkContainer(
               color: Colors.transparent,

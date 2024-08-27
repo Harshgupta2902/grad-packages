@@ -64,4 +64,8 @@ class StudyAbroadAssetPath {
   static const String customizedStudyPlans = "${universityDetails}plans.svg";
   static const String bestTestPrep = "${universityDetails}test_preparation.svg";
   static const String smoothVisaProcess = "${universityDetails}visa_process.svg";
+
+  static const String campus = "${universityDetails}campus.png";
+
+  static const String play = "${universityDetails}play.svg";
 }

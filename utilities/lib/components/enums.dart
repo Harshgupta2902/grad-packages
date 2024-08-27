@@ -1,6 +1,6 @@
 enum ApplicationStage { manager, course, shortlisted }
 
-enum Extensions {
+enum FileTypes {
   image,
   sound,
   video,

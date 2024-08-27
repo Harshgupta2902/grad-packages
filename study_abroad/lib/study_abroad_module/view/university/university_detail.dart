@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:study_abroad/constants/study_abroad_asset_paths.dart';
+import 'package:study_abroad/study_abroad_module/components/university/accommodation_detail.dart';
 import 'package:study_abroad/study_abroad_module/components/university/benefits_card.dart';
+import 'package:study_abroad/study_abroad_module/components/university/faq_detail.dart';
+import 'package:study_abroad/study_abroad_module/components/university/gallery_detail.dart';
 import 'package:study_abroad/study_abroad_module/components/university/overview_detail.dart';
+import 'package:study_abroad/study_abroad_module/components/university/ranking_detail.dart';
 import 'package:study_abroad/study_abroad_module/components/university/read_more.dart';
 import 'package:study_abroad/study_abroad_module/controller/university_details_controller.dart';
-import 'package:study_abroad/study_abroad_module/models/university_details_model.dart';
 import 'package:utilities/common/bottom_sheet/book_session_sheet.dart';
-import 'package:utilities/common/model/common_model.dart';
 import 'package:utilities/components/cached_image_network_container.dart';
 import 'package:utilities/components/custom_header_delegate.dart';
 import 'package:utilities/components/custom_tab_bar.dart';
 import 'package:utilities/components/gradding_app_bar.dart';
 import 'package:utilities/packages/smooth_rectangular_border.dart';
-import 'package:utilities/theme/app_box_decoration.dart';
 import 'package:utilities/theme/app_colors.dart';
 
 final universityDetailsController = Get.put(UniversityDetailsController());
@@ -45,7 +45,7 @@ class _UniversityDetailsScreenState extends State<UniversityDetailsScreen> {
       ),
       body: universityDetailsController.obx((state) {
         return DefaultTabController(
-          length: 7,
+          length: 5,
           child: NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) => [
               SliverToBoxAdapter(
@@ -106,8 +106,6 @@ class _UniversityDetailsScreenState extends State<UniversityDetailsScreen> {
                         height: 44,
                         tabList: [
                           "Overview",
-                          "Courses & Fees",
-                          "Admissions",
                           "Accommodation",
                           "Gallery",
                           "Rankings",
@@ -124,12 +122,10 @@ class _UniversityDetailsScreenState extends State<UniversityDetailsScreen> {
               child: TabBarView(
                 children: [
                   OverViewDetail(result: state?.result),
-                  OverViewDetail(result: state?.result),
-                  OverViewDetail(result: state?.result),
-                  OverViewDetail(result: state?.result),
-                  OverViewDetail(result: state?.result),
-                  OverViewDetail(result: state?.result),
-                  OverViewDetail(result: state?.result),
+                  AccommodationDetail(result: state?.result),
+                  GalleryDetail(result: state?.result),
+                  RankingDetail(result: state?.result),
+                  FaqDetail(result: state?.result),
                 ],
               ),
             ),
@@ -139,7 +135,10 @@ class _UniversityDetailsScreenState extends State<UniversityDetailsScreen> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: GestureDetector(
-          onTap: () => bookSessionSheet(context, service: ""),
+          onTap: () => bookSessionSheet(
+            context,
+            service: "${universityDetailsController.state?.result?.name}",
+          ),
           child: Container(
             height: 55,
             width: MediaQuery.of(context).size.width,

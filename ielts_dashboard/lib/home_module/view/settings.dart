@@ -118,7 +118,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     GestureDetector(
                       onTap: () => studyMaterialSheet(
                         context,
-                        extensions: Extensions.image,
+                        extensions: FileTypes.image,
                         imageUrl: state?.imageUrl,
                       ),
                       child: Hero(
