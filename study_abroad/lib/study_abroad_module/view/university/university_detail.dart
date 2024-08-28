@@ -57,7 +57,12 @@ class _UniversityDetailsScreenState extends State<UniversityDetailsScreen> {
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height * 0.25,
                         url: state?.result?.images?[0],
-                        placeHolder: buildPlaceholderSVG(assetPath: StudyAbroadAssetPath.word),
+                        placeHolder: Center(
+                          child: Image.network(
+                            "https://archive.org/download/placeholder-image/placeholder-image.jpg",
+                            fit: BoxFit.fill,
+                          ),
+                        ),
                       ),
                       const SizedBox(height: 16),
                       RichText(

@@ -61,31 +61,35 @@ class CounsellorSheetState extends State<CounsellorSheet> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SvgPicture.asset("packages/utilities/assets/counsellor.svg"),
-                const SizedBox(width: 20),
                 Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
                     children: [
-                      Text(
-                        widget.name,
-                        // "No Counsellor assigned yet",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge
-                            ?.copyWith(color: Colors.white, fontWeight: FontWeight.w500),
-                      ),
-                      Text(
-                        "COUNSELLOR",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium
-                            ?.copyWith(color: Colors.white, fontWeight: FontWeight.w500),
+                      SvgPicture.asset("packages/utilities/assets/counsellor.svg"),
+                      const SizedBox(width: 20),
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.name,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(color: Colors.white, fontWeight: FontWeight.w500),
+                            ),
+                            Text(
+                              "COUNSELLOR",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(color: Colors.white, fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
-                const Spacer(),
                 GestureDetector(
                   onTap: () {
                     context.pop();

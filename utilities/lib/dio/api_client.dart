@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
@@ -12,8 +14,10 @@ class NewClient {
     dio.options.baseUrl = APIEndPoints.base;
     dio.options.headers["Authorization"] = 'Bearer ${token ?? ""}';
     dio.options.headers["AppName"] = AppConstants.appName;
-    debugPrint("token  : : :: : : : $token");
-    debugPrint("AppName  ::::::::::::::::::::: ${AppConstants.appName}");
+    dio.options.headers["source"] = Platform.isAndroid ? "Android" : "IOS";
+
+    debugPrint(
+        ":::::::::::::::------------   AppName => ${AppConstants.appName}|||||||||||||||||  Soucrce => ${Platform.isAndroid ? "Android" : "IOS"}");
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
