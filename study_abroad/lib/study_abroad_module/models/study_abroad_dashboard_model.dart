@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class StudyAbroadDashboardModel {
   StudyAbroadDashboardModel({
     this.message,
@@ -35,6 +37,7 @@ class Result {
     this.timeline,
     this.counsellor,
     this.courses,
+    this.universities,
   });
 
   Result.fromJson(dynamic json) {
@@ -62,6 +65,12 @@ class Result {
         courses?.add(Courses.fromJson(v));
       });
     }
+    if (json['universities'] != null) {
+      universities = [];
+      json['universities'].forEach((v) {
+        universities?.add(University.fromJson(v));
+      });
+    }
   }
   TestCard? testCard;
   List<Cards>? cards;
@@ -71,6 +80,7 @@ class Result {
   Counsellor? counsellor;
   List<Timeline>? timeline;
   List<Courses>? courses;
+  List<University>? universities;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -93,6 +103,9 @@ class Result {
     }
     if (courses != null) {
       map['courses'] = courses?.map((v) => v.toJson()).toList();
+    }
+    if (universities != null) {
+      map['universities'] = universities?.map((v) => v.toJson()).toList();
     }
     return map;
   }
@@ -249,7 +262,7 @@ class Courses {
     amount = json['Amount'];
     durationValue = json['durationValue'];
     durationUnit = json['durationUnit'];
-    university = json['university'] != null ? University.fromJson(json['university']) : null;
+    university = json['university'] != null ? CourseUniversity.fromJson(json['university']) : null;
   }
   num? id;
   String? name;
@@ -259,7 +272,7 @@ class Courses {
   num? amount;
   num? durationValue;
   String? durationUnit;
-  University? university;
+  CourseUniversity? university;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -278,15 +291,15 @@ class Courses {
   }
 }
 
-class University {
-  University({
+class CourseUniversity {
+  CourseUniversity({
     this.id,
     this.name,
     this.countryId,
     this.countries,
   });
 
-  University.fromJson(dynamic json) {
+  CourseUniversity.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
     countryId = json['country_id'];
@@ -309,26 +322,95 @@ class University {
   }
 }
 
+class University {
+  University({
+    this.id,
+    this.name,
+    this.qsRanking,
+    this.url,
+    this.recommended,
+    this.countryId,
+    this.countries,
+    this.averageInrAmount,
+    this.averageAmount,
+    this.intakes,
+    this.tests,
+  });
+
+  University.fromJson(dynamic json) {
+    try {
+      id = json['id'];
+      name = json['name'];
+      qsRanking = json['qs_ranking'];
+      url = json['url'];
+      recommended = json['recommended'];
+      countryId = json['country_id'];
+      countries = json['countries'] != null ? Countries.fromJson(json['countries']) : null;
+      averageInrAmount = json['averageInrAmount'];
+      averageAmount = json['averageAmount'];
+      intakes = json['intakes'] != null ? json['intakes'].cast<String>() : [];
+
+      tests = json['tests'] != null ? json['tests'].cast<String>() : [];
+    } catch (e) {
+      debugPrint("UniversityFinderModel: University => $e");
+    }
+  }
+  num? id;
+  String? name;
+  num? qsRanking;
+  String? url;
+  num? recommended;
+  num? countryId;
+  Countries? countries;
+  String? averageInrAmount;
+  String? averageAmount;
+  List<String>? intakes;
+  List<String>? tests;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['name'] = name;
+    map['qs_ranking'] = qsRanking;
+    map['url'] = url;
+    map['recommended'] = recommended;
+    map['country_id'] = countryId;
+    if (countries != null) {
+      map['countries'] = countries?.toJson();
+    }
+    map['averageInrAmount'] = averageInrAmount;
+    map['averageAmount'] = averageAmount;
+    map['intakes'] = intakes;
+
+    map['tests'] = tests;
+    return map;
+  }
+}
+
 class Countries {
   Countries({
     this.id,
     this.name,
+    this.url,
     this.symbol,
   });
 
   Countries.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
+    url = json['url'];
     symbol = json['symbol'];
   }
   num? id;
   String? name;
+  String? url;
   String? symbol;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;
     map['name'] = name;
+    map['url'] = url;
     map['symbol'] = symbol;
     return map;
   }

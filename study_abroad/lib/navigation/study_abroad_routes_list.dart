@@ -4,6 +4,7 @@ import 'package:study_abroad/navigation/study_abroad_go_paths.dart';
 import 'package:study_abroad/study_abroad_module/view/application_manager.dart';
 import 'package:study_abroad/study_abroad_module/view/course_unifinder.dart';
 import 'package:study_abroad/study_abroad_module/view/documents_center.dart';
+import 'package:study_abroad/study_abroad_module/view/university/university_courses.dart';
 import 'package:study_abroad/study_abroad_module/view/university/university_detail.dart';
 import 'package:study_abroad/study_abroad_module/view/university/university_unifinder.dart';
 
@@ -57,6 +58,18 @@ List<RouteBase> studyAbroadRoutes({
         return UniversityDetailsScreen(
           city: city,
           university: university,
+        );
+      },
+    ),
+    GoRoute(
+      parentNavigatorKey: rootNavigatorKey,
+      path: StudyAbroadGoPaths.universityCourses,
+      name: StudyAbroadGoPaths.universityCourses,
+      builder: (context, state) {
+        final extras = state.extra as Map<String, dynamic>;
+        final postData = extras['postData'];
+        return UniversityCourses(
+          postData: postData,
         );
       },
     ),

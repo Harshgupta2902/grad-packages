@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:study_abroad/constants/study_abroad_asset_paths.dart';
+import 'package:study_abroad/navigation/study_abroad_go_paths.dart';
 import 'package:study_abroad/study_abroad_module/components/university/accommodation_detail.dart';
 import 'package:study_abroad/study_abroad_module/components/university/benefits_card.dart';
 import 'package:study_abroad/study_abroad_module/components/university/faq_detail.dart';
@@ -140,10 +142,17 @@ class _UniversityDetailsScreenState extends State<UniversityDetailsScreen> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: GestureDetector(
-          onTap: () => bookSessionSheet(
-            context,
-            service: "${universityDetailsController.state?.result?.name}",
-          ),
+          onTap: () {
+            Map<String, dynamic> postData = {
+              'currency': ['INR'],
+              'university': ['${universityDetailsController.state?.result?.id}'],
+            };
+
+            context.pushNamed(
+              StudyAbroadGoPaths.universityCourses,
+              extra: {'postData': postData},
+            );
+          },
           child: Container(
             height: 55,
             width: MediaQuery.of(context).size.width,
@@ -154,7 +163,7 @@ class _UniversityDetailsScreenState extends State<UniversityDetailsScreen> {
             ),
             child: Center(
               child: Text(
-                "Talk to University Experts",
+                "View Courses",
                 style: Theme.of(context)
                     .textTheme
                     .bodyLarge

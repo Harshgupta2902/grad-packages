@@ -13,7 +13,7 @@ class APIEndPoints {
   static const otpVerification = 'otp-verification';
   static const pinVerification = 'pin-verification';
   static const pinGenerate = 'pin-generate';
-  
+
   static const getServices = 'get-services';
   static const onBoardingQuestions = 'onboarding-questions';
   static const onBoardingSubmit = 'onboarding-questions-submit';

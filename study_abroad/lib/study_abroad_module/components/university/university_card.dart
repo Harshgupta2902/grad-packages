@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-
 import 'package:study_abroad/constants/study_abroad_asset_paths.dart';
 import 'package:study_abroad/navigation/study_abroad_go_paths.dart';
 import 'package:study_abroad/study_abroad_module/models/university_unifinder_model.dart';
-import 'package:utilities/common/bottom_sheet/book_session_sheet.dart';
-import 'package:utilities/packages/smooth_rectangular_border.dart';
 import 'package:utilities/theme/app_box_decoration.dart';
 import 'package:utilities/theme/app_colors.dart';
 
@@ -191,7 +188,7 @@ class UniversityCard extends StatelessWidget {
               },
             ),
             child: const Text(
-              "Apply Now",
+              "View Details",
               textAlign: TextAlign.center,
             ),
           ),

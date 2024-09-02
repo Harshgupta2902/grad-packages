@@ -227,8 +227,7 @@ class CoursesCard extends StatelessWidget {
                 ],
               ),
             ),
-          ]
-          else ...[
+          ] else ...[
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -236,6 +235,7 @@ class CoursesCard extends StatelessWidget {
                 Flexible(
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
+                      padding: EdgeInsets.zero,
                       shape: SmoothRectangleBorder(
                         borderRadius: SmoothBorderRadius(
                           cornerRadius: 10,

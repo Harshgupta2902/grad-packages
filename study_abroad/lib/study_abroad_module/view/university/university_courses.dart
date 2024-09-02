@@ -1,39 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:study_abroad/constants/study_abroad_asset_paths.dart';
 import 'package:study_abroad/study_abroad_module/components/filter/filter_button.dart';
 import 'package:study_abroad/study_abroad_module/components/filter/filter_logic.dart';
-import 'package:study_abroad/study_abroad_module/components/university/university_card.dart';
-import 'package:study_abroad/study_abroad_module/components/university/university_load_more_shimmer.dart';
+import 'package:study_abroad/study_abroad_module/components/unifinder/course_view.dart';
+import 'package:study_abroad/study_abroad_module/components/unifinder/safe_courses.dart';
+import 'package:study_abroad/study_abroad_module/controller/course_finder_controller.dart';
 import 'package:study_abroad/study_abroad_module/controller/unifinder_filter_controller.dart';
-import 'package:study_abroad/study_abroad_module/controller/university_finder_controller.dart';
+import 'package:utilities/common/bottom_sheet/book_session_sheet.dart';
 import 'package:utilities/components/custom_error_or_empty.dart';
 import 'package:utilities/components/custom_header_delegate.dart';
 import 'package:utilities/components/gradding_app_bar.dart';
 import 'package:utilities/components/try_again.dart';
+import 'package:utilities/packages/smooth_rectangular_border.dart';
 import 'package:utilities/theme/app_colors.dart';
 
-final _universityController = Get.put(UniversityUnifinderController());
 final _universityFilterController = Get.put(UniFinderFilterController());
+final _coursesController = Get.put(CoursesUnifinderController());
 
-class UniversityUnifinder extends StatefulWidget {
-  const UniversityUnifinder({super.key});
+class UniversityCourses extends StatefulWidget {
+  const UniversityCourses({super.key, required this.postData});
+
+  final Map<String, dynamic> postData;
 
   @override
-  State<UniversityUnifinder> createState() => _UniversityUnifinderState();
+  State<UniversityCourses> createState() => _UniversityCoursesState();
 }
 
-class _UniversityUnifinderState extends State<UniversityUnifinder> {
-  Map<String, String> exams = {};
-  Map<String, String> intakes = {};
-  String currency = 'INR';
+class _UniversityCoursesState extends State<UniversityCourses> {
   ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    _universityController.getUniversityApi(offset: '1', currency: currency);
-    _universityController.loadMoreCount = 1;
-    _universityFilterController.getUniversityFilterApi();
+    final postData = convertMapToDesiredFormat(
+      widget.postData,
+      '10',
+      '1',
+    );
+    _coursesController.getCoursesApi(filterPostData: postData, offset: "1");
+    _universityFilterController.getCoursesFilterApi();
+    _coursesController.loadMoreCount = 1;
     scrollController.addListener(_scrollListener);
   }
 
@@ -54,9 +62,16 @@ class _UniversityUnifinderState extends State<UniversityUnifinder> {
   void _loadMoreData() async {
     debugPrint("load more satrrt");
     var limit = 1;
-    limit += _universityController.loadMoreCount;
-    _universityController.loadMoreCount += 1;
-    await _universityController.getUniversityApi(offset: limit.toString());
+    limit += _coursesController.loadMoreCount;
+    _coursesController.loadMoreCount += 1;
+    final postData = convertMapToDesiredFormat(
+      widget.postData,
+      '10',
+      limit.toString(),
+    );
+    await _coursesController.getCoursesApi(
+      filterPostData: postData,
+    );
   }
 
   @override
@@ -64,8 +79,10 @@ class _UniversityUnifinderState extends State<UniversityUnifinder> {
     return Scaffold(
       appBar: const GraddingAppBar(
         backButton: true,
+        showActions: false,
+        title: "Courses",
       ),
-      body: _universityController.obx(
+      body: _coursesController.obx(
         (state) {
           return state?.result == null
               ? const Center(
@@ -80,8 +97,8 @@ class _UniversityUnifinderState extends State<UniversityUnifinder> {
                       SliverPersistentHeader(
                         pinned: true,
                         delegate: CustomHeaderDelegate(
-                          minExtent: 60,
-                          maxExtent: 60,
+                          minExtent: 50,
+                          maxExtent: 50,
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             color: AppColors.backgroundColor,
@@ -92,14 +109,14 @@ class _UniversityUnifinderState extends State<UniversityUnifinder> {
                                   children: [
                                     RichText(
                                       text: TextSpan(
-                                        text: "${state?.result?.totalUniversity}",
+                                        text: "${state?.result?.totalCourses}",
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyLarge
                                             ?.copyWith(fontWeight: FontWeight.w500),
                                         children: [
                                           TextSpan(
-                                            text: " Universities Found",
+                                            text: " Courses Found",
                                             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                                 fontWeight: FontWeight.w400,
                                                 color: AppColors.blueGrey),
@@ -123,11 +140,12 @@ class _UniversityUnifinderState extends State<UniversityUnifinder> {
                                                   '1',
                                                 );
                                                 debugPrint(postData.toString());
-                                                await _universityController.getUniversityApi(
+                                                await _coursesController.getCoursesApi(
                                                   filterPostData: postData,
                                                   offset: "1",
                                                 );
                                               },
+                                              skipFilter: true,
                                               filterList: _universityFilterController
                                                       .state?.result?.filters ??
                                                   [],
@@ -149,54 +167,71 @@ class _UniversityUnifinderState extends State<UniversityUnifinder> {
                         final controller = PrimaryScrollController.of(context);
                         controller.addListener(() {
                           if (controller.position.maxScrollExtent == controller.position.pixels) {
-                            if (_universityController.isLoading.value == false) {
+                            if (_coursesController.isLoading.value == false) {
                               _loadMoreData();
                             }
                           }
                         });
-                        return state?.result?.university?.isEmpty == true
-                            ? const CustomErrorOrEmpty(title: "No Universities Found")
-                            : SingleChildScrollView(
-                                padding: const EdgeInsets.symmetric(horizontal: 16),
-                                child: Column(
-                                  children: [
-                                    ...List.generate(state?.result?.university?.length ?? 0,
-                                        (index) {
-                                      final university = state?.result?.university?[index];
-                                      final universityId = '${university?.id}';
-                                      return UniversityCard(
-                                        currency: currency,
-                                        state: university,
-                                        selectedExam: exams[universityId],
-                                        selectedIntake: intakes[universityId],
-                                        onChangeExam: (value) {
-                                          setState(() {
-                                            exams[universityId] = value ?? "";
-                                          });
-                                        },
-                                        onChangeIntake: (value) {
-                                          setState(() {
-                                            intakes[universityId] = value ?? "";
-                                          });
-                                        },
-                                      );
-                                    }),
-                                    Obx(() {
-                                      return _universityController.isLoading.value == true
-                                          ? const UniversityLoadMoreShimmer()
-                                          : const SizedBox.shrink();
-                                    }),
-                                  ],
-                                ),
-                              );
+                        return Column(
+                          children: [
+                            Flexible(
+                              child: TabBarView(
+                                physics: const NeverScrollableScrollPhysics(),
+                                children: [
+                                  CourseView(
+                                    courses: state?.result?.courses,
+                                    isLoading: _coursesController.isLoading,
+                                  ),
+                                  SafeCoursesView(
+                                    courses: state?.result?.safeCourses,
+                                    isLoading: _coursesController.isLoading,
+                                  ),
+                                  SafeCoursesView(
+                                    courses: state?.result?.moderateCourses,
+                                    isLoading: _coursesController.isLoading,
+                                  ),
+                                  SafeCoursesView(
+                                    courses: state?.result?.lowCourses,
+                                    isLoading: _coursesController.isLoading,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
                       },
                     ),
                   ),
                 );
         },
         onError: (error) => TryAgain(
-          onTap: () => _universityController.getUniversityApi(offset: '1'),
+          onTap: () => _coursesController.getCoursesApi(offset: '1'),
         ),
+      ),
+    );
+    return Scaffold(
+      appBar: const GraddingAppBar(
+        backButton: true,
+        showActions: false,
+        title: "Courses",
+      ),
+      body: Builder(
+        builder: (context) {
+          final controller = PrimaryScrollController.of(context);
+          controller.addListener(() {
+            if (controller.position.maxScrollExtent == controller.position.pixels) {
+              if (_coursesController.isLoading.value == false) {
+                _loadMoreData();
+              }
+            }
+          });
+          return _coursesController.obx((state) {
+            return CourseView(
+              courses: state?.result?.courses,
+              isLoading: _coursesController.isLoading,
+            );
+          });
+        },
       ),
     );
   }

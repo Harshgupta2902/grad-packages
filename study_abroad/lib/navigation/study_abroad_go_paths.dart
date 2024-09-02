@@ -6,4 +6,5 @@ class StudyAbroadGoPaths {
   static const String universityFinder = '/universityFinder';
 
   static const String universityDetails = '/universityDetails';
+  static const String universityCourses = '/universityCourses';
 }
