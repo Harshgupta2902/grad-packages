@@ -18,7 +18,6 @@ class GalleryDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaList = [...result?.images ?? [], ...result?.videos ?? []];
-
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -72,39 +71,39 @@ class GalleryDetail extends StatelessWidget {
                                   extensions: FileTypes.image, imageUrl: mediaUrl);
                             }
                           },
-                          child: isVideo
-                              ? Stack(
-                                  children: [
-                                    CachedImageNetworkContainer(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(16),
-                                        border: Border.all(color: AppColors.white, width: 2),
+                          child: Container(
+                            clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(color: AppColors.white, width: 2)),
+                            child: isVideo
+                                ? Stack(
+                                    children: [
+                                      CachedImageNetworkContainer(
+                                        fit: BoxFit.fill,
+                                        width: MediaQuery.of(context).size.width * 0.4,
+                                        height: 80,
+                                        url: getYoutubeThumbnailUrl(mediaUrl),
+                                        placeHolder: buildPlaceholder(name: "", context: context),
                                       ),
-                                      width: MediaQuery.of(context).size.width * 0.4,
-                                      height: 80,
-                                      url: getYoutubeThumbnailUrl(mediaUrl),
-                                      placeHolder: buildPlaceholder(name: "", context: context),
-                                    ),
-                                    Positioned(
-                                      top: 0,
-                                      left: 0,
-                                      right: 0,
-                                      bottom: 0,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(20.0),
-                                        child: SvgPicture.asset(StudyAbroadAssetPath.play),
+                                      Positioned(
+                                        top: 0,
+                                        left: 0,
+                                        right: 0,
+                                        bottom: 0,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(20.0),
+                                          child: SvgPicture.asset(StudyAbroadAssetPath.play),
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                )
-                              : CachedImageNetworkContainer(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(16),
-                                    border: Border.all(color: AppColors.white, width: 2),
+                                    ],
+                                  )
+                                : CachedImageNetworkContainer(
+                                    fit: BoxFit.cover,
+                                    url: mediaUrl,
+                                    placeHolder: buildPlaceholder(name: "", context: context),
                                   ),
-                                  url: mediaUrl,
-                                  placeHolder: buildPlaceholder(name: "", context: context),
-                                ),
+                          ),
                         );
                       },
                     )),

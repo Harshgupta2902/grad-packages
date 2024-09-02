@@ -86,5 +86,3 @@ Widget buildPlaceholderIcon({required IconData icon}) {
     ),
   );
 }
-
-
