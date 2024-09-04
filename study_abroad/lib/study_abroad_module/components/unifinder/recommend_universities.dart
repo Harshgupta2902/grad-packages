@@ -127,14 +127,8 @@ class _RecommendedUniversitiesState extends State<RecommendedUniversities> {
                                 StudyAbroadAssetPath.intakes,
                               ];
                               final List name = ["FEES (AVG)", "RANKING", "EXAMS", "INTAKE"];
-                              final List data = [
-                                "INR" == 'local'
-                                    ? (university?.averageAmount == '0'
-                                        ? "-"
-                                        : '${university?.countries?.symbol} ${university?.averageAmount} / Year')
-                                    : (university?.averageInrAmount == '0'
-                                        ? "-"
-                                        : '₹ ${university?.averageInrAmount} / Yr'),
+                              final List<String> data = [
+                                "${university?.averageInrAmount}",
                                 "${university?.qsRanking ?? "-"}",
                                 "${university?.tests?.isEmpty == true ? "-" : university?.tests?[0]}",
                                 "${university?.intakes?.isEmpty == true ? "-" : university?.intakes?[0]}"
@@ -171,6 +165,31 @@ class _RecommendedUniversitiesState extends State<RecommendedUniversities> {
                                               color: AppColors.primaryColor,
                                             ),
                                       ),
+                                    // if (index == 2)
+                                    //   _dropdown(
+                                    //     value: exams["${university?.id}"],
+                                    //     hintText: data[index],
+                                    //     data: university?.tests ?? [],
+                                    //     onChanged: (value) {
+                                    //       setState(() {
+                                    //         exams["${university?.id}"] = value ?? "";
+                                    //       });
+                                    //     },
+                                    //     context: context,
+                                    //   ),
+                                    // if (index == 3)
+                                    //   _dropdown(
+                                    //     value: intakes["${university?.id}"],
+                                    //     hintText: data[3],
+                                    //     data: university?.intakes ?? [],
+                                    //     onChanged: (value) {
+                                    //       setState(() {
+                                    //         intakes["${university?.id}"] = value ?? "";
+                                    //       });
+                                    //     },
+                                    //     context: context,
+                                    //   )
+
                                     if (index == 2)
                                       _dropdown(
                                         value: exams["${university?.id}"],
