@@ -180,7 +180,7 @@ class _IeltsDashboardViewState extends State<IeltsDashboardView> {
                             ),
                           ],
                         ),
-                        SvgPicture.asset(IeltsAssetPath.courseProgress)
+                        SvgPicture.asset(IeltsAssetPath.courseProgress),
                       ],
                     ),
                     const SizedBox(height: 12),

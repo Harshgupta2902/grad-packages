@@ -88,7 +88,7 @@ class _RecommendedUniversitiesState extends State<RecommendedUniversities> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyLarge
-                                    ?.copyWith(fontWeight: FontWeight.w600, fontSize: 20),
+                                    ?.copyWith(fontWeight: FontWeight.w600),
                               ),
                             ),
                             AnimatedRotation(
@@ -165,31 +165,6 @@ class _RecommendedUniversitiesState extends State<RecommendedUniversities> {
                                               color: AppColors.primaryColor,
                                             ),
                                       ),
-                                    // if (index == 2)
-                                    //   _dropdown(
-                                    //     value: exams["${university?.id}"],
-                                    //     hintText: data[index],
-                                    //     data: university?.tests ?? [],
-                                    //     onChanged: (value) {
-                                    //       setState(() {
-                                    //         exams["${university?.id}"] = value ?? "";
-                                    //       });
-                                    //     },
-                                    //     context: context,
-                                    //   ),
-                                    // if (index == 3)
-                                    //   _dropdown(
-                                    //     value: intakes["${university?.id}"],
-                                    //     hintText: data[3],
-                                    //     data: university?.intakes ?? [],
-                                    //     onChanged: (value) {
-                                    //       setState(() {
-                                    //         intakes["${university?.id}"] = value ?? "";
-                                    //       });
-                                    //     },
-                                    //     context: context,
-                                    //   )
-
                                     if (index == 2)
                                       _dropdown(
                                         value: exams["${university?.id}"],

@@ -198,12 +198,13 @@ class _DefaultCustomDrawerState extends State<DefaultCustomDrawer> with TickerPr
                                         _profileController.state?.profile?.name ?? "",
                                         style: Theme.of(context).textTheme.bodyLarge,
                                       ),
-                                      Text(
-                                        _profileController.state?.profile?.email ?? "",
-                                        style: Theme.of(context).textTheme.bodySmall,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
+                                      if (_profileController.state?.profile?.email != null)
+                                        Text(
+                                          _profileController.state?.profile?.email ?? "",
+                                          style: Theme.of(context).textTheme.bodySmall,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                     ],
                                   ),
                                 ),

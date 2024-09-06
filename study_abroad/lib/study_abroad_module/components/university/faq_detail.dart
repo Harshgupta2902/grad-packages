@@ -93,7 +93,7 @@ class _FaqDetailState extends State<FaqDetail> {
                                       question.toString(),
                                       style: Theme.of(context)
                                           .textTheme
-                                          .bodyMedium
+                                          .bodySmall
                                           ?.copyWith(fontWeight: FontWeight.w600),
                                     )),
                                     AnimatedRotation(
