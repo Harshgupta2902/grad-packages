@@ -6,6 +6,10 @@ class IeltsGoPaths {
 
   static const String ieltsMockTest = '/ieltsMockTest';
   static const String ieltsPracticeTest = '/ieltsPracticeTest';
+
+  static const String ieltsExercise = '/ieltsExercise';
+
+
   static const String ieltsStudyMaterialView = '/ieltsStudyMaterialView';
   static const String ieltsStudyMaterialWebView = '/ieltsStudyMaterialWebView';
   static const String ieltsSchedule = '/ieltsSchedule';

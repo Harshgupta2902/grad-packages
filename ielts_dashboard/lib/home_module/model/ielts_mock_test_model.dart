@@ -67,6 +67,7 @@ class BuyMockTests {
     this.testQuestion,
     this.testIs,
     this.testId,
+    this.successUrl,
   });
 
   BuyMockTests.fromJson(dynamic json) {
@@ -76,6 +77,7 @@ class BuyMockTests {
     testQuestion = json['test_question'];
     testIs = json['test_is'];
     testId = json['test_id'];
+    successUrl = json['success_url'];
   }
   String? testTitle;
   String? testDuration;
@@ -83,6 +85,7 @@ class BuyMockTests {
   num? testQuestion;
   num? testIs;
   num? testId;
+  String? successUrl;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -92,6 +95,8 @@ class BuyMockTests {
     map['test_question'] = testQuestion;
     map['test_is'] = testIs;
     map['test_id'] = testId;
+    map['success_url'] = successUrl;
+
     return map;
   }
 }
@@ -100,6 +105,7 @@ class Tests {
   Tests({
     this.testId,
     this.testTitle,
+    this.encodeTestId,
     this.testIs,
     this.src,
     this.status,
@@ -111,24 +117,32 @@ class Tests {
     this.writingTestScore,
     this.readingTestScore,
     this.speakingTestScore,
+    this.successUrl,
   });
 
   Tests.fromJson(dynamic json) {
-    testId = json['test_id'];
-    testTitle = json['test_title'];
-    testIs = json['test_is'];
-    src = json['src'];
-    status = json['status'];
-    band = json['band'];
-    testPrice = json['test_price'];
-    testDuration = json['test_duration'];
-    testQuestion = json['test_question'];
-    listeningTestScore = json['listening_test_score'];
-    writingTestScore = json['writing_test_score'];
-    readingTestScore = json['reading_test_score'];
-    speakingTestScore = json['speaking_test_score'];
+    try {
+      testId = json['test_id'];
+      testTitle = json['test_title'];
+      encodeTestId = json['encode_test_id'];
+      testIs = json['test_is'];
+      src = json['src'];
+      status = json['status'];
+      band = json['band'];
+      testPrice = json['test_price'];
+      testDuration = json['test_duration'];
+      testQuestion = json['test_question'];
+      listeningTestScore = json['listening_test_score'];
+      writingTestScore = json['writing_test_score'];
+      readingTestScore = json['reading_test_score'];
+      speakingTestScore = json['speaking_test_score'];
+      successUrl = json['success_url'];
+    } catch (e) {
+      debugPrint("TEST MOCK TEST MODEL => $e");
+    }
   }
   num? testId;
+  String? encodeTestId;
   String? testTitle;
   num? testIs;
   String? src;
@@ -141,11 +155,13 @@ class Tests {
   num? writingTestScore;
   num? readingTestScore;
   num? speakingTestScore;
+  String? successUrl;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['test_id'] = testId;
     map['test_title'] = testTitle;
+    map['encode_test_id'] = encodeTestId;
     map['test_is'] = testIs;
     map['src'] = src;
     map['status'] = status;
@@ -157,6 +173,8 @@ class Tests {
     map['writing_test_score'] = writingTestScore;
     map['reading_test_score'] = readingTestScore;
     map['speaking_test_score'] = speakingTestScore;
+    map['success_url'] = successUrl;
+
     return map;
   }
 }

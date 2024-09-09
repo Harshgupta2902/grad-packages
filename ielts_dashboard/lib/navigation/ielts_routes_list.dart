@@ -6,6 +6,7 @@ import 'package:ielts_dashboard/home_module/view/ielts_practice_test_screen.dart
 import 'package:ielts_dashboard/home_module/view/ielts_schedule_screen.dart';
 import 'package:ielts_dashboard/home_module/view/ielts_study_material_view.dart';
 import 'package:ielts_dashboard/home_module/view/ielts_study_material_web_view.dart';
+import 'package:ielts_dashboard/home_module/view/ielts_test_details_view.dart';
 import 'package:ielts_dashboard/home_module/view/ielts_test_web_view.dart';
 import 'package:ielts_dashboard/home_module/view/profile_screen.dart';
 import 'package:ielts_dashboard/home_module/view/settings.dart';
@@ -49,14 +50,14 @@ List<RouteBase> ieltsRoutes({
         return const IeltsPracticeTestScreen();
       },
     ),
-    // GoRoute(
-    //   parentNavigatorKey: rootNavigatorKey,
-    //   path: IeltsGoPaths.ieltsExercise,
-    //   name: IeltsGoPaths.ieltsExercise,
-    //   builder: (context, state) {
-    //     return const IeltsExerciseScreen();
-    //   },
-    // ),
+    GoRoute(
+      parentNavigatorKey: rootNavigatorKey,
+      path: IeltsGoPaths.ieltsExercise,
+      name: IeltsGoPaths.ieltsExercise,
+      builder: (context, state) {
+        return const IeltsTestDetailsView();
+      },
+    ),
     GoRoute(
       parentNavigatorKey: rootNavigatorKey,
       path: IeltsGoPaths.ieltsUserAttendance,
