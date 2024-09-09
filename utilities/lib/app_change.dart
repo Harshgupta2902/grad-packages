@@ -1,5 +1,5 @@
 class AppConstants {
-  static String appName = collegePredictor;
+  static String appName = gradding;
 
   static String gradding = "Gradding";
   static String courseFinder = "Course-Finder";

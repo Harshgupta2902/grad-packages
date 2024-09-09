@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:utilities/common/controller/payment_controller.dart';
+import 'package:utilities/dio/api_end_points.dart';
 import 'package:utilities/packages/dialogs.dart';
 
 typedef VoidCallback = void Function();
@@ -70,8 +71,10 @@ openRazorpay({
   razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
 
   var options = {
-    // 'key': 'rzp_live_cbnFxnhacRizR0',
-    'key': 'rzp_test_9Oqxns8kejKZpZ',
+    'key': APIEndPoints.base == APIEndPoints.live
+        ? 'rzp_live_cbnFxnhacRizR0'
+        : 'rzp_test_9Oqxns8kejKZpZ',
+    // 'key': 'rzp_test_9Oqxns8kejKZpZ',
     'amount': (amount * 100), // Amount in smallest currency unit (e.g., paise for INR)
     'currency': currency ?? "INR",
     'name': 'Gradding',

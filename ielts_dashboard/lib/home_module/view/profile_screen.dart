@@ -659,19 +659,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: pickedImage == null
                             ? ClipOval(
                                 child: CachedImageNetworkContainer(
-                                height: 100,
-                                width: 100,
-                                fit: BoxFit.contain,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  shape: BoxShape.circle,
+                                  height: 100,
+                                  width: 100,
+                                  fit: BoxFit.contain,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  url: state?.profile?.imageUrl,
+                                  placeHolder: buildPlaceholder(
+                                    name: state?.profile?.name?[0],
+                                    context: context,
+                                  ),
                                 ),
-                                url: state?.profile?.imageUrl,
-                                placeHolder: buildPlaceholder(
-                                  name: state?.profile?.name?[0],
-                                  context: context,
-                                ),
-                              ))
+                              )
                             : Container(
                                 height: 100,
                                 width: 100,
