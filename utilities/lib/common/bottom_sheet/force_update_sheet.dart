@@ -21,6 +21,8 @@ appUpdateFunction({
   bool updateAvailable = (buildNo ?? 0) > int.parse(buildNumber);
   debugPrint('updateAvailable $updateAvailable inside function');
 
+  _handleInAppUpdate(forceUpdate, softUpdate);
+
   if (forceUpdate == 1) {
     if (updateAvailable) {
       debugPrint('updateAvailable $updateAvailable inside forceUpdate updateAvailable');
@@ -30,39 +32,30 @@ appUpdateFunction({
         () => updateDrawer(appUpdate: forceUpdate ?? 0, context: context),
       );
     }
+  }
+}
 
-    if (Platform.isAndroid) {
-      try {
-        final updateInfo = await InAppUpdate.checkForUpdate();
-        if (updateInfo.updateAvailability == UpdateAvailability.updateAvailable) {
-          if (forceUpdate == 1) {
-            debugPrint('FORCE UPDATE STARTED');
-            InAppUpdate.performImmediateUpdate().then((appUpdateResult) {
-              if (appUpdateResult == AppUpdateResult.success) {}
-            });
-          } else if (softUpdate == 1) {
-            debugPrint('SOFT UPDATE STARTED');
+_handleInAppUpdate(num? forceUpdate, num? softUpdate) async {
+  final updateInfo = await InAppUpdate.checkForUpdate();
 
-            InAppUpdate.startFlexibleUpdate().then(
-              (appUpdateResult) {
-                if (appUpdateResult == AppUpdateResult.success) {
-                  InAppUpdate.completeFlexibleUpdate();
-                }
-              },
-            );
-          }
+  if (updateInfo.updateAvailability == UpdateAvailability.updateNotAvailable) {
+    return;
+  }
 
-          // if (forceUpdate == 1) {
-          //   debugPrint('FORCE UPDATE STARTED');
-          //   InAppUpdate.performImmediateUpdate().then((appUpdateResult) {
-          //     if (appUpdateResult == AppUpdateResult.success) {}
-          //   });
-          // }
+  if (forceUpdate == 1) {
+    debugPrint('FORCE UPDATE STARTED');
+    InAppUpdate.performImmediateUpdate().then((appUpdateResult) {
+      if (appUpdateResult == AppUpdateResult.success) {}
+    });
+  } else if (softUpdate == 1) {
+    debugPrint('SOFT UPDATE STARTED');
+    InAppUpdate.startFlexibleUpdate().then(
+      (appUpdateResult) {
+        if (appUpdateResult == AppUpdateResult.success) {
+          InAppUpdate.completeFlexibleUpdate();
         }
-      } catch (e) {
-        debugPrint("InAppUpdate Error $e");
-      }
-    }
+      },
+    );
   }
 }
 
