@@ -21,7 +21,7 @@ String? fileName;
 int? fileSize;
 
 Future<PlatformFile?> pickFiles(BuildContext context, bool format,
-    {required String docName}) async {
+    {required String docName, Function? setLoading}) async {
   try {
     final allowedExtensions =
         format ? ['docx', 'doc'] : ['docx', 'doc', 'xlsx', 'pdf', 'jpeg', 'jpg', 'png', 'txt'];
@@ -36,6 +36,8 @@ Future<PlatformFile?> pickFiles(BuildContext context, bool format,
       file = filePickerResult?.files.first;
       final fileExtension = path.extension(file!.name).replaceAll('.', '');
       if (allowedExtensions.contains(fileExtension)) {
+        setLoading!(true); // Show loader
+
         debugPrint("file:::::::::::$file");
         httpApi(
           endpoint: APIEndPoints.documentUpload,
@@ -47,6 +49,8 @@ Future<PlatformFile?> pickFiles(BuildContext context, bool format,
           Map<String, dynamic> responseBody = jsonDecode(value.body);
           final status = responseBody['status'].toString();
           debugPrint('status: $status');
+          setLoading(false); // Hide loader
+
           if (status == "1") {
             _getDocumentController.getDocuments();
             _getDocumentController.update();
@@ -60,6 +64,7 @@ Future<PlatformFile?> pickFiles(BuildContext context, bool format,
         });
         return file;
       } else {
+        setLoading!(false);
         Future.delayed(
           Duration.zero,
           () => messageScaffold(
@@ -75,14 +80,19 @@ Future<PlatformFile?> pickFiles(BuildContext context, bool format,
       throw Exception('No file selected');
     }
   } on PlatformException catch (e) {
+    setLoading!(false); // Hide loader on error
+
     debugPrint(e.toString());
     rethrow;
   } catch (e) {
+    setLoading!(false); // Hide loader on error
+
     debugPrint(e.toString());
     rethrow;
   }
 }
 
-pickFile({context, bool formatChange = false, required String docName}) async {
-  return await pickFiles(context, formatChange, docName: docName);
+pickFile(
+    {context, bool formatChange = false, required String docName, Function? setLoading}) async {
+  return await pickFiles(context, formatChange, docName: docName, setLoading: setLoading);
 }

@@ -151,10 +151,8 @@ class _DocumentsCenterState extends State<DocumentsCenter> with SingleTickerProv
             );
           },
           onError: (error) => TryAgain(
-                        onTap: () => _getDocumentsController.getDocuments(),
-
+            onTap: () => _getDocumentsController.getDocuments(),
           ),
-
         ),
       ),
     );

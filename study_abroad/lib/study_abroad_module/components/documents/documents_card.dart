@@ -9,7 +9,7 @@ import 'package:utilities/packages/smooth_rectangular_border.dart';
 import 'package:utilities/theme/app_box_decoration.dart';
 import 'package:utilities/theme/app_colors.dart';
 
-class DocumentsCard extends StatelessWidget {
+class DocumentsCard extends StatefulWidget {
   const DocumentsCard({
     super.key,
     required this.doc,
@@ -26,11 +26,24 @@ class DocumentsCard extends StatelessWidget {
   final bool? single;
 
   @override
+  State<DocumentsCard> createState() => _DocumentsCardState();
+}
+
+class _DocumentsCardState extends State<DocumentsCard> {
+  bool isLoading = false;
+
+  void setLoading(bool value) {
+    setState(() {
+      isLoading = value;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: AppBoxDecoration.getBoxDecoration(
-        color: single == true ? Colors.white : AppColors.whiteSmoke,
-        showShadow: single ?? false,
+        color: widget.single == true ? Colors.white : AppColors.whiteSmoke,
+        showShadow: widget.single ?? false,
         borderRadius: 8,
       ),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -40,7 +53,7 @@ class DocumentsCard extends StatelessWidget {
           Flexible(
             child: Row(
               children: [
-                if (status == "uploaded") ...[
+                if (widget.status == "uploaded") ...[
                   SvgPicture.asset(
                     StudyAbroadAssetPath.uploaded,
                     height: 20,
@@ -49,7 +62,7 @@ class DocumentsCard extends StatelessWidget {
                 ],
                 Flexible(
                   child: Text(
-                    "$doc",
+                    "${widget.doc}",
                     style: Theme.of(context).textTheme.bodyMedium,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -61,7 +74,7 @@ class DocumentsCard extends StatelessWidget {
           const SizedBox(width: 20),
           Row(
             children: [
-              if (status == "uploaded") ...[
+              if (widget.status == "uploaded") ...[
                 PopupMenuButton(
                   splashRadius: 0,
                   surfaceTintColor: Colors.transparent,
@@ -74,7 +87,7 @@ class DocumentsCard extends StatelessWidget {
                     if (value == 1) {
                       debugPrint("download");
                       FileDownloader.downloadFile(
-                        url: downloadLink.toString(),
+                        url: widget.downloadLink.toString(),
                         downloadDestination: DownloadDestinations.publicDownloads,
                         onDownloadCompleted: (path) async {
                           debugPrint("path:::::::::::::::$path");
@@ -88,8 +101,8 @@ class DocumentsCard extends StatelessWidget {
                       debugPrint("delete sheeet");
                       deleteDocumentSheet(
                         context,
-                        docType: doc ?? "",
-                        docId: docId.toString(),
+                        docType: widget.doc ?? "",
+                        docId: widget.docId.toString(),
                       );
                       return;
                     }
@@ -161,15 +174,25 @@ class DocumentsCard extends StatelessWidget {
                   ),
                 )
               ],
-              if (status != "uploaded") ...[
+              if (widget.status != "uploaded") ...[
                 GestureDetector(
                   onTap: () async {
-                    await pickFile(context: context, docName: "$doc");
+                    await pickFile(
+                      context: context,
+                      docName: "${widget.doc}",
+                      setLoading: setLoading,
+                    );
                   },
-                  child: SvgPicture.asset(
-                    StudyAbroadAssetPath.upload,
-                    height: 20,
-                  ),
+                  child: isLoading
+                      ? const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(),
+                        ) // Show loader
+                      : SvgPicture.asset(
+                          StudyAbroadAssetPath.upload,
+                          height: 20,
+                        ),
                 ),
               ]
             ],
