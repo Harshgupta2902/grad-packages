@@ -1,11 +1,17 @@
 library utilities;
 
-// export 'theme/app_colors.dart';
-//
-// export 'validators/input_formatters.dart';
-// export 'validators/generic_validator.dart';
-// export 'validators/debouncer.dart';
-// export 'validators/my_regex.dart';
-// export 'validators/validators.dart';
-//
-// export 'form_fields/pinput_field.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:utilities/common/controller/default_controller.dart';
+
+final _defaultController = Get.put(DefaultController());
+late final GlobalKey<ScaffoldMessengerState> globalScaffoldMessengerKey;
+
+initGlobalKeys(GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey) async {
+  globalScaffoldMessengerKey = scaffoldMessengerKey;
+  final getStatus = await GetStorage.init();
+  _defaultController.getDefaultData();
+
+  debugPrint("-------- initGetStorage ------ => $getStatus");
+}

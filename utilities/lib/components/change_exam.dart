@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:guest_dashboard/constants/guest_asset_paths.dart';
 import 'package:guest_dashboard/test_module/controller/update_exam_name.dart';
+import 'package:utilities/components/enums.dart';
+import 'package:utilities/components/message_scaffold.dart';
 import 'package:utilities/packages/dialogs.dart';
 
 final _updateExamNameController = Get.put(UpdateExamNameController());
@@ -47,10 +49,16 @@ class ChangeExam {
                     _updateExamNameController.updateExamName(
                       testType: selectedExamName,
                       subTestType: selectedExamCat,
-                    );
-                    //     .then((value) {
-                    //   Navigator.of(context).pop();
-                    // });
+                    ).then((value) {
+                      debugPrint("value:::::::::$value");
+                      if(value['status'].toString() == "200"){
+                        messageScaffold(context: context, content: "Exam Switch Successfully", messageScaffoldType: MessageScaffoldType.success);
+                      }
+                      else{
+                        messageScaffold(context: context, content: "Something went wrong!", messageScaffoldType: MessageScaffoldType.error);
+
+                      }
+                    },);
                   },
                 );
               });

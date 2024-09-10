@@ -9,6 +9,7 @@ import 'package:utilities/app_change.dart';
 
 appUpdateFunction({
   required num? forceUpdate,
+  required num? softUpdate,
   required num? buildNo,
   required BuildContext context,
 }) async {
@@ -31,18 +32,32 @@ appUpdateFunction({
     }
 
     if (Platform.isAndroid) {
-      debugPrint('Platform.isAndroid');
-
       try {
         final updateInfo = await InAppUpdate.checkForUpdate();
-
         if (updateInfo.updateAvailability == UpdateAvailability.updateAvailable) {
           if (forceUpdate == 1) {
             debugPrint('FORCE UPDATE STARTED');
             InAppUpdate.performImmediateUpdate().then((appUpdateResult) {
               if (appUpdateResult == AppUpdateResult.success) {}
             });
+          } else if (softUpdate == 1) {
+            debugPrint('SOFT UPDATE STARTED');
+
+            InAppUpdate.startFlexibleUpdate().then(
+              (appUpdateResult) {
+                if (appUpdateResult == AppUpdateResult.success) {
+                  InAppUpdate.completeFlexibleUpdate();
+                }
+              },
+            );
           }
+
+          // if (forceUpdate == 1) {
+          //   debugPrint('FORCE UPDATE STARTED');
+          //   InAppUpdate.performImmediateUpdate().then((appUpdateResult) {
+          //     if (appUpdateResult == AppUpdateResult.success) {}
+          //   });
+          // }
         }
       } catch (e) {
         debugPrint("InAppUpdate Error $e");
@@ -127,7 +142,7 @@ void _launchStore() async {
 String getAndroidPackageName(String appName) {
   switch (appName) {
     case 'Gradding':
-      return "1246082058";
+      return "com.gradding";
     case 'Course-Finder':
       return "com.gradding.finder";
     case 'College-Predictor':

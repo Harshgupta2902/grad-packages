@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:utilities/theme/app_colors.dart';
+import 'package:utilities/utilities.dart';
 import 'enums.dart';
-
-final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
 messageScaffold({
   required BuildContext context,
@@ -41,7 +40,7 @@ messageScaffold({
       break;
   }
 
-  scaffoldMessengerKey.currentState?.showSnackBar(
+  globalScaffoldMessengerKey.currentState?.showSnackBar(
     SnackBar(
       behavior: SnackBarBehavior.floating,
       backgroundColor: backgroundColor,

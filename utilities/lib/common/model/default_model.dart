@@ -28,6 +28,7 @@ class DefaultModel {
 class Result {
   Result({
     this.forceUpdate,
+    this.softUpdate,
     this.buildNo,
     this.downloadUrl,
     this.path,
@@ -38,6 +39,7 @@ class Result {
 
   Result.fromJson(dynamic json) {
     forceUpdate = json['force_update'];
+    softUpdate = json['soft_update'];
     buildNo = json['build_no'];
     downloadUrl = json['download_url'];
     path = json['path'];
@@ -46,6 +48,7 @@ class Result {
     terms = json['terms'];
   }
   num? forceUpdate;
+  num? softUpdate;
   num? buildNo;
   String? downloadUrl;
   String? path;
@@ -56,6 +59,7 @@ class Result {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['force_update'] = forceUpdate;
+    map['soft_update'] = softUpdate;
     map['build_no'] = buildNo;
     map['download_url'] = downloadUrl;
     map['path'] = path;
