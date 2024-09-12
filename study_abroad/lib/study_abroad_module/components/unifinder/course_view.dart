@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:study_abroad/constants/study_abroad_asset_paths.dart';
+import 'package:study_abroad/study_abroad_module/components/filter/filter_logic.dart';
 import 'package:study_abroad/study_abroad_module/components/unifinder/courses_card.dart';
 import 'package:study_abroad/study_abroad_module/components/unifinder/courses_load_more_shimmer.dart';
 import 'package:study_abroad/study_abroad_module/controller/course_finder_controller.dart';
 import 'package:study_abroad/study_abroad_module/controller/shortlist_course_controller.dart';
+import 'package:study_abroad/study_abroad_module/controller/unifinder_filter_controller.dart';
 import 'package:study_abroad/study_abroad_module/models/courses_unifinder_model.dart';
 import 'package:utilities/common/bottom_sheet/councellor_sheet.dart';
 import 'package:utilities/components/enums.dart';
@@ -13,6 +15,7 @@ import 'package:utilities/components/message_scaffold.dart';
 
 final _shortListCourseController = Get.put(ShortlistCourseController());
 final _coursesController = Get.put(CoursesUnifinderController());
+final _universityFilterController = Get.put(UniFinderFilterController());
 
 class CourseView extends StatefulWidget {
   const CourseView({
@@ -77,7 +80,14 @@ class _CourseViewState extends State<CourseView> {
                         content: value['msg'].toString(),
                         messageScaffoldType: MessageScaffoldType.success,
                       );
-                      _coursesController.getCoursesApi(offset: '1');
+                      final postData = convertMapToDesiredFormat(
+                        _universityFilterController.tempFilter,
+                        '10',
+                        "1",
+                      );
+                      debugPrint(
+                          '$postData ::::::::::::: ${_universityFilterController.tempFilter}');
+                      _coursesController.getCoursesApi(filterPostData: postData, hadLoad: true);
                       return;
                     } else {
                       messageScaffold(

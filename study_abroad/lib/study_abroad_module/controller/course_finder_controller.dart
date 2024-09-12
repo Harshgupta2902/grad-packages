@@ -8,7 +8,7 @@ class CoursesUnifinderController extends GetxController with StateMixin<CoursesU
   RxBool isLoading = RxBool(false);
   int loadMoreCount = 1;
 
-  getCoursesApi({String? offset, Map<String, dynamic>? filterPostData}) async {
+  getCoursesApi({String? offset, Map<String, dynamic>? filterPostData, bool? hadLoad}) async {
     isLoading.value = true;
 
     const apiEndPoint = APIEndPoints.getCourses;
@@ -16,6 +16,10 @@ class CoursesUnifinderController extends GetxController with StateMixin<CoursesU
     if (offset == '1') {
       change(null, status: RxStatus.loading());
     }
+    if (hadLoad == true) {
+      change(null, status: RxStatus.loading());
+    }
+
     try {
       final Map<String, dynamic> postData = {
         "currency": "local",
@@ -34,7 +38,7 @@ class CoursesUnifinderController extends GetxController with StateMixin<CoursesU
         throw 'API ERROR ${response.statusCode} Message ${response.statusMessage}';
       }
 
-      if (offset == '1') {
+      if (offset == '1' || hadLoad == true) {
         debugPrint("Offset:::::::::::$offset::::::::::::;;insertion");
         final modal = CoursesUnifinderModel.fromJson(response.data);
         change(modal, status: RxStatus.success());

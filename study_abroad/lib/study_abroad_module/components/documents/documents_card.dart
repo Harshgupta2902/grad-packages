@@ -5,6 +5,8 @@ import 'package:open_filex/open_filex.dart';
 import 'package:study_abroad/constants/study_abroad_asset_paths.dart';
 import 'package:study_abroad/study_abroad_module/components/documents/upload_button.dart';
 import 'package:utilities/common/bottom_sheet/delete_document_sheet.dart';
+import 'package:utilities/components/enums.dart';
+import 'package:utilities/components/message_scaffold.dart';
 import 'package:utilities/packages/smooth_rectangular_border.dart';
 import 'package:utilities/theme/app_box_decoration.dart';
 import 'package:utilities/theme/app_colors.dart';
@@ -96,7 +98,6 @@ class _DocumentsCardState extends State<DocumentsCard> {
                         },
                       );
                     }
-
                     if (value == 3) {
                       debugPrint("delete sheeet");
                       deleteDocumentSheet(
@@ -104,6 +105,10 @@ class _DocumentsCardState extends State<DocumentsCard> {
                         docType: widget.doc ?? "",
                         docId: widget.docId.toString(),
                       );
+                      messageScaffold(
+                          context: context,
+                          content: "${widget.doc} is deleted ",
+                          messageScaffoldType: MessageScaffoldType.error);
                       return;
                     }
                   },

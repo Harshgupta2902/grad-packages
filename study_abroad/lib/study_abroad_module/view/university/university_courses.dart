@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:study_abroad/constants/study_abroad_asset_paths.dart';
 import 'package:study_abroad/study_abroad_module/components/filter/filter_button.dart';
 import 'package:study_abroad/study_abroad_module/components/filter/filter_logic.dart';
 import 'package:study_abroad/study_abroad_module/components/unifinder/course_view.dart';
 import 'package:study_abroad/study_abroad_module/components/unifinder/safe_courses.dart';
 import 'package:study_abroad/study_abroad_module/controller/course_finder_controller.dart';
 import 'package:study_abroad/study_abroad_module/controller/unifinder_filter_controller.dart';
-import 'package:utilities/common/bottom_sheet/book_session_sheet.dart';
 import 'package:utilities/components/custom_error_or_empty.dart';
 import 'package:utilities/components/custom_header_delegate.dart';
 import 'package:utilities/components/gradding_app_bar.dart';
 import 'package:utilities/components/try_again.dart';
-import 'package:utilities/packages/smooth_rectangular_border.dart';
 import 'package:utilities/theme/app_colors.dart';
 
 final _universityFilterController = Get.put(UniFinderFilterController());
@@ -90,148 +86,99 @@ class _UniversityCoursesState extends State<UniversityCourses> {
                     title: "No Data Found \n Api Error",
                   ),
                 )
-              : DefaultTabController(
-                  length: 4,
-                  child: NestedScrollView(
-                    headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                      SliverPersistentHeader(
-                        pinned: true,
-                        delegate: CustomHeaderDelegate(
-                          minExtent: 50,
-                          maxExtent: 50,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            color: AppColors.backgroundColor,
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    RichText(
-                                      text: TextSpan(
-                                        text: "${state?.result?.totalCourses}",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge
-                                            ?.copyWith(fontWeight: FontWeight.w500),
-                                        children: [
-                                          TextSpan(
-                                            text: " Courses Found",
-                                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                                fontWeight: FontWeight.w400,
-                                                color: AppColors.blueGrey),
-                                          ),
-                                        ],
-                                      ),
+              : NestedScrollView(
+                  headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                    SliverPersistentHeader(
+                      pinned: true,
+                      delegate: CustomHeaderDelegate(
+                        minExtent: 50,
+                        maxExtent: 50,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          color: AppColors.backgroundColor,
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  RichText(
+                                    text: TextSpan(
+                                      text: "${state?.result?.totalCourses}",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(fontWeight: FontWeight.w500),
+                                      children: [
+                                        TextSpan(
+                                          text: " Courses Found",
+                                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                              fontWeight: FontWeight.w400,
+                                              color: AppColors.blueGrey),
+                                        ),
+                                      ],
                                     ),
-                                    FilterButton(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => FilterLogic(
-                                              pageFilter: _universityFilterController
-                                                  .state?.result?.selected,
-                                              tempFilter: _universityFilterController.tempFilter,
-                                              onApply: () async {
-                                                final postData = convertMapToDesiredFormat(
-                                                  _universityFilterController.tempFilter,
-                                                  '10',
-                                                  '1',
-                                                );
-                                                debugPrint(postData.toString());
-                                                await _coursesController.getCoursesApi(
-                                                  filterPostData: postData,
-                                                  offset: "1",
-                                                );
-                                              },
-                                              skipFilter: true,
-                                              filterList: _universityFilterController
-                                                      .state?.result?.filters ??
-                                                  [],
-                                            ),
+                                  ),
+                                  FilterButton(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => FilterLogic(
+                                            pageFilter:
+                                                _universityFilterController.state?.result?.selected,
+                                            tempFilter: _universityFilterController.tempFilter,
+                                            onApply: () async {
+                                              _universityFilterController.tempFilter['university'] =
+                                                  widget.postData['university'];
+                                              final postData = convertMapToDesiredFormat(
+                                                _universityFilterController.tempFilter,
+                                                '10',
+                                                '1',
+                                              );
+                                              debugPrint("filter post Data  :::::::::::$postData");
+                                              await _coursesController.getCoursesApi(
+                                                filterPostData: postData,
+                                                hadLoad: true,
+                                              );
+                                            },
+                                            skipFilter: true,
+                                            filterList: _universityFilterController
+                                                    .state?.result?.filters ??
+                                                [],
                                           ),
-                                        );
-                                      },
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
+                                        ),
+                                      );
+                                    },
+                                  )
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                    ],
-                    body: Builder(
-                      builder: (context) {
-                        final controller = PrimaryScrollController.of(context);
-                        controller.addListener(() {
-                          if (controller.position.maxScrollExtent == controller.position.pixels) {
-                            if (_coursesController.isLoading.value == false) {
-                              _loadMoreData();
-                            }
-                          }
-                        });
-                        return Column(
-                          children: [
-                            Flexible(
-                              child: TabBarView(
-                                physics: const NeverScrollableScrollPhysics(),
-                                children: [
-                                  CourseView(
-                                    courses: state?.result?.courses,
-                                    isLoading: _coursesController.isLoading,
-                                  ),
-                                  SafeCoursesView(
-                                    courses: state?.result?.safeCourses,
-                                    isLoading: _coursesController.isLoading,
-                                  ),
-                                  SafeCoursesView(
-                                    courses: state?.result?.moderateCourses,
-                                    isLoading: _coursesController.isLoading,
-                                  ),
-                                  SafeCoursesView(
-                                    courses: state?.result?.lowCourses,
-                                    isLoading: _coursesController.isLoading,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        );
-                      },
                     ),
+                  ],
+                  body: Builder(
+                    builder: (context) {
+                      final controller = PrimaryScrollController.of(context);
+                      controller.addListener(() {
+                        if (controller.position.maxScrollExtent == controller.position.pixels) {
+                          if (_coursesController.isLoading.value == false) {
+                            _loadMoreData();
+                          }
+                        }
+                      });
+                      return CourseView(
+                        courses: state?.result?.courses,
+                        isLoading: _coursesController.isLoading,
+                      );
+                    },
                   ),
                 );
         },
         onError: (error) => TryAgain(
           onTap: () => _coursesController.getCoursesApi(offset: '1'),
         ),
-      ),
-    );
-    return Scaffold(
-      appBar: const GraddingAppBar(
-        backButton: true,
-        showActions: false,
-        title: "Courses",
-      ),
-      body: Builder(
-        builder: (context) {
-          final controller = PrimaryScrollController.of(context);
-          controller.addListener(() {
-            if (controller.position.maxScrollExtent == controller.position.pixels) {
-              if (_coursesController.isLoading.value == false) {
-                _loadMoreData();
-              }
-            }
-          });
-          return _coursesController.obx((state) {
-            return CourseView(
-              courses: state?.result?.courses,
-              isLoading: _coursesController.isLoading,
-            );
-          });
-        },
       ),
     );
   }

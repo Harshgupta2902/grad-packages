@@ -58,12 +58,10 @@ class GalleryDetail extends StatelessWidget {
                               debugPrint("video:::::::$mediaUrl");
                               final uri = Uri.parse(mediaUrl);
                               final videoId = uri.pathSegments.last;
-                              final url = "https://www.youtube.com/watch?v=$videoId";
-                              debugPrint("final video url:::::::$url");
 
                               context.pushNamed(
                                 GuestGoPaths.youtubeVideoView,
-                                extra: {'url': url},
+                                extra: {'url': videoId},
                               );
                             } else {
                               debugPrint("image:::::::$mediaUrl");

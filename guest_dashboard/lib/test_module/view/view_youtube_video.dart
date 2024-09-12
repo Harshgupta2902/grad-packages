@@ -22,12 +22,14 @@ class ViewYoutubeVideoState extends State<ViewYoutubeVideo> {
   @override
   void initState() {
     super.initState();
+    debugPrint("currentWebUrl1::::::::::${widget.url}");
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       setState(() {
         currentUrl = widget.url;
       });
     });
-    debugPrint("currentWebUrl::::::::::$currentWebUrl");
+    debugPrint("currentWebUrl2::::::::::$currentWebUrl");
     debugPrint("widget urkl::::::::::${widget.url}");
   }
 
@@ -50,6 +52,7 @@ class ViewYoutubeVideoState extends State<ViewYoutubeVideo> {
       body: InAppWebView(
         initialUrlRequest: URLRequest(
           url: Uri.parse(
+
             "https://www.youtube.com/watch?v=${currentUrl ?? widget.url}",
           ),
         ),
