@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
@@ -5,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
+import 'package:utilities/app_change.dart';
 import 'package:utilities/dio/api_end_points.dart';
 
 Future<http.Response> httpApi({
@@ -22,6 +25,8 @@ Future<http.Response> httpApi({
   try {
     final request = http.MultipartRequest('POST', uri);
     request.headers['Authorization'] = 'Bearer $token';
+    request.headers['AppName'] = AppConstants.appName;
+    request.headers['source'] = Platform.isAndroid ? "Android" : "IOS";
     if (file != null) {
       request.files.add(await http.MultipartFile.fromPath(
         'file',
