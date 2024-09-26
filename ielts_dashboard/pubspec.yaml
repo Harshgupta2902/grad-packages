@@ -24,8 +24,7 @@ dependencies:
     path: /home/user/Apps/gradding-packages/utilities
   guest_dashboard:
     path: /home/user/Apps/gradding-packages/guest_dashboard
-  study_abroad:
-    path: /home/user/Apps/gradding-packages/study_abroad
+
 
 dev_dependencies:
   flutter_test:

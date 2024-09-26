@@ -26,6 +26,8 @@ class ProfileController extends GetxController with StateMixin<ProfileModelData>
 
       final modal = ProfileModelData.fromJson(response.data);
       change(modal, status: RxStatus.success());
+
+      return response;
     } catch (error) {
       debugPrint("---------- $apiEndPoint getProfileData End With Error ----------");
       debugPrint("ProfileController => getProfileData > Error $error ");

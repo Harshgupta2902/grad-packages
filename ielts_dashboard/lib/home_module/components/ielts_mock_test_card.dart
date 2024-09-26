@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:guest_dashboard/test_module/controller/get_order_id_controller.dart';
 import 'package:ielts_dashboard/constants/ielts_assets_path.dart';
+import 'package:ielts_dashboard/home_module/controller/mock_test_details_controller.dart';
 import 'package:ielts_dashboard/home_module/model/ielts_mock_test_model.dart';
 import 'package:ielts_dashboard/navigation/ielts_go_paths.dart';
+import 'package:utilities/app_change.dart';
 import 'package:utilities/common/model/common_model.dart';
 import 'package:utilities/components/enums.dart';
 import 'package:utilities/components/message_scaffold.dart';
@@ -15,6 +17,7 @@ import 'package:utilities/theme/app_box_decoration.dart';
 import 'package:utilities/theme/app_colors.dart';
 
 final _getOrderIdController = Get.put(GetOrderIdController());
+final _mockTestDetailsController = Get.put(MockTestDetailsController());
 
 class IeltsMockTestCard extends StatelessWidget {
   const IeltsMockTestCard({
@@ -186,11 +189,31 @@ class IeltsMockTestCard extends StatelessWidget {
                           const SizedBox(height: 16),
                           isFree
                               ? GestureDetector(
-                                  onTap: () {
-                                    Dialogs.webViewErrorDialog(
-                                      context,
-                                      title: "Use the desktop version to access the mock test",
-                                    );
+                                  onTap: () async {
+                                    if (AppConstants.appName == AppConstants.gradding) {
+                                      Dialogs.webViewErrorDialog(
+                                        context,
+                                        title: "Use the desktop version to access the mock test",
+                                      );
+                                      return;
+                                    }
+                                    if (AppConstants.appName == AppConstants.ieltsPrep ||
+                                        testData?.testTitle == "Full Mock Test") {
+                                      await _mockTestDetailsController
+                                          .mockTestDetails(
+                                        testId: testData?.encodeTestId,
+                                      )
+                                          .then(
+                                        (value) {
+                                          if (value?['status'] == 1 ||
+                                              value?['result']['tests'] != []) {
+                                            context.pushNamed(IeltsGoPaths.ieltsExercise);
+                                          }
+                                        },
+                                      );
+
+                                      return;
+                                    }
                                   },
                                   child: Container(
                                     width: MediaQuery.of(context).size.width * 0.9,
