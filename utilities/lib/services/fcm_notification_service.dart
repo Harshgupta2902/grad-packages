@@ -76,9 +76,20 @@ class FCMNotificationService {
   }
 
   onNotificationClicked({required Map payload}) {
-    if (payload.containsKey('route')) {
-      Navigator.pushNamed(Get.context!, payload['route'], arguments: payload['extra']);
-      // Navigator.pushNamed(payload['route'],);
+    debugPrint(payload.toString());
+    if (payload.containsKey('route') && payload.containsKey('arguments')) {
+      final arguments = json.decode(payload['arguments']);
+      debugPrint(arguments.runtimeType.toString());
+      debugPrint(payload['route']);
+      debugPrint(arguments);
+
+      if (arguments == null) {
+        return;
+      }
+
+      Navigator.pushNamed(Get.context!, payload['route'], arguments: arguments);
+    } else if (payload.containsKey('route') == true) {
+      Navigator.pushNamed(Get.context!, payload['route']);
     }
   }
 

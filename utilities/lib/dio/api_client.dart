@@ -25,6 +25,7 @@ class NewClient {
         },
         onError: (e, handler) {
           return handler.next(e);
+
         },
       ),
     );
