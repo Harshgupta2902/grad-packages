@@ -2,15 +2,10 @@ library utilities;
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:utilities/common/controller/default_controller.dart';
-import 'package:utilities/services/analytics_service.dart';
-import 'package:utilities/services/crashlytics_service.dart';
-import 'package:utilities/services/fcm_notification_service.dart';
 
 final _defaultController = Get.put(DefaultController());
 late final GlobalKey<ScaffoldMessengerState> globalScaffoldMessengerKey;

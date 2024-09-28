@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
+import 'package:guest_dashboard/navigation/guest_go_paths.dart';
 import 'package:ielts_dashboard/constants/ielts_assets_path.dart';
+import 'package:ielts_dashboard/home_module/controller/mock_test_details_controller.dart';
 import 'package:ielts_dashboard/home_module/model/ielts_practice_test_model.dart';
+import 'package:ielts_dashboard/navigation/ielts_go_paths.dart';
+import 'package:utilities/app_change.dart';
 import 'package:utilities/common/model/common_model.dart';
 import 'package:utilities/components/custom_error_or_empty.dart';
 import 'package:utilities/packages/dialogs.dart';
 import 'package:utilities/theme/app_box_decoration.dart';
 import 'package:utilities/theme/app_colors.dart';
+
+final _mockTestDetailsController = Get.put(MockTestDetailsController());
 
 class IeltsPracticeTestCard extends StatelessWidget {
   const IeltsPracticeTestCard({
@@ -168,11 +176,36 @@ class IeltsPracticeTestCard extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           minimumSize: Size(MediaQuery.of(context).size.width, 40),
                         ),
-                        onPressed: () {
-                          Dialogs.webViewErrorDialog(
-                            context,
-                            title: "Use the desktop version to access the practise test",
-                          );
+                        onPressed: () async {
+                          if (AppConstants.appName == AppConstants.gradding) {
+                            Dialogs.webViewErrorDialog(
+                              context,
+                              title: "Use the desktop version to access the mock test",
+                            );
+                            return;
+                          } else if (AppConstants.appName == AppConstants.ieltsPrep) {
+                            if (testData?.testTitle == "Full Mock Test") {
+                              await _mockTestDetailsController
+                                  .mockTestDetails(
+                                testId: testData?.encodeTestId,
+                              )
+                                  .then(
+                                (value) {
+                                  if (value?['status'] == 1 || value?['result']['tests'] != []) {
+                                    context.pushNamed(IeltsGoPaths.ieltsExercise);
+                                  }
+                                },
+                              );
+                            } else {
+                              context.pushReplacementNamed(
+                                GuestGoPaths.guestTestWebView,
+                                extra: {
+                                  'url': testData?.src,
+                                  'successUrl': testData?.successUrl,
+                                },
+                              );
+                            }
+                          }
                         },
                         child: const Text("Start Now"),
                       ),

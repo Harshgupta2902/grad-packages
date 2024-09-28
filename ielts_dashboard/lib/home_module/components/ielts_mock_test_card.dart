@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:guest_dashboard/navigation/guest_go_paths.dart';
 import 'package:guest_dashboard/test_module/controller/get_order_id_controller.dart';
 import 'package:ielts_dashboard/constants/ielts_assets_path.dart';
 import 'package:ielts_dashboard/home_module/controller/mock_test_details_controller.dart';
@@ -195,24 +196,29 @@ class IeltsMockTestCard extends StatelessWidget {
                                         context,
                                         title: "Use the desktop version to access the mock test",
                                       );
-                                      return;
-                                    }
-                                    if (AppConstants.appName == AppConstants.ieltsPrep ||
-                                        testData?.testTitle == "Full Mock Test") {
-                                      await _mockTestDetailsController
-                                          .mockTestDetails(
-                                        testId: testData?.encodeTestId,
-                                      )
-                                          .then(
-                                        (value) {
-                                          if (value?['status'] == 1 ||
-                                              value?['result']['tests'] != []) {
-                                            context.pushNamed(IeltsGoPaths.ieltsExercise);
-                                          }
-                                        },
-                                      );
-
-                                      return;
+                                    } else if (AppConstants.appName == AppConstants.ieltsPrep) {
+                                      if (testData?.testTitle == "Full Mock Test") {
+                                        await _mockTestDetailsController
+                                            .mockTestDetails(
+                                          testId: testData?.encodeTestId,
+                                        )
+                                            .then(
+                                          (value) {
+                                            if (value?['status'] == 1 ||
+                                                value?['result']['tests'] != []) {
+                                              context.pushNamed(IeltsGoPaths.ieltsExercise);
+                                            }
+                                          },
+                                        );
+                                      } else {
+                                        context.pushReplacementNamed(
+                                          GuestGoPaths.guestTestWebView,
+                                          extra: {
+                                            'url': testData?.src,
+                                            'successUrl': testData?.successUrl,
+                                          },
+                                        );
+                                      }
                                     }
                                   },
                                   child: Container(
@@ -239,11 +245,38 @@ class IeltsMockTestCard extends StatelessWidget {
                                   style: ElevatedButton.styleFrom(
                                     minimumSize: Size(MediaQuery.of(context).size.width, 40),
                                   ),
-                                  onPressed: () {
-                                    Dialogs.webViewErrorDialog(
-                                      context,
-                                      title: "Use the desktop version to access the mock test",
-                                    );
+                                  onPressed: () async {
+                                    if (AppConstants.appName == AppConstants.gradding) {
+                                      Dialogs.webViewErrorDialog(
+                                        context,
+                                        title: "Use the desktop version to access the mock test",
+                                      );
+                                      return;
+                                    }
+                                    else if (AppConstants.appName == AppConstants.ieltsPrep) {
+                                      if (testData?.testTitle == "Full Mock Test") {
+                                        await _mockTestDetailsController
+                                            .mockTestDetails(
+                                          testId: testData?.encodeTestId,
+                                        )
+                                            .then(
+                                          (value) {
+                                            if (value?['status'] == 1 ||
+                                                value?['result']['tests'] != []) {
+                                              context.pushNamed(IeltsGoPaths.ieltsExercise);
+                                            }
+                                          },
+                                        );
+                                      } else {
+                                        context.pushReplacementNamed(
+                                          GuestGoPaths.guestTestWebView,
+                                          extra: {
+                                            'url': testData?.src,
+                                            'successUrl': testData?.successUrl,
+                                          },
+                                        );
+                                      }
+                                    }
                                   },
                                   child: const Text("Start Now"),
                                 ),
